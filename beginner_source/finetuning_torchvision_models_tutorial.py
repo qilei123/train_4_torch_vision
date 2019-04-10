@@ -150,7 +150,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
         # Each epoch has a training and validation phase
         for phase in ['train_binary', 'val_binary']:
-            if phase == 'train':
+            if phase == 'train_binary':
                 model.train()  # Set model to training mode
             else:
                 model.eval()   # Set model to evaluate mode
