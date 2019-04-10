@@ -21,7 +21,6 @@ Finetuning Torchvision Models
 # 
 # In this document we will perform two types of transfer learning:
 # finetuning and feature extraction. In **finetuning**, we start with a
-# pretrained model and update *all* of the model’s parameters for our new
 # task, in essence retraining the whole model. In **feature extraction**,
 # we start with a pretrained model and only update the final layer weights
 # from which we derive predictions. It is called feature extraction
