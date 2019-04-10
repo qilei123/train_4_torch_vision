@@ -88,7 +88,7 @@ print("Torchvision Version: ",torchvision.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "./data/hymenoptera_data"
+data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
@@ -146,7 +146,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
         print('-' * 10)
 
         # Each epoch has a training and validation phase
-        for phase in ['train', 'val']:
+        for phase in ['train_binary', 'val_binary']:
             if phase == 'train':
                 model.train()  # Set model to training mode
             else:
@@ -165,12 +165,12 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
                 # forward
                 # track history if only in train
-                with torch.set_grad_enabled(phase == 'train'):
+                with torch.set_grad_enabled(phase == 'train_binary'):
                     # Get model outputs and calculate loss
                     # Special case for inception because in training it has an auxiliary output. In train
                     #   mode we calculate the loss by summing the final output and the auxiliary output
                     #   but in testing we only consider the final output.
-                    if is_inception and phase == 'train':
+                    if is_inception and phase == 'train_binary':
                         # From https://discuss.pytorch.org/t/how-to-optimize-inception-model-with-auxiliary-classifiers/7958
                         outputs, aux_outputs = model(inputs)
                         loss1 = criterion(outputs, labels)
@@ -183,7 +183,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                     _, preds = torch.max(outputs, 1)
 
                     # backward + optimize only if in training phase
-                    if phase == 'train':
+                    if phase == 'train_binary':
                         loss.backward()
                         optimizer.step()
 
@@ -197,10 +197,10 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
-            if phase == 'val' and epoch_acc > best_acc:
+            if phase == 'val_binary' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-            if phase == 'val':
+            if phase == 'val_binary':
                 val_acc_history.append(epoch_acc)
 
         print()
@@ -502,13 +502,13 @@ print(model_ft)
 # Data augmentation and normalization for training
 # Just normalization for validation
 data_transforms = {
-    'train': transforms.Compose([
+    'train_binary': transforms.Compose([
         transforms.RandomResizedCrop(input_size),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
-    'val': transforms.Compose([
+    'val_binary': transforms.Compose([
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
         transforms.ToTensor(),
@@ -519,9 +519,9 @@ data_transforms = {
 print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train_binary', 'val_binary']}
 # Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train', 'val']}
+dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train_binary', 'val_binary']}
 
 # Detect if we have a GPU available
 device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
@@ -617,13 +617,13 @@ ohist = []
 shist = []
 
 ohist = [h.cpu().numpy() for h in hist]
-shist = [h.cpu().numpy() for h in scratch_hist]
+#shist = [h.cpu().numpy() for h in scratch_hist]
 
 plt.title("Validation Accuracy vs. Number of Training Epochs")
 plt.xlabel("Training Epochs")
 plt.ylabel("Validation Accuracy")
 plt.plot(range(1,num_epochs+1),ohist,label="Pretrained")
-plt.plot(range(1,num_epochs+1),shist,label="Scratch")
+#plt.plot(range(1,num_epochs+1),shist,label="Scratch")
 plt.ylim((0,1.))
 plt.xticks(np.arange(1, num_epochs+1, 1.0))
 plt.legend()
