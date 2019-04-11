@@ -100,7 +100,7 @@ model_name = "inception"
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 128
+batch_size = 32
 
 # Number of epochs to train for 
 num_epochs = 15
@@ -478,7 +478,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         # Handle the primary net
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
-        input_size = 299
+        input_size = 897
 
     else:
         print("Invalid model name, exiting...")
