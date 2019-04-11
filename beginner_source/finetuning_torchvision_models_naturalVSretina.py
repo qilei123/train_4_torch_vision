@@ -91,7 +91,7 @@ print("Torchvision Version: ",torchvision.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data"
+data_dir = "/data0/qilei_chen/AI_EYE/binary_0"
 model_folder_dir = "/data0/qilei_chen/train_4_torch_vision/naturalVSretina"
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
