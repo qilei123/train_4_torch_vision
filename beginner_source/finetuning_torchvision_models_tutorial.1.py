@@ -100,7 +100,7 @@ model_name = "inception"
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 128
+batch_size = 64
 
 # Number of epochs to train for 
 num_epochs = 15
