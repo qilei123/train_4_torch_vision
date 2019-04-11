@@ -214,6 +214,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
+    torch.save(model.state_dict(), 'natural_retina.model')
     return model, val_acc_history
 
 
