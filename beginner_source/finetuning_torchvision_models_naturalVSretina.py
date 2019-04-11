@@ -92,6 +92,9 @@ print("Torchvision Version: ",torchvision.__version__)
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
 data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data"
+model_folder_dir = "/data0/qilei_chen/train_4_torch_vision/naturalVSretina"
+if not os.path.exists(model_folder_dir):
+    os.makedirs(model_folder_dir)
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
@@ -205,7 +208,14 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 best_model_wts = copy.deepcopy(model.state_dict())
             if phase == 'val_binary':
                 val_acc_history.append(epoch_acc)
-
+        
+        model_save_path = model_folder_dir+'/'+model_name+'_epoch_'+str(epoch)+'.pth'
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'loss': loss,
+            }, model_save_path)        
         print()
 
     time_elapsed = time.time() - since
@@ -214,7 +224,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), 'retina_diabetic.model')
+    torch.save(model.state_dict(), model_folder_dir+'/best_retina_diabetic.pth')
     return model, val_acc_history
 
 
