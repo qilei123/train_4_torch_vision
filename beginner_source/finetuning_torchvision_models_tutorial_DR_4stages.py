@@ -96,6 +96,10 @@ data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_4stages"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 model_folder_dir = data_dir+'/models'
+
+if not os.path.exists(model_folder_dir):
+    os.makedirs(model_folder_dir)
+
 # Number of classes in the dataset
 num_classes = 4
 
