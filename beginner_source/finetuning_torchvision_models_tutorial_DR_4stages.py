@@ -91,11 +91,11 @@ print("Torchvision Version: ",torchvision.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/data0/qilei_chen/AI_EYE/binary_0"
+data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_4stages"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
-
+model_folder_dir = data_dir+'/models'
 # Number of classes in the dataset
 num_classes = 4
 
@@ -149,8 +149,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
         print('-' * 10)
 
         # Each epoch has a training and validation phase
-        for phase in ['train_binary', 'val_binary']:
-            if phase == 'train_binary':
+        for phase in ['train_4', 'val_4']:
+            if phase == 'train_4':
                 model.train()  # Set model to training mode
             else:
                 model.eval()   # Set model to evaluate mode
@@ -168,12 +168,12 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
                 # forward
                 # track history if only in train
-                with torch.set_grad_enabled(phase == 'train_binary'):
+                with torch.set_grad_enabled(phase == 'train_4'):
                     # Get model outputs and calculate loss
                     # Special case for inception because in training it has an auxiliary output. In train
                     #   mode we calculate the loss by summing the final output and the auxiliary output
                     #   but in testing we only consider the final output.
-                    if is_inception and phase == 'train_binary':
+                    if is_inception and phase == 'train_4':
                         # From https://discuss.pytorch.org/t/how-to-optimize-inception-model-with-auxiliary-classifiers/7958
                         outputs, aux_outputs = model(inputs)
                         loss1 = criterion(outputs, labels)
@@ -186,7 +186,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                     _, preds = torch.max(outputs, 1)
 
                     # backward + optimize only if in training phase
-                    if phase == 'train_binary':
+                    if phase == 'train_4':
                         loss.backward()
                         optimizer.step()
 
@@ -200,11 +200,19 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
-            if phase == 'val_binary' and epoch_acc > best_acc:
+            if phase == 'val_4' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-            if phase == 'val_binary':
+            if phase == 'val_4':
                 val_acc_history.append(epoch_acc)
+
+        model_save_path = model_folder_dir+'/'+model_name+'_epoch_'+str(epoch)+'.pth'
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'loss': loss,
+            }, model_save_path)   
 
         print()
 
@@ -214,7 +222,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), 'natural_retina.model')
+    torch.save(model.state_dict(), model_folder_dir+'/best_retina_4stages.pth')
     return model, val_acc_history
 
 
@@ -506,13 +514,13 @@ print(model_ft)
 # Data augmentation and normalization for training
 # Just normalization for validation
 data_transforms = {
-    'train_binary': transforms.Compose([
+    'train_4': transforms.Compose([
         transforms.RandomResizedCrop(input_size),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
-    'val_binary': transforms.Compose([
+    'val_4': transforms.Compose([
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
         transforms.ToTensor(),
@@ -523,9 +531,9 @@ data_transforms = {
 print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train_binary', 'val_binary']}
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train_4', 'val_4']}
 # Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train_binary', 'val_binary']}
+dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train_4', 'val_4']}
 
 # Detect if we have a GPU available
 device = torch.device("cuda:0")# if torch.cuda.is_available() else "cpu")
