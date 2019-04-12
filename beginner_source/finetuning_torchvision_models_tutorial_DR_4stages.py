@@ -496,7 +496,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
 
 # Initialize the model for this run
 model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained=True)
-print input_size
+print(input_size)
 # Print the model we just instantiated
 print(model_ft) 
 
