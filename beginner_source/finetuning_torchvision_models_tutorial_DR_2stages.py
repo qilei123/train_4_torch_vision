@@ -105,7 +105,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 4
+batch_size = 1
 
 # Number of epochs to train for 
 num_epochs = 50
