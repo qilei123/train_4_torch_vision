@@ -543,8 +543,8 @@ image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transf
 dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train_binary', 'val_binary']}
 
 # Detect if we have a GPU available
-device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
-
+#device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
+device = torch.device('cpu')
 
 ######################################################################
 # Create the Optimizer
