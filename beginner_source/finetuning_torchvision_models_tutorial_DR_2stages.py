@@ -91,24 +91,30 @@ print("Torchvision Version: ",torchvision.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/data0/qilei_chen/AI_EYE/binary_0"
+data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
+
+model_folder_dir = data_dir+'/models'
+
+if not os.path.exists(model_folder_dir):
+    os.makedirs(model_folder_dir)
 
 # Number of classes in the dataset
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 24
+batch_size = 8
 
 # Number of epochs to train for 
-num_epochs = 55
+num_epochs = 50
 
 # Flag for feature extracting. When False, we finetune the whole model, 
 #   when True we only update the reshaped layer params
-feature_extract = True
+feature_extract = False
 
+input_size = 1495
 
 ######################################################################
 # Helper Functions
@@ -205,7 +211,14 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 best_model_wts = copy.deepcopy(model.state_dict())
             if phase == 'val_binary':
                 val_acc_history.append(epoch_acc)
-
+        
+        model_save_path = model_folder_dir+'/'+model_name+'_epoch_'+str(epoch)+'.pth'
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'loss': loss,
+            }, model_save_path)  
         print()
 
     time_elapsed = time.time() - since
@@ -214,7 +227,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), 'natural_retina.model')
+    torch.save(model.state_dict(), model_folder_dir+'/best_retina_2stages.model')
     return model, val_acc_history
 
 
@@ -478,7 +491,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         # Handle the primary net
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
-        input_size = 1196
+        input_size = input_size_
 
     else:
         print("Invalid model name, exiting...")
