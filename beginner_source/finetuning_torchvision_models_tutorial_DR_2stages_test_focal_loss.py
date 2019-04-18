@@ -49,7 +49,7 @@ import torch.optim as optim
 import numpy as np
 import sys
 from FocalLoss import FocalLoss
-sys.path.insert(0,'/data0/qilei_chen/pytorch_vision_4_DR')
+sys.path.insert(0,'/media/cql/DATA0/Development/torch_vision')
 import torchvision
 from torchvision import datasets, models, transforms
 import matplotlib.pyplot as plt
@@ -92,7 +92,7 @@ print("Torchvision Version: ",torchvision.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
+data_dir = "/media/cql/DATA1/data/dog_cat"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
@@ -106,7 +106,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 3
+batch_size = 8
 
 # Number of epochs to train for 
 num_epochs = 10
@@ -115,9 +115,9 @@ num_epochs = 10
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 1495
+input_size_ = 299
 
-gpu_index = '1'
+gpu_index = '0'
 
 ######################################################################
 # Helper Functions
