@@ -606,7 +606,7 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 
 # Setup the loss fxn
 #criterion = nn.CrossEntropyLoss()
-criterion = FocalLoss(class_num = num_classes, alpha=0.25, gamma=2)
+criterion = FocalLoss(class_num = num_classes)
 
 # Train and evaluate
 model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
