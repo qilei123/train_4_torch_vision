@@ -22,7 +22,7 @@ class FocalLoss(nn.Module):
                                 However, if the field size_average is set to False, the losses are
                                 instead summed for each minibatch.
     """
-    def __init__(self, class_num, alpha=None, gamma=2, size_average=True):
+    def __init__(self, class_num, device_index = 1,alpha=None, gamma=2, size_average=True):
         super(FocalLoss, self).__init__()
         if alpha is None:
             self.alpha = Variable(torch.ones(class_num, 1))
@@ -35,6 +35,7 @@ class FocalLoss(nn.Module):
         self.gamma = gamma
         self.class_num = class_num
         self.size_average = size_average
+        self.device = torch.device("cuda:"+str(device_index))
 
     def forward(self, inputs, targets):
         N = inputs.size(0)
@@ -53,11 +54,11 @@ class FocalLoss(nn.Module):
         alpha = self.alpha[ids.data.view(-1)]
 
         probs = (P*class_mask).sum(1).view(-1,1)
-
+        probs.to(self.device)
         log_p = probs.log()
         #print('probs size= {}'.format(probs.size()))
         #print(probs)
-
+        
         batch_loss = -alpha*(torch.pow((1-probs), self.gamma))*log_p 
         #print('-----bacth_loss------')
         #print(batch_loss)
