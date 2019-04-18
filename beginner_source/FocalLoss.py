@@ -32,10 +32,12 @@ class FocalLoss(nn.Module):
             else:
                 self.alpha = Variable(alpha)
         print(self.alpha)
+        
         self.gamma = gamma
         self.class_num = class_num
         self.size_average = size_average
         self.device = torch.device("cuda:"+str(device_index))
+        self.alpha = self.alpha.to(self.device)
 
     def forward(self, inputs, targets):
         N = inputs.size(0)
@@ -54,7 +56,7 @@ class FocalLoss(nn.Module):
         alpha = self.alpha[ids.data.view(-1)]
 
         probs = (P*class_mask).sum(1).view(-1,1)
-        probs.to(self.device)
+        #probs.to(self.device)
         log_p = probs.log()
         #print('probs size= {}'.format(probs.size()))
         #print(probs)
