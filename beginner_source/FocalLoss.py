@@ -31,6 +31,7 @@ class FocalLoss(nn.Module):
                 self.alpha = alpha
             else:
                 self.alpha = Variable(alpha)
+        print(self.alpha)
         self.gamma = gamma
         self.class_num = class_num
         self.size_average = size_average
