@@ -105,7 +105,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 128
+batch_size = 3
 
 # Number of epochs to train for 
 num_epochs = 10
@@ -116,7 +116,7 @@ feature_extract = False
 
 input_size_ = 1495
 
-gpu_index = '2'
+gpu_index = '1'
 
 ######################################################################
 # Helper Functions
@@ -543,8 +543,8 @@ image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transf
 dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train_binary', 'val_binary']}
 
 # Detect if we have a GPU available
-#device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
-device = torch.device('cpu')
+device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
+#device = torch.device('cpu')
 
 ######################################################################
 # Create the Optimizer
