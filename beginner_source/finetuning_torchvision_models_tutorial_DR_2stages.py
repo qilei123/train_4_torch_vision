@@ -48,6 +48,7 @@ import torch.nn as nn
 import torch.optim as optim
 import numpy as np
 import sys
+from FocalLoss import FocalLoss
 sys.path.insert(0,'/data0/qilei_chen/pytorch_vision_4_DR')
 import torchvision
 from torchvision import datasets, models, transforms
