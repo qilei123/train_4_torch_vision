@@ -115,7 +115,7 @@ num_epochs = 10
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 1196
+input_size_ = 1000
 
 gpu_index = '1'
 
