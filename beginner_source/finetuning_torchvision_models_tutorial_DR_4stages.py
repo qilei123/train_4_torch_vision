@@ -512,7 +512,7 @@ else:
 model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained_)
 
 if resume>0:
-    checkpoint = torch.load(model_folder_dir+'inception_epoch_'+str(resume)+'.pth')
+    checkpoint = torch.load(model_folder_dir+'/inception_epoch_'+str(resume)+'.pth')
     model_ft.load_state_dict(checkpoint['model_state_dict'])
 
 print(input_size)
