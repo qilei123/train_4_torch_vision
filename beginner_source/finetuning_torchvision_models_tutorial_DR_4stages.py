@@ -48,6 +48,7 @@ import torch.nn as nn
 import torch.optim as optim
 import numpy as np
 import sys
+from FocalLoss import FocalLoss
 sys.path.insert(0,'/data0/qilei_chen/pytorch_vision_4_DR')
 import torchvision
 from torchvision import datasets, models, transforms
@@ -604,7 +605,8 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 # 
 
 # Setup the loss fxn
-criterion = nn.CrossEntropyLoss()
+#criterion = nn.CrossEntropyLoss()
+criterion = FocalLoss(class_num = num_classes,device_index = int(gpu_index))
 
 # Train and evaluate
 model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
