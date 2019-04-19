@@ -108,7 +108,7 @@ num_classes = 4
 batch_size = 3
 
 # Number of epochs to train for 
-num_epochs = 10
+num_epochs = 15
 
 # Flag for feature extracting. When False, we finetune the whole model, 
 #   when True we only update the reshaped layer params
@@ -117,6 +117,8 @@ feature_extract = False
 input_size_ = 1495
 
 gpu_index = '2'
+
+resume = 7
 
 ######################################################################
 # Helper Functions
@@ -152,7 +154,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0
 
-    for epoch in range(num_epochs):
+    for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
 
@@ -503,7 +505,16 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
     return model_ft, input_size
 
 # Initialize the model for this run
-model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained=True)
+if resume>0:
+    use_pretrained_ = False
+else:
+    use_pretrained_ = True
+model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained_)
+
+if resume>0:
+    checkpoint = torch.load(model_folder_dir+'inception_epoch_'+str(resume)+'.pth')
+    model_ft.load_state_dict(checkpoint['model_state_dict'])
+
 print(input_size)
 # Print the model we just instantiated
 print(model_ft) 
