@@ -108,7 +108,7 @@ num_classes = 4
 batch_size = 3
 
 # Number of epochs to train for 
-num_epochs = 15
+num_epochs = 25
 
 # Flag for feature extracting. When False, we finetune the whole model, 
 #   when True we only update the reshaped layer params
@@ -118,7 +118,7 @@ input_size_ = 1495
 
 gpu_index = '2'
 
-resume = 7
+resume = 14
 
 ######################################################################
 # Helper Functions
