@@ -87,8 +87,8 @@ model.AuxLogits.fc = nn.Linear(num_ftrs, cf.num_classes)
 # Handle the primary net
 num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs,cf.num_classes)
-
-model.load_state_dict(torch.load(cf.model_dir))
+checkpoint = torch.load(cf.model_dir,map_location='cuda:0')
+model.load_state_dict(checkpoint['model_state_dict'])
 
 if use_gpu:
     model.cuda()
@@ -103,7 +103,7 @@ if use_gpu:
 print("\n[Phase 3] : Score Inference")
 
 def is_image(f):
-    return f.endswith(".png") or f.endswith(".jpg")
+    return f.endswith(".png") or f.endswith(".jpg") or f.endswith(".jpeg")
 
 test_transform = transforms.Compose([
     transforms.Scale(cf.input_size),
@@ -116,7 +116,7 @@ if not os.path.isdir('result'):
     os.mkdir('result')
 
 output_file = cf.output_dir+cf.test_dir.split("/")[-1]+".csv"
-
+count=0
 with open(output_file, 'wb') as csvfile:
     fields = ['file_name', 'score']
     writer = csv.DictWriter(csvfile, fieldnames=fields)
@@ -135,7 +135,16 @@ with open(output_file, 'wb') as csvfile:
 
                 outputs = model(inputs)
                 softmax_res = softmax(outputs.data.cpu().numpy()[0])
-                score = softmax_res[1]
+                probilities = []
+                for probility in softmax_res:
+                    probilities.append(probility)
+                
 
-                print(file_path + "," + str(softmax_res))
+                if probilities.index(max(probilities))==0:
+                    count+=1
+                    print(file_path + "," + str(softmax_res)+",label:"+str(probilities.index(max(probilities))))
+                    #os.system('cp '+file_path+' /media/cql/DATA1/data/dr_2stages_samples/wrong_samples/0')
                 writer.writerow({'file_name': file_path, 'score':softmax_res})
+
+
+print(count)

@@ -22,9 +22,9 @@ name = 'GURO_TRAIN'
 # MIX_TRAIN -> MIX_TEST
 #name = 'MIX_TRAIN'
 #test_dir = '/home/bumsoo/Data/test/FINAL_HWEJIN/HWEJIN_MIX_TEST'
-test_dir = '/media/cql/DATA1/data/dog_cat/test'
-model_dir = '/media/cql/DATA1/data/dog_cat/models/best_retina_2stages.model'
-output_dir = '/media/cql/DATA1/data/dog_cat/test/'
+test_dir = '/media/cql/DATA1/data/dr_2stages_samples/1'
+model_dir = '/media/cql/DATA1/data/DR_2stages_balance_samples/inception_epoch_7.pth'
+output_dir = '/media/cql/DATA1/data/dr_2stages_samples/'
 # GURO80+INBREAST_ALL
 #name = 'GURO80+INBREAST'
 #test_dir = '/home/bumsoo/Data/test/FINAL_HWEJIN/GURO80+INBREAST'
@@ -55,7 +55,7 @@ batch_size = 16
 num_epochs = 50
 lr_decay_epoch=20
 feature_size = 500
-input_size = 299
+input_size = 1000
 
 num_classes = 2
 mean = [0.485, 0.456, 0.406] 
