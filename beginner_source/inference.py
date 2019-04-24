@@ -140,7 +140,7 @@ with open(output_file, 'wb') as csvfile:
                     probilities.append(probility)
                 
 
-                if probilities.index(max(probilities))==0:
+                if probilities.index(max(probilities))==1:
                     count+=1
                     print(file_path + "," + str(softmax_res)+",label:"+str(probilities.index(max(probilities))))
                     #os.system('cp '+file_path+' /media/cql/DATA1/data/dr_2stages_samples/wrong_samples/0')

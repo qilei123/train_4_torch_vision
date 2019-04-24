@@ -22,8 +22,8 @@ name = 'GURO_TRAIN'
 # MIX_TRAIN -> MIX_TEST
 #name = 'MIX_TRAIN'
 #test_dir = '/home/bumsoo/Data/test/FINAL_HWEJIN/HWEJIN_MIX_TEST'
-test_dir = '/media/cql/DATA1/data/dr_2stages_samples/1'
-model_dir = '/media/cql/DATA1/data/DR_2stages_balance_samples/inception_epoch_7.pth'
+test_dir = '/media/cql/DATA1/data/dr_2stages_samples/0'
+model_dir = '/media/cql/DATA1/data/DR_2stages_balance_samples/inception_epoch_9.pth'
 output_dir = '/media/cql/DATA1/data/dr_2stages_samples/'
 # GURO80+INBREAST_ALL
 #name = 'GURO80+INBREAST'
