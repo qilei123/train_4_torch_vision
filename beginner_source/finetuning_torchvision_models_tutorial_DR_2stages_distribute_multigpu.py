@@ -171,7 +171,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             for inputs, labels in dataloaders[phase]:
                 cpu_loss = 1
                 predict_right=0
-                while cpu_loss<0.5 or predict_right:
+                while cpu_loss>0.5 or predict_right==0:
                     inputs = inputs.to(device)
                     print ('---------------------------')
                     print ('gt:'+str(labels))
