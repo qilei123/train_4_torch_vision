@@ -172,7 +172,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 cpu_loss = 1
                 predict_right=0
                 count =0 
-                while cpu_loss>0.05 and predict_right==0:
+                #while cpu_loss>0.05 and predict_right==0:
+                while predict_right==0:
                     inputs = inputs.to(device)
                     print ('---------------------------')
                     cpu_labels = labels.cpu().data.numpy()
