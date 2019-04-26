@@ -170,6 +170,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
                 inputs = inputs.to(device)
+                print ('---------------------------')
                 print ('gt:'+str(labels))
                 labels = labels.to(device)
 
