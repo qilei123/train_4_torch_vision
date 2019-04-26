@@ -166,7 +166,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
             running_loss = 0.0
             running_corrects = 0
-            hard_counts = np.zeros(20)
+            hard_counts = np.zeros(21)
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
                 cpu_loss = 1
@@ -236,7 +236,11 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                     if phase=='val_binary':
                         break
                 print(count)
-                hard_counts[int(count)]+=1
+                print(cpu_loss)
+                if count<=19:
+                    hard_counts[int(count)]+=1
+                else:
+                    hard_counts[20]+=1
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
