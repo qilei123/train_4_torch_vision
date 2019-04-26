@@ -222,7 +222,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                             
                             cpu_preds = preds.cpu().data.numpy()
                             print('preds:'+str(cpu_preds))
-                            if cpu_preds==cpu_labels:
+                            if (cpu_preds==cpu_labels).all():
                                 predict_right=1
 
                 # statistics
