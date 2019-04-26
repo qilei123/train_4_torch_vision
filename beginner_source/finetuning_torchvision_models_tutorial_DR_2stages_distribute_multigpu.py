@@ -204,15 +204,18 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                             cpu_loss = loss.cpu().data.numpy()
                             #print ('------------------------------loss:'+str(cpu_loss))
 
-                            cpu_preds = preds.cpu().data.numpy()
-                            #print('preds:'+str(cpu_preds))
-                            if (cpu_preds==cpu_labels).all() and cpu_loss<0.2:
-                                predict_right=1
                         else:
                             outputs = model(inputs)
                             loss = criterion(outputs, labels)
 
                         _, preds = torch.max(outputs, 1)
+
+                        if phase=='train_binary':
+                            cpu_preds = preds.cpu().data.numpy()
+                            #print('preds:'+str(cpu_preds))
+                            if (cpu_preds==cpu_labels).all() and cpu_loss<0.2:
+                                predict_right=1
+
                         #print('preds:'+str(preds))
                         # backward + optimize only if in training phase
                         if phase == 'train_binary' and predict_right==0:
