@@ -213,7 +213,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         if phase=='train_binary':
                             cpu_preds = preds.cpu().data.numpy()
                             #print('preds:'+str(cpu_preds))
-                            if (cpu_preds==cpu_labels).all() and cpu_loss<0.2:
+                            if (cpu_preds==cpu_labels).all():
                                 predict_right=1
 
                         #print('preds:'+str(preds))
