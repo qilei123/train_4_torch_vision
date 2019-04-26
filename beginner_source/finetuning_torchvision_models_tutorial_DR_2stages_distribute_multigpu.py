@@ -205,7 +205,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                     # backward + optimize only if in training phase
                     if phase == 'train_binary':
                         for i in range(10):
-                            loss.backward(retain_graph=True)
+                            loss.backward()
                             optimizer.step()
                             outputs, aux_outputs = model(inputs)
                             print('----------after back-----------'+str(i))
@@ -620,8 +620,8 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 # 
 
 # Setup the loss fxn
-criterion = nn.CrossEntropyLoss()
-#criterion = FocalLoss(class_num = num_classes)
+#criterion = nn.CrossEntropyLoss()
+criterion = FocalLoss(class_num = num_classes)
 
 # Train and evaluate
 model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
