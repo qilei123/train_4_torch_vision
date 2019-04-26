@@ -175,9 +175,9 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 #while cpu_loss>0.05 and predict_right==0:
                 while predict_right==0:
                     inputs = inputs.to(device)
-                    print ('---------------------------')
+                    #print ('---------------------------')
                     cpu_labels = labels.cpu().data.numpy()
-                    print ('gts:'+str(cpu_labels))
+                    #print ('gts:'+str(cpu_labels))
                     labels = labels.to(device)
 
                     # zero the parameter gradients
