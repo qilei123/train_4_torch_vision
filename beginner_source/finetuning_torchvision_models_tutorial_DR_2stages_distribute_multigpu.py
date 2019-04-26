@@ -191,8 +191,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         loss2 = criterion(aux_outputs, labels)
                         print ('----------before back---------')
                         
-                        print (outputs.cpu().data.numpy())
-                        print (aux_outputs.cpu().data.numpy())
+                        #print (outputs.cpu().data.numpy())
+                        #print (aux_outputs.cpu().data.numpy())
                         
                         loss = loss1 + 0.4*loss2
                         #print (loss)
@@ -209,8 +209,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                             optimizer.step()
                             outputs, aux_outputs = model(inputs)
                             print('----------after back-----------'+str(i))
-                            print (outputs.cpu().data.numpy())
-                            print (aux_outputs.cpu().data.numpy())
+                            #print (outputs.cpu().data.numpy())
+                            #print (aux_outputs.cpu().data.numpy())
                             _, preds = torch.max(outputs, 1)
                             print('preds:'+str(preds))
 
