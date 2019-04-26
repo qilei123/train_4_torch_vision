@@ -204,15 +204,33 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                     print('preds:'+str(preds))
                     # backward + optimize only if in training phase
                     if phase == 'train_binary':
-                        for i in range(10):
-                            loss.backward(retain_graph=True)
-                            optimizer.step()
-                            outputs, aux_outputs = model(inputs)
-                            print('----------after back-----------'+str(i))
-                            #print (outputs.cpu().data.numpy())
-                            #print (aux_outputs.cpu().data.numpy())
-                            _, preds = torch.max(outputs, 1)
-                            print('preds:'+str(preds))
+                        #for i in range(10):
+                        loss.backward(retain_graph=True)
+                        optimizer.step()
+                        outputs, aux_outputs = model(inputs)
+                        print('----------after back-----------')
+                        #print (outputs.cpu().data.numpy())
+                        #print (aux_outputs.cpu().data.numpy())
+                        _, preds = torch.max(outputs, 1)
+                        print('preds:'+str(preds))
+
+                        loss.backward(retain_graph=True)
+                        optimizer.step()
+                        outputs, aux_outputs = model(inputs)
+                        print('----------after back-----------')
+                        #print (outputs.cpu().data.numpy())
+                        #print (aux_outputs.cpu().data.numpy())
+                        _, preds = torch.max(outputs, 1)
+                        print('preds:'+str(preds))
+
+                        loss.backward(retain_graph=False)
+                        optimizer.step()
+                        outputs, aux_outputs = model(inputs)
+                        print('----------after back-----------')
+                        #print (outputs.cpu().data.numpy())
+                        #print (aux_outputs.cpu().data.numpy())
+                        _, preds = torch.max(outputs, 1)
+                        print('preds:'+str(preds))
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
