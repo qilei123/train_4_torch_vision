@@ -175,9 +175,9 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 #while cpu_loss>0.05 and predict_right==0:
                 while predict_right==0:
                     inputs = inputs.to(device)
-                    #print ('---------------------------')
+                    print ('---------------------------')
                     cpu_labels = labels.cpu().data.numpy()
-                    #print ('gts:'+str(cpu_labels))
+                    print ('gts:'+str(cpu_labels))
                     labels = labels.to(device)
 
                     # zero the parameter gradients
@@ -215,14 +215,14 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                             loss.backward()
                             optimizer.step()
                             outputs, aux_outputs = model(inputs)
-                            #print('----------after back-----------'+str(count))
+                            print('----------after back-----------'+str(count))
                             count+=1
                             #print (outputs.cpu().data.numpy())
                             #print (aux_outputs.cpu().data.numpy())
                             _, preds = torch.max(outputs, 1)
                             
                             cpu_preds = preds.cpu().data.numpy()
-                            #print('preds:'+str(cpu_preds))
+                            print('preds:'+str(cpu_preds))
                             if (cpu_preds==cpu_labels).all():
                                 predict_right=1
                     if phase=='val_binary':
