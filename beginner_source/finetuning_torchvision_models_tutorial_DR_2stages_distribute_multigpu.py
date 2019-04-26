@@ -187,10 +187,11 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         outputs, aux_outputs = model(inputs)
                         loss1 = criterion(outputs, labels)
                         loss2 = criterion(aux_outputs, labels)
-                        print (outputs)
                         print (labels)
+                        print (outputs)
                         print (aux_outputs)
                         loss = loss1 + 0.4*loss2
+                        print (loss)
                     else:
                         outputs = model(inputs)
                         loss = criterion(outputs, labels)
