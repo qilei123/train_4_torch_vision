@@ -187,9 +187,11 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         outputs, aux_outputs = model(inputs)
                         loss1 = criterion(outputs, labels)
                         loss2 = criterion(aux_outputs, labels)
-                        print (labels)
-                        print (outputs)
-                        print (aux_outputs)
+                        print ('----------before back---------')
+                        print (labels.cpu().data.numpy())
+                        print (outputs.cpu().data.numpy())
+                        print (aux_outputs.cpu().data.numpy())
+                        
                         loss = loss1 + 0.4*loss2
                         print (loss)
                     else:
@@ -202,6 +204,10 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                     if phase == 'train_binary':
                         loss.backward()
                         optimizer.step()
+                        outputs, aux_outputs = model(inputs)
+                        print('----------after back-----------')
+                        print (outputs.cpu().data.numpy())
+                        print (aux_outputs.cpu().data.numpy())
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
