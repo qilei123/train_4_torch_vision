@@ -166,7 +166,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
             running_loss = 0.0
             running_corrects = 0
-
+            hard_counts = np.zeros(20)
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
                 cpu_loss = 1
@@ -203,6 +203,11 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                             loss = loss1 + 0.4*loss2
                             cpu_loss = loss.cpu().data.numpy()
                             #print ('------------------------------loss:'+str(cpu_loss))
+
+                            cpu_preds = preds.cpu().data.numpy()
+                            #print('preds:'+str(cpu_preds))
+                            if (cpu_preds==cpu_labels).all() and cpu_loss<0.2:
+                                predict_right=1
                         else:
                             outputs = model(inputs)
                             loss = criterion(outputs, labels)
@@ -210,28 +215,28 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         _, preds = torch.max(outputs, 1)
                         #print('preds:'+str(preds))
                         # backward + optimize only if in training phase
-                        if phase == 'train_binary':
+                        if phase == 'train_binary' and predict_right==0:
                             #for i in range(10):
                             loss.backward()
                             optimizer.step()
-                            outputs, aux_outputs = model(inputs)
-                            print('----------after back-----------'+str(count))
+                            #outputs, aux_outputs = model(inputs)
+                            #print('----------after back-----------'+str(count))
                             count+=1
                             #print (outputs.cpu().data.numpy())
                             #print (aux_outputs.cpu().data.numpy())
-                            _, preds = torch.max(outputs, 1)
+                            #_, preds = torch.max(outputs, 1)
                             
-                            cpu_preds = preds.cpu().data.numpy()
-                            print('preds:'+str(cpu_preds))
-                            if (cpu_preds==cpu_labels).all():
-                                predict_right=1
+                            #cpu_preds = preds.cpu().data.numpy()
+                            #print('preds:'+str(cpu_preds))
+                            #if (cpu_preds==cpu_labels).all():
+                            #    predict_right=1
                     if phase=='val_binary':
                         break
-
+                hard_counts[int(count)]+=1
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
-
+            print(hard_counts)
             epoch_loss = running_loss / len(dataloaders[phase].dataset)
             epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
 
