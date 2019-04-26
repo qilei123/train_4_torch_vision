@@ -169,7 +169,9 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
-                for i in range(3):
+                cpu_loss = 1
+                predict_right=0
+                while cpu_loss<0.5 or predict_right:
                     inputs = inputs.to(device)
                     print ('---------------------------')
                     print ('gt:'+str(labels))
@@ -196,7 +198,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                             #print (aux_outputs.cpu().data.numpy())
                             
                             loss = loss1 + 0.4*loss2
-                            print ('------------------------------loss:'+str(loss.cpu().data.numpy()))
+                            cpu_loss = loss.cpu().data.numpy()
+                            print ('------------------------------loss:'+str(cpu_loss))
                         else:
                             outputs = model(inputs)
                             loss = criterion(outputs, labels)
@@ -213,7 +216,9 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                             #print (outputs.cpu().data.numpy())
                             #print (aux_outputs.cpu().data.numpy())
                             _, preds = torch.max(outputs, 1)
-                            print('preds:'+str(preds))
+                            
+                            cpu_preds = preds.cpu().data.numpy()
+                            print('preds:'+str(cpu_preds))
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
