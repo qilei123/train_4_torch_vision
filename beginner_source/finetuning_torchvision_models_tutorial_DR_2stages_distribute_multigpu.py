@@ -97,7 +97,7 @@ data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages_balance"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 
-model_folder_dir = data_dir+'/models'
+model_folder_dir = data_dir+'/ohem_models'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -106,7 +106,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 12
+batch_size = 6
 
 # Number of epochs to train for 
 num_epochs = 10
@@ -115,9 +115,9 @@ num_epochs = 10
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 299
+input_size_ = 1200
 
-gpu_index = '1'
+gpu_index = '2'
 
 ######################################################################
 # Helper Functions
