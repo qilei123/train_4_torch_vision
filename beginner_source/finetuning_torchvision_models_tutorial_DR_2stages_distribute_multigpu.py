@@ -235,6 +235,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                             #    predict_right=1
                     if phase=='val_binary':
                         break
+                print(count)
                 hard_counts[int(count)]+=1
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
