@@ -205,7 +205,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                     # backward + optimize only if in training phase
                     if phase == 'train_binary':
                         for i in range(10):
-                            loss.backward()
+                            loss.backward(retain_graph=True)
                             optimizer.step()
                             outputs, aux_outputs = model(inputs)
                             print('----------after back-----------'+str(i))
