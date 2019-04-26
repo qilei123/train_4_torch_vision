@@ -169,68 +169,51 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
-                inputs = inputs.to(device)
-                print ('---------------------------')
-                print ('gt:'+str(labels))
-                labels = labels.to(device)
+                for i in range(3):
+                    inputs = inputs.to(device)
+                    print ('---------------------------')
+                    print ('gt:'+str(labels))
+                    labels = labels.to(device)
 
-                # zero the parameter gradients
-                optimizer.zero_grad()
+                    # zero the parameter gradients
+                    optimizer.zero_grad()
 
-                # forward
-                # track history if only in train
-                with torch.set_grad_enabled(phase == 'train_binary'):
-                    # Get model outputs and calculate loss
-                    # Special case for inception because in training it has an auxiliary output. In train
-                    #   mode we calculate the loss by summing the final output and the auxiliary output
-                    #   but in testing we only consider the final output.
-                    if is_inception and phase == 'train_binary':
-                        # From https://discuss.pytorch.org/t/how-to-optimize-inception-model-with-auxiliary-classifiers/7958
-                        outputs, aux_outputs = model(inputs)
-                        loss1 = criterion(outputs, labels)
-                        loss2 = criterion(aux_outputs, labels)
-                        print ('----------before back---------')
-                        
-                        #print (outputs.cpu().data.numpy())
-                        #print (aux_outputs.cpu().data.numpy())
-                        
-                        loss = loss1 + 0.4*loss2
-                        #print (loss)
-                    else:
-                        outputs = model(inputs)
-                        loss = criterion(outputs, labels)
+                    # forward
+                    # track history if only in train
+                    with torch.set_grad_enabled(phase == 'train_binary'):
+                        # Get model outputs and calculate loss
+                        # Special case for inception because in training it has an auxiliary output. In train
+                        #   mode we calculate the loss by summing the final output and the auxiliary output
+                        #   but in testing we only consider the final output.
+                        if is_inception and phase == 'train_binary':
+                            # From https://discuss.pytorch.org/t/how-to-optimize-inception-model-with-auxiliary-classifiers/7958
+                            outputs, aux_outputs = model(inputs)
+                            loss1 = criterion(outputs, labels)
+                            loss2 = criterion(aux_outputs, labels)
+                            print ('----------before back---------')
+                            
+                            #print (outputs.cpu().data.numpy())
+                            #print (aux_outputs.cpu().data.numpy())
+                            
+                            loss = loss1 + 0.4*loss2
+                            #print (loss)
+                        else:
+                            outputs = model(inputs)
+                            loss = criterion(outputs, labels)
 
-                    _, preds = torch.max(outputs, 1)
-                    print('preds:'+str(preds))
-                    # backward + optimize only if in training phase
-                    if phase == 'train_binary':
-                        #for i in range(10):
-                        loss.backward(retain_graph=True)
-                        optimizer.step()
-                        outputs, aux_outputs = model(inputs)
-                        print('----------after back1-----------')
-                        #print (outputs.cpu().data.numpy())
-                        #print (aux_outputs.cpu().data.numpy())
                         _, preds = torch.max(outputs, 1)
                         print('preds:'+str(preds))
-
-                        loss.backward(retain_graph=True)
-                        optimizer.step()
-                        outputs, aux_outputs = model(inputs)
-                        print('----------after back2-----------')
-                        #print (outputs.cpu().data.numpy())
-                        #print (aux_outputs.cpu().data.numpy())
-                        _, preds = torch.max(outputs, 1)
-                        print('preds:'+str(preds))
-
-                        loss.backward(retain_graph=False)
-                        optimizer.step()
-                        outputs, aux_outputs = model(inputs)
-                        print('----------after back3-----------')
-                        #print (outputs.cpu().data.numpy())
-                        #print (aux_outputs.cpu().data.numpy())
-                        _, preds = torch.max(outputs, 1)
-                        print('preds:'+str(preds))
+                        # backward + optimize only if in training phase
+                        if phase == 'train_binary':
+                            #for i in range(10):
+                            loss.backward()
+                            optimizer.step()
+                            outputs, aux_outputs = model(inputs)
+                            print('----------after back-----------'+str(i))
+                            #print (outputs.cpu().data.numpy())
+                            #print (aux_outputs.cpu().data.numpy())
+                            _, preds = torch.max(outputs, 1)
+                            print('preds:'+str(preds))
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
