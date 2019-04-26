@@ -171,6 +171,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             for inputs, labels in dataloaders[phase]:
                 cpu_loss = 1
                 predict_right=0
+                count =0 
                 while cpu_loss>0.5 or predict_right==0:
                     inputs = inputs.to(device)
                     print ('---------------------------')
@@ -212,7 +213,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                             loss.backward()
                             optimizer.step()
                             outputs, aux_outputs = model(inputs)
-                            print('----------after back-----------'+str(i))
+                            print('----------after back-----------'+str(count))
+                            count+=1
                             #print (outputs.cpu().data.numpy())
                             #print (aux_outputs.cpu().data.numpy())
                             _, preds = torch.max(outputs, 1)
