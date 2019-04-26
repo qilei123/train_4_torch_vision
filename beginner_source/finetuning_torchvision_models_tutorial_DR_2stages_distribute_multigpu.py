@@ -170,6 +170,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
                 inputs = inputs.to(device)
+                print (labels)
                 labels = labels.to(device)
 
                 # zero the parameter gradients
@@ -188,7 +189,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         loss1 = criterion(outputs, labels)
                         loss2 = criterion(aux_outputs, labels)
                         print ('----------before back---------')
-                        print (labels.cpu().data.numpy())
+                        
                         print (outputs.cpu().data.numpy())
                         print (aux_outputs.cpu().data.numpy())
                         
