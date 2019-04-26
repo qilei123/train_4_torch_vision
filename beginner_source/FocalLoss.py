@@ -41,7 +41,7 @@ class FocalLoss(nn.Module):
         N = inputs.size(0)
         C = inputs.size(1)
         P = F.softmax(inputs,dim = 1)
-        print('P:'+str(P))
+        #print('P:'+str(P))
         class_mask = inputs.data.new(N, C).fill_(0)
         class_mask = Variable(class_mask)
         ids = targets.view(-1, 1)
@@ -54,7 +54,7 @@ class FocalLoss(nn.Module):
         alpha = self.alpha[ids.data.view(-1)]
 
         probs = (P*class_mask).sum(1).view(-1,1)
-        print('probs:'+str(probs))
+        #print('probs:'+str(probs))
         #probs.to(self.device)
         log_p = probs.log()
         #print('probs size= {}'.format(probs.size()))
