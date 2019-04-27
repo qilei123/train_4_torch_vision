@@ -583,7 +583,7 @@ print("Initializing Datasets and Dataloaders...")
 # Create training and validation datasets
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train_binary', 'val_binary']}
 # Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=False, num_workers=4) for x in ['train_binary', 'val_binary']}
+dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=False, num_workers=8) for x in ['train_binary', 'val_binary']}
 
 # Detect if we have a GPU available
 device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
