@@ -92,12 +92,12 @@ print("Torchvision Version: ",torchvision.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages_balance_no_norm"
+data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages_balance"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 
-model_folder_dir = data_dir+'/ohem_models'
+model_folder_dir = data_dir+'/no_norm_ohem_models'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
