@@ -97,7 +97,7 @@ data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages_balance"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 
-model_folder_dir = data_dir+'/models'
+model_folder_dir = data_dir+'/299_models'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
