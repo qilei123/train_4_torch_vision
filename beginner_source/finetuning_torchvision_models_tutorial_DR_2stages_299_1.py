@@ -106,7 +106,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 64
+batch_size = 16
 
 # Number of epochs to train for 
 num_epochs = 20
@@ -525,7 +525,7 @@ data_transforms = {
     'train_binary': transforms.Compose([
         #transforms.RandomResizedCrop(input_size),
         transforms.Resize(input_size),
-        #transforms.CenterCrop(input_size),
+        transforms.CenterCrop(input_size),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
