@@ -534,7 +534,7 @@ print(model_ft)
 # Data augmentation and normalization for training
 # Just normalization for validation
 data_transforms = {
-    'train_binary': transforms.Compose([
+    'train_4': transforms.Compose([
         #transforms.RandomResizedCrop(input_size),
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
@@ -542,7 +542,7 @@ data_transforms = {
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
-    'val_binary': transforms.Compose([
+    'val_4': transforms.Compose([
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
         transforms.ToTensor(),
