@@ -368,6 +368,10 @@ image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transf
 
 imgs = image_datasets['train_binary'].get_imgs()
 random.shuffle(imgs)
+record_list = open('train_list.txt','w')
+for img in imgs:
+    record_list.write(str(img)+'\n')
+record_list.close()
 image_datasets['train_binary'].set_imgs(imgs)
 # Create training and validation dataloaders
 dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=False, num_workers=1) for x in ['train_binary', 'val_binary']}
