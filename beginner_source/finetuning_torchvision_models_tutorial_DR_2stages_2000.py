@@ -259,6 +259,12 @@ image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transf
 imgs = image_datasets['val_binary'].get_imgs()
 import random
 random.shuffle(imgs)
+
+record_file = open('val_binary_2000_record.txt','w')
+for img in imgs:
+    record_file.write(str(img)+'\n')
+record_file.close()
+
 image_datasets['val_binary'].set_imgs(imgs)
 
 # Create training and validation dataloaders
@@ -282,7 +288,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-
+        record_file = open('Epoch_'+str(epoch)+'_val_binary_2000_record.txt','w')
         # Each epoch has a training and validation phase
         for phase in ['train_binary', 'val_binary']:
             if phase == 'train_binary':
@@ -334,10 +340,15 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
+                if phase =='val_binary':
+                    cpupreds = preds.cpu().data.numpy()
+                    record_file.write(str(cpupreds)+'\n')
+                
                 print('----preds----')
-                print(preds)
+                print(preds.cpu().data.numpy())
                 print('------gt-----')
                 print(labels.data)
+                
             epoch_loss = running_loss / len(dataloaders[phase].dataset)
             epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
 
@@ -358,6 +369,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             'loss': loss,
             }, model_save_path)  
         print()
+        record_file.close()
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
