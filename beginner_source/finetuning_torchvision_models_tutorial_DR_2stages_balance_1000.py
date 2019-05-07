@@ -8,39 +8,6 @@ Finetuning Torchvision Models
 """
 
 
-######################################################################
-# In this tutorial we will take a deeper look at how to finetune and
-# feature extract the `torchvision
-# models <https://pytorch.org/docs/stable/torchvision/models.html>`__, all
-# of which have been pretrained on the 1000-class Imagenet dataset. This
-# tutorial will give an indepth look at how to work with several modern
-# CNN architectures, and will build an intuition for finetuning any
-# PyTorch model. Since each model architecture is different, there is no
-# boilerplate finetuning code that will work in all scenarios. Rather, the
-# researcher must look at the existing architecture and make custom
-# adjustments for each model.
-# 
-# In this document we will perform two types of transfer learning:
-# finetuning and feature extraction. In **finetuning**, we start with a
-# pretrained model and update *all* of the model’s parameters for our new
-# task, in essence retraining the whole model. In **feature extraction**,
-# we start with a pretrained model and only update the final layer weights
-# from which we derive predictions. It is called feature extraction
-# because we use the pretrained CNN as a fixed feature-extractor, and only
-# change the output layer. For more technical information about transfer
-# learning see `here <https://cs231n.github.io/transfer-learning/>`__ and
-# `here <https://ruder.io/transfer-learning/>`__.
-# 
-# In general both transfer learning methods follow the same few steps:
-# 
-# -  Initialize the pretrained model
-# -  Reshape the final layer(s) to have the same number of outputs as the
-#    number of classes in the new dataset
-# -  Define for the optimization algorithm which parameters we want to
-#    update during training
-# -  Run the training step
-# 
-
 from __future__ import print_function 
 from __future__ import division
 import torch
