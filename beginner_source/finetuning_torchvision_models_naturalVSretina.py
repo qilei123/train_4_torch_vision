@@ -40,9 +40,9 @@ Finetuning Torchvision Models
 #    update during training
 # -  Run the training step
 # 
-import random
 from __future__ import print_function 
 from __future__ import division
+import random
 import torch
 import torch.nn as nn
 import torch.optim as optim
