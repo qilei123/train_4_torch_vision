@@ -343,12 +343,12 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 if phase =='val_binary':
                     cpupreds = preds.cpu().data.numpy()
                     record_file.write(str(cpupreds)+'\n')
-                
+                '''
                 print('----preds----')
                 print(preds.cpu().data.numpy())
                 print('------gt-----')
                 print(labels.data)
-                
+                '''
             epoch_loss = running_loss / len(dataloaders[phase].dataset)
             epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
 
