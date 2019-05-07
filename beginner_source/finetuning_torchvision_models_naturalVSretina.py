@@ -92,7 +92,7 @@ print("Torchvision Version: ",torchvision.__version__)
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
 data_dir = "/data0/qilei_chen/AI_EYE/binary_0"
-model_folder_dir = "/data0/qilei_chen/train_4_torch_vision/naturalVSretina"
+model_folder_dir = data_dir+'/naturalVSretina_fine_tune_all'
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
 
@@ -110,7 +110,7 @@ num_epochs = 15
 
 # Flag for feature extracting. When False, we finetune the whole model, 
 #   when True we only update the reshaped layer params
-feature_extract = True
+feature_extract = False
 
 
 ######################################################################
@@ -517,8 +517,10 @@ print(model_ft)
 # Just normalization for validation
 data_transforms = {
     'train_binary': transforms.Compose([
-        transforms.RandomResizedCrop(input_size),
-        transforms.RandomHorizontalFlip(),
+        #transforms.RandomResizedCrop(input_size),
+        #transforms.RandomHorizontalFlip(),
+        transforms.Resize(input_size),
+        transforms.CenterCrop(input_size),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
