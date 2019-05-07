@@ -40,7 +40,7 @@ Finetuning Torchvision Models
 #    update during training
 # -  Run the training step
 # 
-
+import random
 from __future__ import print_function 
 from __future__ import division
 import torch
@@ -365,6 +365,10 @@ print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train_binary', 'val_binary']}
+
+imgs = image_datasets['train_binary'].get_imgs()
+random.shuffle(imgs)
+image_datasets['train_binary'].set_imgs(imgs)
 # Create training and validation dataloaders
 dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=False, num_workers=1) for x in ['train_binary', 'val_binary']}
 
