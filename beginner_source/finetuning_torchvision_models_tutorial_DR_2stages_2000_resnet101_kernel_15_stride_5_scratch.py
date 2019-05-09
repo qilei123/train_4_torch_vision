@@ -116,13 +116,11 @@ num_epochs = 50
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 2000
+input_size_ = 1000
 
 gpu_index = '0'
 
 resume = 0
-
-
 
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
