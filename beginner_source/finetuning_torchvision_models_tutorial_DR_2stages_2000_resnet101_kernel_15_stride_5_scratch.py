@@ -96,7 +96,7 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/home/ubuntu/kaggle_data/binary"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception"
+model_name = "resnet101_wide"
 
 model_folder_dir = data_dir+'/models_2000_resnet101_kernel_15_stride_5_scratch'
 
