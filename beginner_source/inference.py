@@ -114,37 +114,38 @@ test_transform = transforms.Compose([
 
 if not os.path.isdir('result'):
     os.mkdir('result')
-
+import glob
 output_file = cf.output_dir+cf.test_dir.split("/")[-1]+".csv"
 count=0
 with open(output_file, 'wb') as csvfile:
     fields = ['file_name', 'score']
     writer = csv.DictWriter(csvfile, fieldnames=fields)
-    for subdir, dirs, files in os.walk(data_dir):
-        for f in files:
-            file_path = subdir + os.sep + f
-            if (is_image(f)):
-                image = Image.open(file_path).convert('RGB')
-                if test_transform is not None:
-                    image = test_transform(image)
-                inputs = image
-                inputs = Variable(inputs, volatile=True)
-                if use_gpu:
-                    inputs = inputs.cuda()
-                inputs = inputs.view(1, inputs.size(0), inputs.size(1), inputs.size(2)) # add batch dim in the front
+    #for subdir, dirs, files in os.walk(data_dir):
+    for file_path in glob.glob(os.path.join(data_dir, '*.jpeg')):
+        print(file_path)
+        #file_path = subdir + os.sep + f
+        if (is_image(file_path)):
+            image = Image.open(file_path)#.convert('RGB')
+            if test_transform is not None:
+                image = test_transform(image)
+            inputs = image
+            inputs = Variable(inputs, volatile=True)
+            if use_gpu:
+                inputs = inputs.cuda()
+            inputs = inputs.view(1, inputs.size(0), inputs.size(1), inputs.size(2)) # add batch dim in the front
 
-                outputs = model(inputs)
-                softmax_res = softmax(outputs.data.cpu().numpy()[0])
-                probilities = []
-                for probility in softmax_res:
-                    probilities.append(probility)
-                
+            outputs = model(inputs)
+            softmax_res = softmax(outputs.data.cpu().numpy()[0])
+            probilities = []
+            for probility in softmax_res:
+                probilities.append(probility)
+            
 
-                if probilities.index(max(probilities))==1:
-                    count+=1
-                    print(file_path + "," + str(softmax_res)+",label:"+str(probilities.index(max(probilities))))
-                    #os.system('cp '+file_path+' /media/cql/DATA1/data/dr_2stages_samples/wrong_samples/0')
-                writer.writerow({'file_name': file_path, 'score':softmax_res})
+            if probilities.index(max(probilities))==1:
+                count+=1
+                print(file_path + "," + str(softmax_res)+",label:"+str(probilities.index(max(probilities))))
+                #os.system('cp '+file_path+' /media/cql/DATA1/data/dr_2stages_samples/wrong_samples/0')
+            writer.writerow({'file_name': file_path, 'score':softmax_res})
 
 
 print(count)

@@ -303,7 +303,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 random.shuffle(imgs)
                 image_datasets[phase].set_imgs(imgs)
                 
-                dataloaders[phase] = torch.utils.data.DataLoader(image_datasets[phase], batch_size=batch_size, shuffle=False, num_workers=1)
+                dataloaders[phase] = torch.utils.data.DataLoader(image_datasets[phase], batch_size=batch_size, shuffle=False, num_workers=8)
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
                 inputs = inputs.to(device)
