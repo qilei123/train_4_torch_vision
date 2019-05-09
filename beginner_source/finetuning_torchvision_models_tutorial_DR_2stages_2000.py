@@ -120,7 +120,7 @@ input_size_ = 2000
 
 gpu_index = '0'
 
-resume = 2
+resume = 5
 
 
 
