@@ -98,7 +98,7 @@ data_dir = "/home/ubuntu/kaggle_data/binary"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception_v3_wide"
 
-model_folder_dir = data_dir+'/models_2000_resnet101_kernel_15_stride_5_scratch'
+model_folder_dir = data_dir+'/models_2000_inceptionv3_kernel_15_stride_5_scratch'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -435,7 +435,7 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 criterion = FocalLoss(class_num = num_classes,device_index=int(gpu_index))
 
 # Train and evaluate
-model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
+model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=("inception" in model_name))
 
 '''
 
