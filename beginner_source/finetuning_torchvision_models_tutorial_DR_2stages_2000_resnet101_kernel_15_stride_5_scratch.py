@@ -148,7 +148,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
     elif model_name == "resnet101_wide":
         """ Resnet101
         """
-        model_ft = models.resnet101_wide(pretrained=False,large_size_input = True)
+        model_ft = models.resnet101_wide(pretrained=True,large_size_input = True)
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs, num_classes)

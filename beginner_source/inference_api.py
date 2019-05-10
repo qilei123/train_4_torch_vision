@@ -6,22 +6,22 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.backends.cudnn as cudnn
 import numpy as np
-import torchvision
 import time
 import copy
 import os
 import sys
 import argparse
 import csv
-sys.path.insert(0,'/media/cql/DATA0/Development/torch_vision')
+sys.path.insert(0,'/media/cql/DATA1/Development/vision2')
 import torchvision
 from torchvision import datasets, models, transforms
 #from networks import *
 from torch.autograd import Variable
 from PIL import Image
+import glob
 
 class classifier:
-    def __init__(self,input_size_=1000,mean_=[0.485, 0.456, 0.406],std_=[0.229, 0.224, 0.225],class_num_=2):
+    def __init__(self,input_size_=1000,mean_=[0.485, 0.456, 0.406],std_=[0.229, 0.224, 0.225],class_num_=2,model_name = 'resnet101_wide'):
         self.input_size = input_size_
         self.mean = mean_
         self.std = std_
@@ -32,11 +32,16 @@ class classifier:
                 transforms.Normalize(self.mean, self.std)
             ])
         self.class_num = class_num_
-        self.model = models.inception_v3(pretrained=True)
-        num_ftrs = self.model.AuxLogits.fc.in_features
-        self.model.AuxLogits.fc = nn.Linear(num_ftrs, self.class_num)
-        num_ftrs = self.model.fc.in_features
-        self.model.fc = nn.Linear(num_ftrs,self.class_num)
+        if model_name=='inception_v3_wide':
+            self.model = models.inception_v3_wide()
+            num_ftrs = self.model.AuxLogits.fc.in_features
+            self.model.AuxLogits.fc = nn.Linear(num_ftrs, self.class_num)
+            num_ftrs = self.model.fc.in_features
+            self.model.fc = nn.Linear(num_ftrs,self.class_num)
+        elif model_name=='resnet101_wide':
+            self.model = models.resnet101_wide()
+            num_ftrs = self.model.fc.in_features
+            self.model.fc = nn.Linear(num_ftrs,self.class_num)
 
     def softmax(self,x):
         return np.exp(x) / np.sum(np.exp(x), axis=0)
@@ -63,6 +68,25 @@ class classifier:
         return probilities.index(max(probilities))
 
 cf = classifier()
-cf.ini_model('/home/cql/Downloads/binary_models/inception_epoch_6_1000.pth')
-for i in range(100):    
-    print(cf.predict('/home/cql/Downloads/test5.7/test/13_left.jpeg'))
+cf.ini_model('/home/cql/Downloads/binary_models/resnet101_wide_epoch_1.pth')
+#for i in range(100):
+image_file_dirs = glob.glob('/home/cql/Downloads/binary_models/DR_2stages_balance_samples/0/*')
+#print(image_file_dirs)
+count = 0
+for image_file_dir in image_file_dirs:
+    label = cf.predict(image_file_dir)
+    print(label)
+    count += label
+print(count)
+'''
+print(cf.predict('/home/cql/Downloads/test5.7/test/16_left.jpeg'))
+print(cf.predict('/home/cql/Downloads/test5.7/test/172_right.jpeg'))
+print(cf.predict('/home/cql/Downloads/test5.7/test/217_right.jpeg'))
+print(cf.predict('/home/cql/Downloads/test5.7/test/286_left.jpeg'))
+print(cf.predict('/home/cql/Downloads/test5.7/test/508_left.jpeg'))
+
+print(cf.predict('/home/cql/Downloads/test5.7/test0/13_left.jpeg'))
+print(cf.predict('/home/cql/Downloads/test5.7/test0/22_left.jpeg'))
+print(cf.predict('/home/cql/Downloads/test5.7/test0/31_right.jpeg'))
+print(cf.predict('/home/cql/Downloads/test5.7/test0/40_right.jpeg'))
+'''
