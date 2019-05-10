@@ -96,9 +96,9 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/home/ubuntu/kaggle_data/binary"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "resnet101_wide"
+model_name = "inception_v3_wide"
 
-model_folder_dir = data_dir+'/models_2000_resnet101_kernel_15_stride_5_scratch'
+model_folder_dir = data_dir+'/models_2000_inceptionv3_kernel_15_stride_5_scratch'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -146,9 +146,9 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         input_size = input_size_
 
     elif model_name == "resnet101_wide":
-        """ Resnet101_wide
+        """ Resnet101
         """
-        model_ft = models.resnet101_wide(pretrained=True,large_size_input = True)
+        model_ft = models.resnet101_wide(pretrained=False,large_size_input = True)
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs, num_classes)
@@ -203,7 +203,16 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_
-
+    elif model_name=="inception_v3_wide":
+        model_ft = models.inception_v3_wide(pretrained=use_pretrained)
+        set_parameter_requires_grad(model_ft, feature_extract)
+        # Handle the auxilary net
+        num_ftrs = model_ft.AuxLogits.fc.in_features
+        model_ft.AuxLogits.fc = nn.Linear(num_ftrs, num_classes)
+        # Handle the primary net
+        num_ftrs = model_ft.fc.in_features
+        model_ft.fc = nn.Linear(num_ftrs,num_classes)
+        input_size = input_size_        
     else:
         print("Invalid model name, exiting...")
         exit()
@@ -217,7 +226,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
 if resume>0:
     use_pretrained_ = False
 else:
-    use_pretrained_ = False
+    use_pretrained_ = True
 model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained_)
 
 if resume>0:
@@ -275,7 +284,7 @@ record_file.close()
 image_datasets['val_binary'].set_imgs(imgs)
 
 # Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train_binary', 'val_binary']}
+dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=16) for x in ['train_binary', 'val_binary']}
 
 # Detect if we have a GPU available
 device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
@@ -426,7 +435,7 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 criterion = FocalLoss(class_num = num_classes,device_index=int(gpu_index))
 
 # Train and evaluate
-model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
+model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=("inception" in model_name))
 
 '''
 
