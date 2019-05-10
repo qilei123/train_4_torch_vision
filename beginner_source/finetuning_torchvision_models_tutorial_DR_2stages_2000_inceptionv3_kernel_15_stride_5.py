@@ -93,12 +93,12 @@ print("PyTorch Version: ",torch.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/home/ubuntu/kaggle_data/binary"
+data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception_v3_wide"
 
-model_folder_dir = data_dir+'/models_2000_inceptionv3_kernel_15_stride_5_scratch'
+model_folder_dir = data_dir+'/models_2000_inceptionv3_kernel_15_stride_5'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -276,7 +276,7 @@ imgs = image_datasets['val_binary'].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_binary_2000_record.txt','w')
+record_file = open('val_binary_2000_inception_k15_s5_record.txt','w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
@@ -284,7 +284,7 @@ record_file.close()
 image_datasets['val_binary'].set_imgs(imgs)
 
 # Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=16) for x in ['train_binary', 'val_binary']}
+dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train_binary', 'val_binary']}
 
 # Detect if we have a GPU available
 device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
@@ -304,7 +304,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_binary_2000_kernel15_stride5_resnet_record.txt','w')
+        record_file = open('Epoch_'+str(epoch)+'_val_binary_2000_kernel15_stride5_inception_record.txt','w')
         # Each epoch has a training and validation phase
         for phase in ['train_binary', 'val_binary']:
             if phase == 'train_binary':
