@@ -96,9 +96,9 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/home/ubuntu/kaggle_data/binary"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "resnet101_wide"
+model_name = "resnet101_wider"
 
-model_folder_dir = data_dir+'/models_2000_resnet101_kernel_15_stride_5_scratch'
+model_folder_dir = data_dir+'/models_2000_resnet101_kernel_15_stride_5_wider'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -153,7 +153,14 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs, num_classes)
         input_size = input_size_
-
+    elif model_name == "resnet101_wider":
+        """ Resnet101_wide
+        """
+        model_ft = models.resnet101_wide(pretrained=True,large_size_input = True,wider=True)
+        set_parameter_requires_grad(model_ft, feature_extract)
+        num_ftrs = model_ft.fc.in_features
+        model_ft.fc = nn.Linear(num_ftrs, num_classes)
+        input_size = input_size_
     elif model_name == "alexnet":
         """ Alexnet
         """
