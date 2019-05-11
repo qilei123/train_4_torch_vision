@@ -96,9 +96,9 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/home/ubuntu/kaggle_data/binary"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception_v3_wide"
+model_name = "resnet101_wide"
 
-model_folder_dir = data_dir+'/models_2000_inceptionv3_kernel_15_stride_5_scratch'
+model_folder_dir = data_dir+'/models_2000_resnet101_kernel_15_stride_5'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -226,7 +226,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
 if resume>0:
     use_pretrained_ = False
 else:
-    use_pretrained_ = False
+    use_pretrained_ = True
 model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained_)
 
 if resume>0:
@@ -276,7 +276,7 @@ imgs = image_datasets['val_binary'].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_binary_2000_record.txt','w')
+record_file = open('val_binary_2000_resnet101_kernel_15_stride_5_record.txt','w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
@@ -304,7 +304,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_binary_2000_kernel15_stride5_resnet_record.txt','w')
+        record_file = open('Epoch_'+str(epoch)+'_val_binary_2000_resnet101_kernel_15_stride_5_record.txt','w')
         # Each epoch has a training and validation phase
         for phase in ['train_binary', 'val_binary']:
             if phase == 'train_binary':
