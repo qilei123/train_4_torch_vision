@@ -104,10 +104,10 @@ if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
 
 # Number of classes in the dataset
-num_classes = 8
+num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 4
+batch_size = 8
 
 # Number of epochs to train for 
 num_epochs = 50
