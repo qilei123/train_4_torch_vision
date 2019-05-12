@@ -98,7 +98,7 @@ data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception_v3_wider"
 
-model_folder_dir = data_dir+'/models_2000_inceptionv3_kernel_15_stride_5_wider'
+model_folder_dir = data_dir+'/models_3000_inceptionv3_kernel_15_stride_5_wider'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -286,7 +286,7 @@ imgs = image_datasets['val_binary'].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_binary_2000_inception_k15_s5_wider_record.txt','w')
+record_file = open('val_binary_3000_inception_k15_s5_wider_record.txt','w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
@@ -314,7 +314,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_binary_2000_kernel_15_stride5_inception_wider_record.txt','w')
+        record_file = open('Epoch_'+str(epoch)+'_val_binary_3000_kernel_15_stride5_inception_wider_record.txt','w')
         # Each epoch has a training and validation phase
         for phase in ['train_binary', 'val_binary']:
             if phase == 'train_binary':
