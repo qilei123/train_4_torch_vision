@@ -97,7 +97,7 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
 data_dir = "/home/ubuntu/kaggle_data/binary"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception_v3_wider"
+model_name = "inception_v3_wider2"
 
 model_folder_dir = data_dir+'/models_2000_inceptionv3_kernel_15_stride_5_wider2'
 
@@ -223,7 +223,17 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         # Handle the primary net
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
-        input_size = input_size_        
+        input_size = input_size_
+    elif model_name=="inception_v3_wider2":
+        model_ft = models.inception_v3_wide(pretrained=use_pretrained,wider2 = True)
+        set_parameter_requires_grad(model_ft, feature_extract)
+        # Handle the auxilary net
+        num_ftrs = model_ft.AuxLogits.fc.in_features
+        model_ft.AuxLogits.fc = nn.Linear(num_ftrs, num_classes)
+        # Handle the primary net
+        num_ftrs = model_ft.fc.in_features
+        model_ft.fc = nn.Linear(num_ftrs,num_classes)
+        input_size = input_size_          
     else:
         print("Invalid model name, exiting...")
         exit()
