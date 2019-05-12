@@ -51,6 +51,7 @@ import sys
 from FocalLoss import FocalLoss
 #sys.path.insert(0,'/data0/qilei_chen/pytorch_vision_4_DR')
 sys.path.insert(0,'/data0/qilei_chen/vision')
+sys.path.insert(0,'/home/ubuntu/qilei_chen/vision2')
 import torchvision
 from torchvision import datasets, models, transforms
 import matplotlib.pyplot as plt
@@ -94,9 +95,9 @@ print("PyTorch Version: ",torch.__version__)
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
 data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
-
+data_dir = "/home/ubuntu/kaggle_data/binary"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception_v3_wider"
+model_name = "inception_v3_bigger_wider"
 
 model_folder_dir = data_dir+'/models_3000_inceptionv3_kernel_15_stride_5_wider'
 
