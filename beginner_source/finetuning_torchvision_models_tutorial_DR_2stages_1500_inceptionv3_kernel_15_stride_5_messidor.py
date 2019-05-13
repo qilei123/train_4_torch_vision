@@ -96,9 +96,9 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception_v3_wider"
+model_name = "inception_v3_wide"
 
-model_folder_dir = data_dir+'/models_2000_inceptionv3_kernel_15_stride_5_wider'
+model_folder_dir = data_dir+'/models_1500_inceptionv3_kernel_15_stride_5'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -116,11 +116,11 @@ num_epochs = 50
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 2000
+input_size_ = 1500
 
 gpu_index = '0'
 
-resume = 13
+resume = 0
 
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
@@ -212,16 +212,6 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         # Handle the primary net
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
-        input_size = input_size_ 
-    elif model_name=="inception_v3_wider":
-        model_ft = models.inception_v3_wide(pretrained=use_pretrained,wider = True)
-        set_parameter_requires_grad(model_ft, feature_extract)
-        # Handle the auxilary net
-        num_ftrs = model_ft.AuxLogits.fc.in_features
-        model_ft.AuxLogits.fc = nn.Linear(num_ftrs, num_classes)
-        # Handle the primary net
-        num_ftrs = model_ft.fc.in_features
-        model_ft.fc = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_        
     else:
         print("Invalid model name, exiting...")
@@ -286,7 +276,7 @@ imgs = image_datasets['val_binary'].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_binary_2000_inception_k15_s5_wider_record.txt','w')
+record_file = open('val_binary_1500_inception_k15_s5_record.txt','w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
@@ -314,7 +304,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_binary_2000_kernel_15_stride5_inception_wider_record.txt','w')
+        record_file = open('Epoch_'+str(epoch)+'_val_binary_1500_kernel15_stride5_inception_record.txt','w')
         # Each epoch has a training and validation phase
         for phase in ['train_binary', 'val_binary']:
             if phase == 'train_binary':
@@ -403,7 +393,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), model_folder_dir+'/best_retina_2stages_2000.model')
+    torch.save(model.state_dict(), model_folder_dir+'/best_retina_2stages_1500.model')
     return model, val_acc_history
 
 # Gather the parameters to be optimized/updated in this run. If we are
