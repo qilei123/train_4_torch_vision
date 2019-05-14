@@ -94,7 +94,7 @@ print("PyTorch Version: ",torch.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
+data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/croped_dataset_2stages"
 #data_dir = "/home/ubuntu/kaggle_data/binary"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception_v3_bigger_wider"
