@@ -95,7 +95,7 @@ print("PyTorch Version: ",torch.__version__)
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
 data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
-data_dir = "/home/ubuntu/kaggle_data/binary"
+#data_dir = "/home/ubuntu/kaggle_data/binary"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception_v3_wider2"
 
@@ -108,7 +108,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 4
+batch_size = 8
 
 # Number of epochs to train for 
 num_epochs = 50
