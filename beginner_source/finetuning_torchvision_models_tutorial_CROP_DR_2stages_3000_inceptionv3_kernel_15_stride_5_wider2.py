@@ -119,7 +119,7 @@ feature_extract = False
 
 input_size_ = 3000
 
-gpu_index = '0'
+gpu_index = '4'
 
 resume = 0
 
