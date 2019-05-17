@@ -121,7 +121,7 @@ input_size_ = 3000
 
 gpu_index = '0'
 
-resume = 6
+resume = 0
 
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
