@@ -272,7 +272,7 @@ print(model_ft)
 # Data augmentation and normalization for training
 # Just normalization for validation
 data_transforms = {
-    'train_binary': transforms.Compose([
+    'train_4': transforms.Compose([
         #transforms.RandomResizedCrop(input_size),
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
@@ -280,7 +280,7 @@ data_transforms = {
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
-    'val_binary': transforms.Compose([
+    'val_4': transforms.Compose([
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
         transforms.ToTensor(),
@@ -291,21 +291,21 @@ data_transforms = {
 print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train_binary', 'val_binary']}
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train_4', 'val_4']}
 
-imgs = image_datasets['val_binary'].get_imgs()
+imgs = image_datasets['val_4'].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_binary_2000_inception_k15_s5_wider2_record.txt','w')
+record_file = open('val_4_2000_inception_k15_s5_wider2_record.txt','w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
 
-image_datasets['val_binary'].set_imgs(imgs)
+image_datasets['val_4'].set_imgs(imgs)
 
 # Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train_binary', 'val_binary']}
+dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train_4', 'val_4']}
 
 # Detect if we have a GPU available
 device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
@@ -325,17 +325,17 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_binary_2000_kernel_15_stride5_inception_wider2_record.txt','w')
+        record_file = open('Epoch_'+str(epoch)+'_val_4_2000_kernel_15_stride5_inception_wider2_record.txt','w')
         # Each epoch has a training and validation phase
-        for phase in ['train_binary', 'val_binary']:
-            if phase == 'train_binary':
+        for phase in ['train_4', 'val_4']:
+            if phase == 'train_4':
                 model.train()  # Set model to training mode
             else:
                 model.eval()   # Set model to evaluate mode
 
             running_loss = 0.0
             running_corrects = 0
-            if phase =='train_binary':
+            if phase =='train_4':
                 imgs = image_datasets[phase].get_imgs()
                 random.shuffle(imgs)
                 image_datasets[phase].set_imgs(imgs)
@@ -351,12 +351,12 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
                 # forward
                 # track history if only in train
-                with torch.set_grad_enabled(phase == 'train_binary'):
+                with torch.set_grad_enabled(phase == 'train_4'):
                     # Get model outputs and calculate loss
                     # Special case for inception because in training it has an auxiliary output. In train
                     #   mode we calculate the loss by summing the final output and the auxiliary output
                     #   but in testing we only consider the final output.
-                    if is_inception and phase == 'train_binary':
+                    if is_inception and phase == 'train_4':
                         # From https://discuss.pytorch.org/t/how-to-optimize-inception-model-with-auxiliary-classifiers/7958
                         outputs, aux_outputs = model(inputs)
                         loss1 = criterion(outputs, labels)
@@ -370,14 +370,14 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                     _, preds = torch.max(outputs, 1)
 
                     # backward + optimize only if in training phase
-                    if phase == 'train_binary':
+                    if phase == 'train_4':
                         loss.backward()
                         optimizer.step()
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
-                if phase =='val_binary':
+                if phase =='val_4':
                     cpupreds = preds.cpu().data.numpy()
                     record_file.write(str(cpupreds)+'\n')
                 '''
@@ -392,10 +392,10 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
-            if phase == 'val_binary' and epoch_acc > best_acc:
+            if phase == 'val_4' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-            if phase == 'val_binary':
+            if phase == 'val_4':
                 val_acc_history.append(epoch_acc)
         
         model_save_path = model_folder_dir+'/'+model_name+'_epoch_'+str(epoch)+'.pth'
