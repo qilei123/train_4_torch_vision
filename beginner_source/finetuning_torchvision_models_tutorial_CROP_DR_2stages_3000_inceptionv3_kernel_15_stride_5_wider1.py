@@ -213,7 +213,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_ 
     elif model_name=="inception_v3_wider":
-        model_ft = models.inception_v3_wide(pretrained=use_pretrained,wider = True)
+        model_ft = models.inception_v3_wide(pretrained=use_pretrained,wider2 = True)
         set_parameter_requires_grad(model_ft, feature_extract)
         # Handle the auxilary net
         num_ftrs = model_ft.AuxLogits.fc.in_features
@@ -223,7 +223,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_ 
     elif model_name=="inception_v3_bigger_wider":
-        model_ft = models.inception_v3_wide(pretrained=use_pretrained,wider = True)
+        model_ft = models.inception_v3_wide(pretrained=use_pretrained,wider2 = True)
         set_parameter_requires_grad(model_ft, feature_extract)
         # Handle the auxilary net
         num_ftrs = model_ft.AuxLogits.fc.in_features
