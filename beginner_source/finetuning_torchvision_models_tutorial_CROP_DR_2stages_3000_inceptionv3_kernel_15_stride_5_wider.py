@@ -108,7 +108,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 8
+batch_size = 4
 
 # Number of epochs to train for 
 num_epochs = 50
@@ -121,7 +121,7 @@ input_size_ = 3000
 
 gpu_index = '0'
 
-resume = 0
+resume = 6
 
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
@@ -223,7 +223,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_ 
     elif model_name=="inception_v3_bigger_wider":
-        model_ft = models.inception_v3_wide(pretrained=use_pretrained,bigger_wider = True)
+        model_ft = models.inception_v3_wide(pretrained=use_pretrained,wider = True)
         set_parameter_requires_grad(model_ft, feature_extract)
         # Handle the auxilary net
         num_ftrs = model_ft.AuxLogits.fc.in_features
