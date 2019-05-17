@@ -108,7 +108,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 16
+batch_size = 8
 
 # Number of epochs to train for 
 num_epochs = 50
@@ -121,7 +121,7 @@ input_size_ = 3000
 
 gpu_index = '1'
 
-resume = 2
+resume = 8
 
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
