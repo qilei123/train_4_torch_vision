@@ -210,7 +210,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         # Handle the auxilary net
         num_ftrs = model_ft.AuxLogits.fc.in_features
         model_ft.AuxLogits.fc = nn.Linear(num_ftrs, num_classes)
-        # Handle the primary net
+        # Handle the pblockrimary net
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_ 
