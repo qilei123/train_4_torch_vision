@@ -77,7 +77,7 @@ class classifier:
 
 cf = classifier(224,model_name='densenet')
 lesion_category = 'Cotton_Wool_Spot'
-folder_label = '0'
+folder_label = '1'
 model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 cf.ini_model(model_dir)
 #for i in range(100):
