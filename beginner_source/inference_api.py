@@ -56,7 +56,7 @@ class classifier:
         checkpoint = torch.load(model_dir,map_location='cuda:0')
         self.model.load_state_dict(checkpoint['model_state_dict'])
         self.model.cuda()
-        print(model)
+        print(self.model)
         cudnn.benchmark = True
         self.model.eval()
     def predict(self,img_dir):
