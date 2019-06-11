@@ -77,18 +77,21 @@ class classifier:
 
 cf = classifier(224,model_name='densenet')
 lesion_category = 'Cotton_Wool_Spot'
-folder_label = '1'
+folder_label = 1
 model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 cf.ini_model(model_dir)
 #for i in range(100):
-image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+folder_label+'/*.jpg')
+image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
 #print(image_file_dirs)
 count = 0
+wrong_count=0
 for image_file_dir in image_file_dirs:
     label = cf.predict(image_file_dir)
-    print(label)
-    count += label
-print(count)
+    if label!=folder_label:
+        print(label)
+        wrong_count+=1
+    count += 1
+print(float(wrong_count)/float(count))
 '''
 print(cf.predict('/home/cql/Downloads/test5.7/test/16_left.jpeg'))
 print(cf.predict('/home/cql/Downloads/test5.7/test/172_right.jpeg'))
