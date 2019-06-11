@@ -42,7 +42,13 @@ class classifier:
             self.model = models.resnet101_wide()
             num_ftrs = self.model.fc.in_features
             self.model.fc = nn.Linear(num_ftrs,self.class_num)
-
+        elif model_name == "densenet":
+            """ Densenet
+            """
+            self.model = models.densenet121()
+            num_ftrs = self.model.classifier.in_features
+            self.model.classifier = nn.Linear(num_ftrs, self.class_num) 
+            
     def softmax(self,x):
         return np.exp(x) / np.sum(np.exp(x), axis=0)
     def ini_model(self,model_dir):
@@ -68,10 +74,11 @@ class classifier:
             probilities.append(probility)
         return probilities.index(max(probilities))
 
-cf = classifier()
-cf.ini_model('/home/cql/Downloads/binary_models/resnet101_wide_epoch_1.pth')
+cf = classifier(224,model_name='densenet')
+model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/Cotton_Wool_Spot/models_4_Cotton_Wool_Spot/densenet_epoch_16.pth'
+cf.ini_model(model_dir)
 #for i in range(100):
-image_file_dirs = glob.glob('/home/cql/Downloads/binary_models/DR_2stages_balance_samples/0/*')
+image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/Cotton_Wool_Spot/val/0/*.jpg')
 #print(image_file_dirs)
 count = 0
 for image_file_dir in image_file_dirs:
