@@ -91,7 +91,7 @@ for image_file_dir in image_file_dirs:
         print(label)
         wrong_count+=1
     count += 1
-print(float(wrong_count)/float(count))
+print(1-float(wrong_count)/float(count))
 '''
 print(cf.predict('/home/cql/Downloads/test5.7/test/16_left.jpeg'))
 print(cf.predict('/home/cql/Downloads/test5.7/test/172_right.jpeg'))
