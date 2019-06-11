@@ -20,6 +20,7 @@ from torchvision import datasets, models, transforms
 from torch.autograd import Variable
 from PIL import Image
 import glob
+import cv2
 
 class classifier:
     def __init__(self,input_size_=1000,mean_=[0.485, 0.456, 0.406],std_=[0.229, 0.224, 0.225],class_num_=2,model_name = 'resnet101_wide'):
@@ -90,6 +91,7 @@ for image_file_dir in image_file_dirs:
     if label!=folder_label:
         print(label)
         wrong_count+=1
+        cv2.imshow('test',cv2.imread(image_file_dir))
     count += 1
 print(1-float(wrong_count)/float(count))
 '''
