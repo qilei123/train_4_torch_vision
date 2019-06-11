@@ -92,6 +92,7 @@ for image_file_dir in image_file_dirs:
         print(label)
         wrong_count+=1
         cv2.imshow('test',cv2.imread(image_file_dir))
+        cv2.waitKey(0)
     count += 1
 print(1-float(wrong_count)/float(count))
 '''
