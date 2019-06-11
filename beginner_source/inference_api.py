@@ -13,6 +13,7 @@ import sys
 import argparse
 import csv
 sys.path.insert(0,'/media/cql/DATA1/Development/vision2')
+sys.path.insert(0,'/data0/qilei_chen/vision')
 import torchvision
 from torchvision import datasets, models, transforms
 #from networks import *
