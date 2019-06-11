@@ -76,10 +76,12 @@ class classifier:
         return probilities.index(max(probilities))
 
 cf = classifier(224,model_name='densenet')
-model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/Cotton_Wool_Spot/models_4_Cotton_Wool_Spot/densenet_epoch_16.pth'
+lesion_category = 'Cotton_Wool_Spot'
+folder_label = '0'
+model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 cf.ini_model(model_dir)
 #for i in range(100):
-image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/Cotton_Wool_Spot/val/0/*.jpg')
+image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+folder_label+'/*.jpg')
 #print(image_file_dirs)
 count = 0
 for image_file_dir in image_file_dirs:
