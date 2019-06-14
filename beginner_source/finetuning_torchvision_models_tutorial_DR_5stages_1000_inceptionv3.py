@@ -261,7 +261,7 @@ imgs = image_datasets['val'].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_5_2000_record.txt','w')
+record_file = open('val_5_1000_record.txt','w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
@@ -289,7 +289,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_5_2000_record.txt','w')
+        record_file = open('Epoch_'+str(epoch)+'_val_5_1000_record.txt','w')
         # Each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
@@ -378,7 +378,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), model_folder_dir+'/best_retina_5stages_2000.model')
+    torch.save(model.state_dict(), model_folder_dir+'/best_retina_5stages_1000.model')
     return model, val_acc_history
 
 # Gather the parameters to be optimized/updated in this run. If we are
