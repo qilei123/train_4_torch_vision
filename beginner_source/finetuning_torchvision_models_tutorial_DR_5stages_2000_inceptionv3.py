@@ -94,7 +94,7 @@ print("PyTorch Version: ",torch.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/data0/qilei_chen/AI_EYE/kaggle_data/dataset_2stages"
+data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
@@ -105,7 +105,7 @@ if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
 
 # Number of classes in the dataset
-num_classes = 2
+num_classes = 5
 
 # Batch size for training (change depending on how much memory you have)
 batch_size = 2
@@ -236,7 +236,7 @@ print(model_ft)
 # Data augmentation and normalization for training
 # Just normalization for validation
 data_transforms = {
-    'train_binary': transforms.Compose([
+    'train': transforms.Compose([
         #transforms.RandomResizedCrop(input_size),
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
@@ -244,7 +244,7 @@ data_transforms = {
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
-    'val_binary': transforms.Compose([
+    'val': transforms.Compose([
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
         transforms.ToTensor(),
@@ -255,21 +255,21 @@ data_transforms = {
 print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train_binary', 'val_binary']}
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
 
-imgs = image_datasets['val_binary'].get_imgs()
+imgs = image_datasets['val'].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_binary_2000_record.txt','w')
+record_file = open('val_5_2000_record.txt','w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
 
-image_datasets['val_binary'].set_imgs(imgs)
+image_datasets['val'].set_imgs(imgs)
 
 # Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=16) for x in ['train_binary', 'val_binary']}
+dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=16) for x in ['train', 'val']}
 
 # Detect if we have a GPU available
 device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
@@ -289,17 +289,17 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_binary_2000_record.txt','w')
+        record_file = open('Epoch_'+str(epoch)+'_val_5_2000_record.txt','w')
         # Each epoch has a training and validation phase
-        for phase in ['train_binary', 'val_binary']:
-            if phase == 'train_binary':
+        for phase in ['train', 'val']:
+            if phase == 'train':
                 model.train()  # Set model to training mode
             else:
                 model.eval()   # Set model to evaluate mode
 
             running_loss = 0.0
             running_corrects = 0
-            if phase =='train_binary':
+            if phase =='train':
                 imgs = image_datasets[phase].get_imgs()
                 random.shuffle(imgs)
                 image_datasets[phase].set_imgs(imgs)
@@ -315,12 +315,12 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
                 # forward
                 # track history if only in train
-                with torch.set_grad_enabled(phase == 'train_binary'):
+                with torch.set_grad_enabled(phase == 'train'):
                     # Get model outputs and calculate loss
                     # Special case for inception because in training it has an auxiliary output. In train
                     #   mode we calculate the loss by summing the final output and the auxiliary output
                     #   but in testing we only consider the final output.
-                    if is_inception and phase == 'train_binary':
+                    if is_inception and phase == 'train':
                         # From https://discuss.pytorch.org/t/how-to-optimize-inception-model-with-auxiliary-classifiers/7958
                         outputs, aux_outputs = model(inputs)
                         loss1 = criterion(outputs, labels)
@@ -334,14 +334,14 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                     _, preds = torch.max(outputs, 1)
 
                     # backward + optimize only if in training phase
-                    if phase == 'train_binary':
+                    if phase == 'train':
                         loss.backward()
                         optimizer.step()
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
-                if phase =='val_binary':
+                if phase =='val':
                     cpupreds = preds.cpu().data.numpy()
                     record_file.write(str(cpupreds)+'\n')
                 '''
@@ -356,10 +356,10 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
-            if phase == 'val_binary' and epoch_acc > best_acc:
+            if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-            if phase == 'val_binary':
+            if phase == 'val':
                 val_acc_history.append(epoch_acc)
         
         model_save_path = model_folder_dir+'/'+model_name+'_epoch_'+str(epoch)+'.pth'
@@ -378,7 +378,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), model_folder_dir+'/best_retina_2stages_2000.model')
+    torch.save(model.state_dict(), model_folder_dir+'/best_retina_5stages_2000.model')
     return model, val_acc_history
 
 # Gather the parameters to be optimized/updated in this run. If we are
