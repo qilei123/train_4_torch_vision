@@ -99,7 +99,7 @@ data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 
-model_folder_dir = data_dir+'/models_2000'
+model_folder_dir = data_dir+'/models_2000_with_heatmap'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
