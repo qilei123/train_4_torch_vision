@@ -99,7 +99,7 @@ data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 
-model_folder_dir = data_dir+'/models_2000'
+model_folder_dir = data_dir+'/models_1000'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -117,7 +117,7 @@ num_epochs = 20
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 2000
+input_size_ = 1000
 
 gpu_index = '0'
 
