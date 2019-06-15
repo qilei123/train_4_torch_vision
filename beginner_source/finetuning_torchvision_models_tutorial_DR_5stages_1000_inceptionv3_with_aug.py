@@ -119,11 +119,11 @@ feature_extract = False
 
 input_size_ = 1000
 
-gpu_index = '0'
+gpu_index = '2'
 
 resume = 0
 
-image_sets = ['train','val']
+image_sets = ['train_aug','val_aug']
 
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
