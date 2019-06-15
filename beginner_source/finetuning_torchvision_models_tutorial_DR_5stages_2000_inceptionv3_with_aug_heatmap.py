@@ -188,7 +188,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         """ Inception v3 
         Be careful, expects (299,299) sized images and has auxiliary output
         """
-        model_ft = models.inception_v3_wide(pretrained=use_pretrained,with_heatmap = True)
+        model_ft = models.inception_v3_wide(pretrained=use_pretrained,with_heatmap = True,transform_input=False)
         set_parameter_requires_grad(model_ft, feature_extract)
         # Handle the auxilary net
         num_ftrs = model_ft.AuxLogits.fc.in_features
