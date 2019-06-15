@@ -119,7 +119,7 @@ feature_extract = False
 
 input_size_ = 2000
 
-gpu_index = '1'
+gpu_index = '0'
 
 resume = 0
 
@@ -433,7 +433,7 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 criterion = FocalLoss(class_num = num_classes,device_index=int(gpu_index))
 
 # Train and evaluate
-model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
+model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=("inception" in model_name))
 
 '''
 
