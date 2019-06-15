@@ -275,7 +275,7 @@ imgs = image_datasets[image_sets[1]].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_5_1000_record_with_heatmap.txt','w')
+record_file = open(os.path.join(model_folder_dir,'val_5_1000_record_with_heatmap.txt'),'w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
@@ -303,7 +303,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_5_1000_record_with_heatmap.txt','w')
+        record_file = open(os.path.join(model_folder_dir,'Epoch_'+str(epoch)+'_val_5_1000_record_with_heatmap.txt'),'w')
         # Each epoch has a training and validation phase
         for phase in [image_sets[0], image_sets[1]]:
             if phase == image_sets[0]:
