@@ -99,7 +99,7 @@ data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception_with_heatmap"
 
-model_folder_dir = data_dir+'/models_2000_with_heatmap'
+model_folder_dir = data_dir+'/models_1000_with_heatmap'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -117,9 +117,9 @@ num_epochs = 20
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 2000
+input_size_ = 1000
 
-gpu_index = '1'
+gpu_index = '0'
 
 resume = 0
 
@@ -210,7 +210,6 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_
-
     else:
         print("Invalid model name, exiting...")
         exit()
@@ -253,7 +252,7 @@ data_transforms = {
         #transforms.RandomResizedCrop(input_size),
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
-        #transforms.RandomHorizontalFlip(),
+        transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
@@ -268,13 +267,13 @@ data_transforms = {
 print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x],input_size=1000,with_heatmap=True) for x in ['train', 'val']}
 
 imgs = image_datasets['val'].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_5_2000_record_with_heatmap.txt','w')
+record_file = open('val_5_1000_record_with_heatmap.txt','w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
@@ -302,7 +301,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_5_2000_record_with_heatmap.txt','w')
+        record_file = open('Epoch_'+str(epoch)+'_val_5_1000_record_with_heatmap.txt','w')
         # Each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
@@ -391,7 +390,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), model_folder_dir+'/best_retina_5stages_2000.model')
+    torch.save(model.state_dict(), model_folder_dir+'/best_retina_5stages_1000.model')
     return model, val_acc_history
 
 # Gather the parameters to be optimized/updated in this run. If we are

@@ -97,7 +97,7 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception_with_heat_map"
+model_name = "inception_with_heatmap"
 
 model_folder_dir = data_dir+'/models_2000_with_aug_heatmap'
 
@@ -184,7 +184,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         model_ft.classifier = nn.Linear(num_ftrs, num_classes) 
         input_size = 224
 
-    elif model_name == "inception_with_heat_map":
+    elif model_name == "inception_with_heatmap":
         """ Inception v3 
         Be careful, expects (299,299) sized images and has auxiliary output
         """
@@ -261,7 +261,7 @@ imgs = image_datasets['val_aug'].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_5_2000_record.txt','w')
+record_file = open('val_5_2000_record_with_aug_heatmap.txt','w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
@@ -289,7 +289,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_5_2000_record.txt','w')
+        record_file = open('Epoch_'+str(epoch)+'_val_5_2000_record_with_aug_heatmap.txt','w')
         # Each epoch has a training and validation phase
         for phase in ['train_aug', 'val_aug']:
             if phase == 'train_aug':
