@@ -97,9 +97,9 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception_with_heatmap"
+model_name = "inception"
 
-model_folder_dir = data_dir+'/models_1000_with_heatmap'
+model_folder_dir = data_dir+'/models_1000'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -125,15 +125,10 @@ resume = 0
 
 image_sets = ['train','val']
 
-
-
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
         for param in model.parameters():
             param.requires_grad = False
-
-
-
 
 def initialize_model(model_name, num_classes, feature_extract, use_pretrained=True):
     # Initialize these variables which will be set in this if statement. Each of these
@@ -199,19 +194,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_
-    elif model_name == "inception_with_heatmap":
-        """ Inception v3 
-        Be careful, expects (299,299) sized images and has auxiliary output
-        """
-        model_ft = models.inception_v3_wide(pretrained=use_pretrained,with_heatmap = True,transform_input=False)
-        set_parameter_requires_grad(model_ft, feature_extract)
-        # Handle the auxilary net
-        num_ftrs = model_ft.AuxLogits.fc.in_features
-        model_ft.AuxLogits.fc = nn.Linear(num_ftrs, num_classes)
-        # Handle the primary net
-        num_ftrs = model_ft.fc.in_features
-        model_ft.fc = nn.Linear(num_ftrs,num_classes)
-        input_size = input_size_
+
     else:
         print("Invalid model name, exiting...")
         exit()
@@ -269,13 +252,13 @@ data_transforms = {
 print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x],input_size=input_size_,with_heatmap=True) for x in [image_sets[0],image_sets[1]]}
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x],) for x in [image_sets[0], image_sets[1]]}
 
 imgs = image_datasets[image_sets[1]].get_imgs()
 import random
 random.shuffle(imgs)
 
-record_file = open('val_5_1000_record_with_heatmap.txt','w')
+record_file = open(os.path.join(model_folder_dir,'val_5_1000_record.txt'),'w')
 for img in imgs:
     record_file.write(str(img)+'\n')
 record_file.close()
@@ -303,7 +286,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
     for epoch in range(resume,num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
-        record_file = open('Epoch_'+str(epoch)+'_val_5_1000_record_with_heatmap.txt','w')
+        record_file = open(os.path.join(model_folder_dir,'Epoch_'+str(epoch)+'_val_5_1000_record.txt'),'w')
         # Each epoch has a training and validation phase
         for phase in [image_sets[0], image_sets[1]]:
             if phase == image_sets[0]:
@@ -434,7 +417,7 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 criterion = FocalLoss(class_num = num_classes,device_index=int(gpu_index))
 
 # Train and evaluate
-model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=("inception" in model_name))
+model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
 
 '''
 
