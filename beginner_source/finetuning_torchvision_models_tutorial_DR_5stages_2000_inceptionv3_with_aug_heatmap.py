@@ -97,7 +97,7 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception"
+model_name = "inception_with_heat_map"
 
 model_folder_dir = data_dir+'/models_2000_with_aug_heatmap'
 
@@ -184,7 +184,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         model_ft.classifier = nn.Linear(num_ftrs, num_classes) 
         input_size = 224
 
-    elif model_name == "inception":
+    elif model_name == "inception_with_heat_map":
         """ Inception v3 
         Be careful, expects (299,299) sized images and has auxiliary output
         """
