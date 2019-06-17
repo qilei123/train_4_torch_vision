@@ -108,7 +108,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 5
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 4
+batch_size = 8
 
 # Number of epochs to train for 
 num_epochs = 20
@@ -121,7 +121,7 @@ input_size_ = 1000
 
 gpu_index = '0'
 
-resume = 1
+resume = 0
 
 image_sets = ['train','val']
 
