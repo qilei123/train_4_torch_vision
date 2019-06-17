@@ -31,10 +31,16 @@ class classifier:
                 transforms.Resize(self.input_size),
                 transforms.CenterCrop(self.input_size),
                 transforms.ToTensor(),
-                transforms.Normalize(self.mean, self.std)
+                #transforms.Normalize(self.mean, self.std)
             ])
         self.class_num = class_num_
-        if model_name=='inception_v3_wide':
+        if model_name=='inception_v3':
+            self.model = models.inception_v3()
+            num_ftrs = self.model.AuxLogits.fc.in_features
+            self.model.AuxLogits.fc = nn.Linear(num_ftrs, self.class_num)
+            num_ftrs = self.model.fc.in_features
+            self.model.fc = nn.Linear(num_ftrs,self.class_num)
+        elif model_name=='inception_v3_wide':
             self.model = models.inception_v3_wide()
             num_ftrs = self.model.AuxLogits.fc.in_features
             self.model.AuxLogits.fc = nn.Linear(num_ftrs, self.class_num)
@@ -76,13 +82,15 @@ class classifier:
             probilities.append(probility)
         return probilities.index(max(probilities))
 
-cf = classifier(224,model_name='densenet')
-lesion_category = 'Cotton_Wool_Spot'
+cf = classifier(1000,model_name='inception_v3')
+#lesion_category = 'Cotton_Wool_Spot'
 folder_label = 1
-model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
+#model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
+model_dir = '/data0/qilei_chen/Development/Datasets/KAGGLE_DR/models_1000/inception_epoch_13.pth'
 cf.ini_model(model_dir)
 #for i in range(100):
-image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
+#image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
+image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/KAGGLE_DR/val/'+str(folder_label))
 #print(image_file_dirs)
 count = 0
 wrong_count=0
