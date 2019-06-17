@@ -97,9 +97,9 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception_with_heatmap"
+model_name = "inception_with_heatmap_v2"
 
-model_folder_dir = data_dir+'/models_1000_with_heatmap'
+model_folder_dir = data_dir+'/models_1000_with_heatmap_v2'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -121,7 +121,7 @@ input_size_ = 1000
 
 gpu_index = '3'
 
-resume = 1
+resume = 0
 
 image_sets = ['train','val']
 
@@ -199,11 +199,11 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_
-    elif model_name == "inception_with_heatmap":
+    elif model_name == "inception_with_heatmap_v2":
         """ Inception v3 
         Be careful, expects (299,299) sized images and has auxiliary output
         """
-        model_ft = models.inception_v3_wide(pretrained=use_pretrained,with_heatmap = True,transform_input=False)
+        model_ft = models.inception_v3_wide(pretrained=use_pretrained,with_heatmap_v2 = True,transform_input=False)
         set_parameter_requires_grad(model_ft, feature_extract)
         # Handle the auxilary net
         num_ftrs = model_ft.AuxLogits.fc.in_features
@@ -229,7 +229,7 @@ else:
 model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained_)
 
 if resume>0:
-    checkpoint = torch.load(model_folder_dir+'/'+model_name+'_epoch_'+str(resume-1)+'.pth')
+    checkpoint = torch.load(model_folder_dir+'/inception_epoch_'+str(resume-1)+'.pth')
     model_ft.load_state_dict(checkpoint['model_state_dict'])
 
 
