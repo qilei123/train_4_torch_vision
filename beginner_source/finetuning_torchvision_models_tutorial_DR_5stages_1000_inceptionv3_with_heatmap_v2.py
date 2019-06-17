@@ -219,14 +219,14 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
     return model_ft, input_size
 
 # Initialize the model for this run
-model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained=True)
+#model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained=True)
 
 # Initialize the model for this run
 if resume>0:
     use_pretrained_ = False
 else:
     use_pretrained_ = True
-model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained_)
+model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, True)
 
 if resume>0:
     checkpoint = torch.load(model_folder_dir+'/inception_epoch_'+str(resume-1)+'.pth')
@@ -269,7 +269,7 @@ data_transforms = {
 print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x],input_size=input_size_,with_heatmap=True) for x in [image_sets[0],image_sets[1]]}
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x],input_size=input_size_,with_heatmap_v2=True) for x in [image_sets[0],image_sets[1]]}
 
 imgs = image_datasets[image_sets[1]].get_imgs()
 import random
