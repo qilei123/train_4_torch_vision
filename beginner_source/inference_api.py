@@ -84,7 +84,7 @@ class classifier:
 
 cf = classifier(1000,model_name='inception_v3',class_num_=5)
 #lesion_category = 'Cotton_Wool_Spot'
-folder_label = 2
+folder_label = 3
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 model_dir = '/data0/qilei_chen/Development/Datasets/KAGGLE_DR/models_1000/inception_epoch_13.pth'
 cf.ini_model(model_dir)
