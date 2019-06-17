@@ -90,7 +90,7 @@ model_dir = '/data0/qilei_chen/Development/Datasets/KAGGLE_DR/models_1000/incept
 cf.ini_model(model_dir)
 #for i in range(100):
 #image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
-image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/KAGGLE_DR/val/'+str(folder_label))
+image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/KAGGLE_DR/val/'+str(folder_label)+'/*.jpeg')
 #print(image_file_dirs)
 count = 0
 wrong_count=0
