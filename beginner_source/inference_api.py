@@ -82,7 +82,7 @@ class classifier:
             probilities.append(probility)
         return probilities.index(max(probilities))
 
-cf = classifier(1000,model_name='inception_v3')
+cf = classifier(1000,model_name='inception_v3',class_num_=5)
 #lesion_category = 'Cotton_Wool_Spot'
 folder_label = 1
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
