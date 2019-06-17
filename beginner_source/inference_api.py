@@ -98,9 +98,10 @@ count = [0,0,0,0,0]
 print('groundtruth:'+str(folder_label))
 for image_file_dir in image_file_dirs:
     label = cf.predict(image_file_dir)
-    '''
+    
     if label!=folder_label:
         print(label)
+    '''
         wrong_count+=1
         #cv2.imshow('test',cv2.imread(image_file_dir))
         #cv2.waitKey(0)
