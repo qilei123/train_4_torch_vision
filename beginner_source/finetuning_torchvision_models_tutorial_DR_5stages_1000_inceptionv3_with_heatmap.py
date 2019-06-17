@@ -226,7 +226,7 @@ if resume>0:
     use_pretrained_ = False
 else:
     use_pretrained_ = True
-model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained_)
+model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, True)
 
 if resume>0:
     checkpoint = torch.load(model_folder_dir+'/'+model_name+'_epoch_'+str(resume-1)+'.pth')
