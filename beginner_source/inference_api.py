@@ -92,17 +92,22 @@ cf.ini_model(model_dir)
 #image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
 image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/KAGGLE_DR/val/'+str(folder_label)+'/*.jpeg')
 #print(image_file_dirs)
-count = 0
+#count = 0
 wrong_count=0
+count = [0,0,0,0,0]
+print('groundtruth:'+str(folder_label))
 for image_file_dir in image_file_dirs:
     label = cf.predict(image_file_dir)
+    '''
     if label!=folder_label:
         print(label)
         wrong_count+=1
         #cv2.imshow('test',cv2.imread(image_file_dir))
         #cv2.waitKey(0)
     count += 1
-print(1-float(wrong_count)/float(count))
+    '''
+    count[int(label)]+=1
+print(count)
 '''
 print(cf.predict('/home/cql/Downloads/test5.7/test/16_left.jpeg'))
 print(cf.predict('/home/cql/Downloads/test5.7/test/172_right.jpeg'))
