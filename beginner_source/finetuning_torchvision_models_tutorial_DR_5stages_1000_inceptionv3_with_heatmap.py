@@ -125,7 +125,7 @@ resume = 0
 
 image_sets = ['train','val']
 
-num_workers = 36
+num_workers = 24
 
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
