@@ -61,7 +61,8 @@ class classifier:
         return np.exp(x) / np.sum(np.exp(x), axis=0)
     def ini_model(self,model_dir):
         checkpoint = torch.load(model_dir,map_location='cuda:0')
-        self.model.load_state_dict(checkpoint['model_state_dict'])
+        #self.model.load_state_dict(checkpoint['model_state_dict'])
+        self.model.load_state_dict(checkpoint)
         self.model.cuda()
         print(self.model)
         cudnn.benchmark = True
@@ -86,7 +87,7 @@ cf = classifier(1000,model_name='inception_v3',class_num_=5)
 #lesion_category = 'Cotton_Wool_Spot'
 folder_label = 4
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
-model_dir = '/data0/qilei_chen/Development/Datasets/KAGGLE_DR/models_1000/inception_epoch_13.pth'
+model_dir = '/data0/qilei_chen/Development/Datasets/KAGGLE_DR/models_1000/best_retina_5stages_1000.model'
 cf.ini_model(model_dir)
 #for i in range(100):
 #image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
