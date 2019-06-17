@@ -125,7 +125,7 @@ resume = 0
 
 image_sets = ['train','val']
 
-
+num_workers = 36
 
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
@@ -283,7 +283,7 @@ record_file.close()
 image_datasets[image_sets[1]].set_imgs(imgs)
 
 # Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=24) for x in [image_sets[0], image_sets[1]]}
+dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=num_workers) for x in [image_sets[0], image_sets[1]]}
 
 # Detect if we have a GPU available
 device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
@@ -318,7 +318,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 random.shuffle(imgs)
                 image_datasets[phase].set_imgs(imgs)
                 
-                dataloaders[phase] = torch.utils.data.DataLoader(image_datasets[phase], batch_size=batch_size, shuffle=False, num_workers=8)
+                dataloaders[phase] = torch.utils.data.DataLoader(image_datasets[phase], batch_size=batch_size, shuffle=False, num_workers=num_workers)
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
                 inputs = inputs.to(device)
