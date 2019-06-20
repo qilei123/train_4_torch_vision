@@ -99,7 +99,7 @@ data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inceptionv4"
 
-model_folder_dir = data_dir+'/inceptionv4_models_1000'
+model_folder_dir = data_dir+'/inceptionv4_models_1000_TEST'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -119,7 +119,7 @@ feature_extract = False
 
 input_size_ = 1000
 
-gpu_index = '3'
+gpu_index = '2'
 
 resume = 0
 
