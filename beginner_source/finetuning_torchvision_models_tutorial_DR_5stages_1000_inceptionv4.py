@@ -211,8 +211,8 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         '''
-        #num_ftrs = model_ft.classif.in_features
-        #model_ft.classif = nn.Linear(num_ftrs,num_classes)
+        num_ftrs = model_ft.classif.in_features
+        model_ft.classif = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_
     else:
         print("Invalid model name, exiting...")
