@@ -201,7 +201,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         """ Inception v3 
         Be careful, expects (299,299) sized images and has auxiliary output
         """
-        model_ft = models.inceptionv4(num_classes = 5,pretrained=use_pretrained)
+        model_ft = models.inceptionv4(num_classes = 5,pretrained=False)
         set_parameter_requires_grad(model_ft, feature_extract)
         '''
         # Handle the auxilary net
@@ -211,8 +211,8 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
         '''
-        num_ftrs = model_ft.classif.in_features
-        model_ft.classif = nn.Linear(num_ftrs,num_classes)
+        #num_ftrs = model_ft.classif.in_features
+        #model_ft.classif = nn.Linear(num_ftrs,num_classes)
         input_size = input_size_
     else:
         print("Invalid model name, exiting...")
