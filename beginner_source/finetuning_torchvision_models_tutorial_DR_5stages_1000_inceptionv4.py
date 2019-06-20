@@ -345,6 +345,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         loss = loss1 + 0.4*loss2
                     else:
                         outputs = model(inputs)
+                        print(outputs.size())
+                        print(labels.size())
                         loss = criterion(outputs, labels)
 
                     _, preds = torch.max(outputs, 1)
