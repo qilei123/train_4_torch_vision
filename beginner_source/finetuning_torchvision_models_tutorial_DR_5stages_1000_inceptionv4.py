@@ -108,7 +108,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 5
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 16
+batch_size = 64
 
 # Number of epochs to train for 
 num_epochs = 20
@@ -285,7 +285,7 @@ record_file.close()
 image_datasets[image_sets[1]].set_imgs(imgs)
 
 # Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=16) for x in [image_sets[0], image_sets[1]]}
+dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=32) for x in [image_sets[0], image_sets[1]]}
 
 # Detect if we have a GPU available
 device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
@@ -320,7 +320,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 random.shuffle(imgs)
                 image_datasets[phase].set_imgs(imgs)
                 
-                dataloaders[phase] = torch.utils.data.DataLoader(image_datasets[phase], batch_size=batch_size, shuffle=False, num_workers=8)
+                dataloaders[phase] = torch.utils.data.DataLoader(image_datasets[phase], batch_size=batch_size, shuffle=False, num_workers=32)
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
                 inputs = inputs.to(device)
