@@ -201,7 +201,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         """ Inception v3 
         Be careful, expects (299,299) sized images and has auxiliary output
         """
-        model_ft = models.inceptionv4(num_classes = 5,pretrained=use_pretrained)
+        model_ft = models.inceptionv4(num_classes = 5,pretrained=use_pretrained,aux_logits = False)
         set_parameter_requires_grad(model_ft, feature_extract)
         '''
         # Handle the auxilary net
@@ -436,7 +436,7 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 criterion = FocalLoss(class_num = num_classes,device_index=int(gpu_index))
 
 # Train and evaluate
-model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=True)
+model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=False)
 
 '''
 
