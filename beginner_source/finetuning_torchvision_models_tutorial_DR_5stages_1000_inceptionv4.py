@@ -255,14 +255,14 @@ data_transforms = {
     image_sets[0]: transforms.Compose([
         #transforms.RandomResizedCrop(input_size),
         transforms.Resize(input_size),
-        #transforms.CenterCrop(input_size),
+        transforms.CenterCrop(input_size),
         #transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
     ]),
     image_sets[1]: transforms.Compose([
         transforms.Resize(input_size),
-        #transforms.CenterCrop(input_size),
+        transforms.CenterCrop(input_size),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
     ]),
