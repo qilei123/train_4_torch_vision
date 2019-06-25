@@ -99,7 +99,7 @@ data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 
-model_folder_dir = data_dir+'/models_1000'
+model_folder_dir = '/data0/qilei_chen/Development/Datasets/KAGGLE_DR/inceptionv3_models_1000'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -238,17 +238,17 @@ print(model_ft)
 data_transforms = {
     image_sets[0]: transforms.Compose([
         #transforms.RandomResizedCrop(input_size),
-        transforms.Resize(input_size),
-        transforms.CenterCrop(input_size),
+        transforms.Resize2(input_size),
+        #transforms.CenterCrop(input_size),
         #transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
-        #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
     ]),
     image_sets[1]: transforms.Compose([
-        transforms.Resize(input_size),
-        transforms.CenterCrop(input_size),
+        transforms.Resize2(input_size),
+        #transforms.CenterCrop(input_size),
         transforms.ToTensor(),
-        #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
     ]),
 }
 
