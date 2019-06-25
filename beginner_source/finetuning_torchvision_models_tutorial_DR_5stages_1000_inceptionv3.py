@@ -121,7 +121,7 @@ input_size_ = 1000
 
 gpu_index = '0'
 
-resume = 0
+resume = 4
 
 image_sets = ['train_aug','val']
 
