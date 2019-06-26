@@ -108,7 +108,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 5
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 4
+batch_size = 1
 
 # Number of epochs to train for 
 num_epochs = 20
@@ -129,9 +129,6 @@ def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
         for param in model.parameters():
             param.requires_grad = False
-
-
-
 
 def initialize_model(model_name, num_classes, feature_extract, use_pretrained=True):
     # Initialize these variables which will be set in this if statement. Each of these
@@ -325,7 +322,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         outputs, aux_outputs = model(inputs)
                         loss1 = criterion(outputs, labels)
                         loss2 = criterion(aux_outputs, labels)
-                        
+                        print(loss1)
+                        print(loss2)
                         loss = loss1 + 0.4*loss2
                     else:
                         outputs = model(inputs)
