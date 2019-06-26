@@ -203,10 +203,11 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         """
         model_ft = models.inceptionv4(num_classes = 5,pretrained=use_pretrained,aux_logits = False)
         set_parameter_requires_grad(model_ft, feature_extract)
-        '''
+        
         # Handle the auxilary net
         num_ftrs = model_ft.AuxLogits.fc.in_features
         model_ft.AuxLogits.fc = nn.Linear(num_ftrs, num_classes)
+        '''
         # Handle the primary net
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
