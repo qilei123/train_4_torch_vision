@@ -99,7 +99,7 @@ data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 
-model_folder_dir = '/data0/qilei_chen/Development/Datasets/KAGGLE_DR/inceptionv3_models_1000_with_deephead'
+model_folder_dir = '/data0/qilei_chen/Development/Datasets/KAGGLE_DR/inceptionv3_models_1200'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -108,7 +108,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 5
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 2
+batch_size = 4
 
 # Number of epochs to train for 
 num_epochs = 20
@@ -117,11 +117,11 @@ num_epochs = 20
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 1000
+input_size_ = 1200
 
 gpu_index = '0'
 
-resume = 0
+resume = 4
 
 image_sets = ['train_aug','val']
 
@@ -129,6 +129,9 @@ def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
         for param in model.parameters():
             param.requires_grad = False
+
+
+
 
 def initialize_model(model_name, num_classes, feature_extract, use_pretrained=True):
     # Initialize these variables which will be set in this if statement. Each of these
@@ -185,7 +188,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         """ Inception v3 
         Be careful, expects (299,299) sized images and has auxiliary output
         """
-        model_ft = models.inception_v3(pretrained=use_pretrained,with_deephead_v1=True)
+        model_ft = models.inception_v3(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
         # Handle the auxilary net
         num_ftrs = model_ft.AuxLogits.fc.in_features
@@ -322,8 +325,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         outputs, aux_outputs = model(inputs)
                         loss1 = criterion(outputs, labels)
                         loss2 = criterion(aux_outputs, labels)
-                        print(loss1)
-                        print(loss2)
+                        
                         loss = loss1 + 0.4*loss2
                     else:
                         outputs = model(inputs)
