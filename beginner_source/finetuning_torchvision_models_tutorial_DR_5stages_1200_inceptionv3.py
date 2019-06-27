@@ -359,6 +359,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             if phase == image_sets[1] and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
+                torch.save(model.state_dict(), model_folder_dir+'/best.model')
             if phase == image_sets[1]:
                 val_acc_history.append(epoch_acc)
         
