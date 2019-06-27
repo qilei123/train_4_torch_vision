@@ -108,7 +108,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 5
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 12
+batch_size = 4
 
 # Number of epochs to train for 
 num_epochs = 20
@@ -123,7 +123,7 @@ gpu_index = '1'
 
 resume = 0
 
-image_sets = ['train','val']
+image_sets = ['train_aug','val']
 num_workers = 24
 
 
@@ -252,15 +252,15 @@ print(model_ft)
 data_transforms = {
     image_sets[0]: transforms.Compose([
         #transforms.RandomResizedCrop(input_size),
-        transforms.Resize(input_size),
-        transforms.CenterCrop(input_size),
+        transforms.Resize2(input_size),
+        #transforms.CenterCrop(input_size),
         #transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
     image_sets[1]: transforms.Compose([
-        transforms.Resize(input_size),
-        transforms.CenterCrop(input_size),
+        transforms.Resize2(input_size),
+        #transforms.CenterCrop(input_size),
         transforms.ToTensor(),
         #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
