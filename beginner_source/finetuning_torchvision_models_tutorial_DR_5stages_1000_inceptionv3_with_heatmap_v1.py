@@ -269,7 +269,7 @@ data_transforms = {
 print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x],input_size=input_size_,with_heatmap_v2=True) for x in [image_sets[0],image_sets[1]]}
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x],input_size=input_size_,with_heatmap=True) for x in [image_sets[0],image_sets[1]]}
 
 imgs = image_datasets[image_sets[1]].get_imgs()
 import random
