@@ -94,7 +94,7 @@ print("PyTorch Version: ",torch.__version__)
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
+data_dir = "/data1/qilei_chen/kaggle_db"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
