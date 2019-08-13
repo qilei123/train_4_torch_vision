@@ -378,7 +378,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), model_folder_dir+'/best_retina_5stages_1000.model')
+    torch.save(model.state_dict(), model_folder_dir+'/best_retina_referrable_1000.model')
     return model, val_acc_history
 
 # Gather the parameters to be optimized/updated in this run. If we are
