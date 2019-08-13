@@ -220,7 +220,7 @@ if resume>0:
 
 
 # Print the model we just instantiated
-print(model_ft) 
+#print(model_ft) 
 
 
 ######################################################################
