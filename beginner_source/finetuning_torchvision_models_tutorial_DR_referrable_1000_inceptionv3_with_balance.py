@@ -99,7 +99,7 @@ data_dir = "/data0/qilei_chen/Development/Datasets/KAGGLE_DR"
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 
-model_folder_dir = data_dir+'/inceptionv3_referrable_1000_no_balance'
+model_folder_dir = data_dir+'/inceptionv3_referrable_1000'
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -123,7 +123,7 @@ gpu_index = '0'
 
 resume = 0
 
-image_sets = ['train_','val']
+image_sets = ['train_aug','val']
 
 def set_parameter_requires_grad(model, feature_extracting):
     if feature_extracting:
