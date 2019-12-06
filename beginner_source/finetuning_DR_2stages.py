@@ -17,7 +17,7 @@ import numpy as np
 import sys
 from FocalLoss import FocalLoss
 #sys.path.insert(0,'/data0/qilei_chen/pytorch_vision_4_DR')
-sys.path.insert(0,'/data0/qilei_chen/vision')
+sys.path.insert(0,'/data0/qilei_chen/Development/vision2')
 import torchvision
 from torchvision import datasets, models, transforms
 import matplotlib.pyplot as plt
@@ -510,7 +510,7 @@ data_transforms = {
 print("Initializing Datasets and Dataloaders...")
 
 # Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
+image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x],DR_REFERRABLE=True) for x in ['train', 'val']}
 # Create training and validation dataloaders
 dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train', 'val']}
 
