@@ -66,6 +66,7 @@ data_dir = "/data1/qilei_chen/DATA/ROP_DATASET/ROP_201707_C3R_Integrated/Integra
 model_name = "inception"
 model_name = "squeezenet"
 model_name = "resnet"
+model_name = "alexnet"
 
 model_folder_dir = data_dir+'/ROP_binary_'+model_name
 
