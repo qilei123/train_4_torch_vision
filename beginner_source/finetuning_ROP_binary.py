@@ -65,6 +65,7 @@ data_dir = "/data1/qilei_chen/DATA/ROP_DATASET/ROP_201707_C3R_Integrated/Integra
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "inception"
 model_name = "squeezenet"
+model_name = "resnet"
 
 model_folder_dir = data_dir+'/ROP_binary_'+model_name
 
@@ -75,7 +76,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 8
+batch_size = 16
 
 # Number of epochs to train for 
 num_epochs = 15
