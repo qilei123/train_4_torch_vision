@@ -63,12 +63,12 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/data1/qilei_chen/DATA/ROP_DATASET/ROP_201707_C3R_Integrated/Integrated"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "inception"
 model_name = "squeezenet"
 model_name = "resnet"
 model_name = "alexnet"
 model_name = "vgg"
 model_name = "densenet"
+model_name = "inception"
 
 model_folder_dir = data_dir+'/ROP_binary_'+model_name
 
@@ -88,7 +88,7 @@ num_epochs = 15
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 1000
+input_size_ = 224
 
 gpu_index = '0'
 
