@@ -68,6 +68,7 @@ model_name = "squeezenet"
 model_name = "resnet"
 model_name = "alexnet"
 model_name = "vgg"
+model_name = "densenet"
 
 model_folder_dir = data_dir+'/ROP_binary_'+model_name
 
