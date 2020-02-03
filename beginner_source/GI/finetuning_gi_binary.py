@@ -17,8 +17,8 @@ import numpy as np
 import sys
 #sys.path.insert(0,"../")
 from FocalLoss import FocalLoss
-#sys.path.insert(0,'/data0/qilei_chen/pytorch_vision_4_DR')
-sys.path.insert(0,'/data0/qilei_chen/Development/vision2')
+sys.path.insert(0,'/data0/qilei_chen/pytorch_vision_4_DR')
+#sys.path.insert(0,'/data0/qilei_chen/Development/vision2')
 import torchvision
 from torchvision import datasets, models, transforms
 import matplotlib.pyplot as plt
