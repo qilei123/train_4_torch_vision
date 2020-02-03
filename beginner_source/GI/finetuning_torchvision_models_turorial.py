@@ -53,7 +53,7 @@ import time
 import os
 import copy
 print("PyTorch Version: ",torch.__version__)
-print("Torchvision Version: ",torchvision.__version__)
+#print("Torchvision Version: ",torchvision.__version__)
 
 
 ######################################################################
