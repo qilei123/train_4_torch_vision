@@ -68,7 +68,7 @@ model_name = "squeezenet"
 model_name = "resnet"
 model_name = "alexnet"
 model_name = "vgg"
-#model_name = "densenet"
+model_name = "densenet"
 #model_name = "inception"
 
 model_folder_dir = data_dir+'/finetune_binary_'+model_name
