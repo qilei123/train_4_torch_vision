@@ -65,13 +65,13 @@ data_dir = "/data2/DB_GI/0"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "squeezenet"
-#model_name = "resnet"
+model_name = "resnet"
 #model_name = "alexnet"
 #model_name = "vgg"
 #model_name = "densenet"
 #model_name = "inception"
 
-model_folder_dir = data_dir+'/squeezenet_binary'+model_name
+model_folder_dir = data_dir+'/finetune_binary_'+model_name
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
