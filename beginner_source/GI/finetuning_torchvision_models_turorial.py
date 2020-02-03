@@ -1,12 +1,42 @@
-# -*- coding: utf-8 -*-
 """
 Finetuning Torchvision Models
 =============================
-
 **Author:** `Nathan Inkawhich <https://github.com/inkawhich>`__
-
 """
 
+
+######################################################################
+# In this tutorial we will take a deeper look at how to finetune and
+# feature extract the `torchvision
+# models <https://pytorch.org/docs/stable/torchvision/models.html>`__, all
+# of which have been pretrained on the 1000-class Imagenet dataset. This
+# tutorial will give an indepth look at how to work with several modern
+# CNN architectures, and will build an intuition for finetuning any
+# PyTorch model. Since each model architecture is different, there is no
+# boilerplate finetuning code that will work in all scenarios. Rather, the
+# researcher must look at the existing architecture and make custom
+# adjustments for each model.
+# 
+# In this document we will perform two types of transfer learning:
+# finetuning and feature extraction. In **finetuning**, we start with a
+# pretrained model and update *all* of the model’s parameters for our new
+# task, in essence retraining the whole model. In **feature extraction**,
+# we start with a pretrained model and only update the final layer weights
+# from which we derive predictions. It is called feature extraction
+# because we use the pretrained CNN as a fixed feature-extractor, and only
+# change the output layer. For more technical information about transfer
+# learning see `here <https://cs231n.github.io/transfer-learning/>`__ and
+# `here <https://ruder.io/transfer-learning/>`__.
+# 
+# In general both transfer learning methods follow the same few steps:
+# 
+# -  Initialize the pretrained model
+# -  Reshape the final layer(s) to have the same number of outputs as the
+#    number of classes in the new dataset
+# -  Define for the optimization algorithm which parameters we want to
+#    update during training
+# -  Run the training step
+# 
 
 from __future__ import print_function 
 from __future__ import division
@@ -14,12 +44,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
-import sys
-#sys.path.insert(0,"../")
-from FocalLoss import FocalLoss
-#sys.path.insert(0,'/data0/qilei_chen/pytorch_vision_4_DR')
 sys.path.insert(0,'/data0/qilei_chen/Development/vision2')
-#sys.path.insert(0,"/data1/qilei_chen/DEVELOPMENTS/vision")
 import torchvision
 from torchvision import datasets, models, transforms
 import matplotlib.pyplot as plt
@@ -27,7 +52,7 @@ import time
 import os
 import copy
 print("PyTorch Version: ",torch.__version__)
-#print("Torchvision Version: ",torchvision.__version__)
+print("Torchvision Version: ",torchvision.__version__)
 
 
 ######################################################################
@@ -65,23 +90,13 @@ print("PyTorch Version: ",torch.__version__)
 data_dir = "/data2/DB_GI/0"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "squeezenet"
-model_name = "resnet"
-model_name = "alexnet"
-model_name = "vgg"
-model_name = "densenet"
 model_name = "inception"
-
-model_folder_dir = data_dir+'/finetune_binary_'+model_name
-
-if not os.path.exists(model_folder_dir):
-    os.makedirs(model_folder_dir)
 
 # Number of classes in the dataset
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 32
+batch_size = 8
 
 # Number of epochs to train for 
 num_epochs = 15
@@ -90,9 +105,6 @@ num_epochs = 15
 #   when True we only update the reshaped layer params
 feature_extract = False
 
-input_size_ = 299
-
-gpu_index = '0'
 
 ######################################################################
 # Helper Functions
@@ -162,7 +174,6 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                         outputs, aux_outputs = model(inputs)
                         loss1 = criterion(outputs, labels)
                         loss2 = criterion(aux_outputs, labels)
-                        
                         loss = loss1 + 0.4*loss2
                     else:
                         outputs = model(inputs)
@@ -190,14 +201,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 best_model_wts = copy.deepcopy(model.state_dict())
             if phase == 'val':
                 val_acc_history.append(epoch_acc)
-        
-        model_save_path = model_folder_dir+'/'+model_name+'_epoch_'+str(epoch)+'.pth'
-        torch.save({
-            'epoch': epoch,
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'loss': loss,
-            }, model_save_path)  
+
         print()
 
     time_elapsed = time.time() - since
@@ -206,7 +210,6 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), model_folder_dir+'/best.model')
     return model, val_acc_history
 
 
@@ -470,7 +473,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         # Handle the primary net
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs,num_classes)
-        input_size = input_size_
+        input_size = 299
 
     else:
         print("Invalid model name, exiting...")
@@ -499,10 +502,8 @@ print(model_ft)
 # Just normalization for validation
 data_transforms = {
     'train': transforms.Compose([
-        #transforms.RandomResizedCrop(input_size),
-        transforms.Resize(input_size),
-        transforms.CenterCrop(input_size),
-        #transforms.RandomHorizontalFlip(),
+        transforms.RandomResizedCrop(input_size),
+        transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
@@ -522,8 +523,8 @@ image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transf
 dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train', 'val']}
 
 # Detect if we have a GPU available
-device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
-#device = torch.device('cpu')
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
 ######################################################################
 # Create the Optimizer
@@ -583,20 +584,18 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 # 
 
 # Setup the loss fxn
-#criterion = nn.CrossEntropyLoss()
-criterion = FocalLoss(class_num = num_classes,device_index=int(gpu_index))
+criterion = nn.CrossEntropyLoss()
 
 # Train and evaluate
 model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
 
-'''
 
 ######################################################################
 # Comparison with Model Trained from Scratch
 # ------------------------------------------
 # 
 # Just for fun, lets see how the model learns if we do not use transfer
-# learning. The performance of finetuning vs. feature extracting depends
+# learning. The performance of finetuning vs. feature extracting depends
 # largely on the dataset but in general both transfer learning methods
 # produce favorable results in terms of training time and overall accuracy
 # versus a model trained from scratch.
@@ -608,7 +607,7 @@ scratch_model = scratch_model.to(device)
 scratch_optimizer = optim.SGD(scratch_model.parameters(), lr=0.001, momentum=0.9)
 scratch_criterion = nn.CrossEntropyLoss()
 _,scratch_hist = train_model(scratch_model, dataloaders_dict, scratch_criterion, scratch_optimizer, num_epochs=num_epochs, is_inception=(model_name=="inception"))
-'''
+
 # Plot the training curves of validation accuracy vs. number 
 #  of training epochs for the transfer learning method and
 #  the model trained from scratch
@@ -616,13 +615,13 @@ ohist = []
 shist = []
 
 ohist = [h.cpu().numpy() for h in hist]
-#shist = [h.cpu().numpy() for h in scratch_hist]
+shist = [h.cpu().numpy() for h in scratch_hist]
 
 plt.title("Validation Accuracy vs. Number of Training Epochs")
 plt.xlabel("Training Epochs")
 plt.ylabel("Validation Accuracy")
 plt.plot(range(1,num_epochs+1),ohist,label="Pretrained")
-#plt.plot(range(1,num_epochs+1),shist,label="Scratch")
+plt.plot(range(1,num_epochs+1),shist,label="Scratch")
 plt.ylim((0,1.))
 plt.xticks(np.arange(1, num_epochs+1, 1.0))
 plt.legend()
@@ -641,9 +640,8 @@ plt.show()
 # -  Run this code with a harder dataset and see some more benefits of
 #    transfer learning
 # -  Using the methods described here, use transfer learning to update a
-#    different model, perhaps in a new domain (i.e. NLP, audio, etc.)
+#    different model, perhaps in a new domain (i.e. NLP, audio, etc.)
 # -  Once you are happy with a model, you can export it as an ONNX model,
 #    or trace it using the hybrid frontend for more speed and optimization
 #    opportunities.
 # 
-
