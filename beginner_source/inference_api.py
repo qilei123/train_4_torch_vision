@@ -40,7 +40,7 @@ class classifier:
             self.model = models.alexnet()
             #set_parameter_requires_grad(model_ft, feature_extract)
             num_ftrs = self.model.classifier[6].in_features
-            self.model_ft.classifier[6] = nn.Linear(num_ftrs,self.num_classes)
+            self.model_ft.classifier[6] = nn.Linear(num_ftrs,self.class_num)
             input_size = 224
 
         elif model_name == "vgg":
@@ -49,7 +49,7 @@ class classifier:
             self.model = models.vgg11_bn()
             #set_parameter_requires_grad(model_ft, feature_extract)
             num_ftrs = self.model.classifier[6].in_features
-            self.model.classifier[6] = nn.Linear(num_ftrs,self.num_classes)
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
             input_size = 224
 
         elif model_name == "squeezenet":
@@ -57,8 +57,8 @@ class classifier:
             """
             self.model = models.squeezenet1_0()
             #set_parameter_requires_grad(model_ft, feature_extract)
-            self.model.classifier[1] = nn.Conv2d(512, self.num_classes, kernel_size=(1,1), stride=(1,1))
-            self.model.num_classes = self.num_classes
+            self.model.classifier[1] = nn.Conv2d(512, self.class_num, kernel_size=(1,1), stride=(1,1))
+            self.model.num_classes = self.class_num
             input_size = 224
         elif model_name == "resnet":
             """ Resnet18
@@ -66,7 +66,7 @@ class classifier:
             self.model = models.resnet18()
             #set_parameter_requires_grad(model_ft, feature_extract)
             num_ftrs = self.model.fc.in_features
-            self.model.fc = nn.Linear(num_ftrs, self.num_classes)
+            self.model.fc = nn.Linear(num_ftrs, self.class_num)
             input_size = 224
 
         elif model_name=='inception_v3':
