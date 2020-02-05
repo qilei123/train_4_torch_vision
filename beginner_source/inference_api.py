@@ -34,7 +34,42 @@ class classifier:
                 #transforms.Normalize(self.mean, self.std)
             ])
         self.class_num = class_num_
-        if model_name=='inception_v3':
+        if model_name == "alexnet":
+            """ Alexnet
+            """
+            self.model = models.alexnet()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[6].in_features
+            self.model_ft.classifier[6] = nn.Linear(num_ftrs,self.num_classes)
+            input_size = 224
+
+        elif model_name == "vgg":
+            """ VGG11_bn
+            """
+            self.model = models.vgg11_bn()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[6].in_features
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.num_classes)
+            input_size = 224
+
+        elif model_name == "squeezenet":
+            """ Squeezenet
+            """
+            self.model = models.squeezenet1_0()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            self.model.classifier[1] = nn.Conv2d(512, self.num_classes, kernel_size=(1,1), stride=(1,1))
+            self.model.num_classes = self.num_classes
+            input_size = 224
+        elif model_name == "resnet":
+            """ Resnet18
+            """
+            self.model = models.resnet18()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.fc.in_features
+            self.model.fc = nn.Linear(num_ftrs, self.num_classes)
+            input_size = 224
+
+        elif model_name=='inception_v3':
             self.model = models.inception_v3()
             num_ftrs = self.model.AuxLogits.fc.in_features
             self.model.AuxLogits.fc = nn.Linear(num_ftrs, self.class_num)
@@ -83,15 +118,15 @@ class classifier:
             probilities.append(probility)
         return probilities.index(max(probilities))
 
-cf = classifier(1000,model_name='inception_v3',class_num_=5)
+cf = classifier(224,model_name='alexnet',class_num_=5)
 #lesion_category = 'Cotton_Wool_Spot'
 folder_label = 4
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
-model_dir = '/data0/qilei_chen/Development/Datasets/KAGGLE_DR/models_1000/best_retina_5stages_1000.model'
+model_dir = '/data2/DB_GI/0/finetune_binary_alexnet/best.model'
 cf.ini_model(model_dir)
 #for i in range(100):
 #image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
-image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/KAGGLE_DR/val/'+str(folder_label)+'/*.jpeg')
+image_file_dirs = glob.glob('/data2/DB_GI/0/val/1/'+str(folder_label)+'/*.jpg')
 #print(image_file_dirs)
 #count = 0
 wrong_count=0
