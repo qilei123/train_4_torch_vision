@@ -40,7 +40,7 @@ class classifier:
             self.model = models.alexnet()
             #set_parameter_requires_grad(model_ft, feature_extract)
             num_ftrs = self.model.classifier[6].in_features
-            self.model_ft.classifier[6] = nn.Linear(num_ftrs,self.class_num)
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
             input_size = 224
 
         elif model_name == "vgg":
