@@ -118,7 +118,7 @@ class classifier:
             probilities.append(probility)
         return probilities.index(max(probilities))
 
-cf = classifier(224,model_name='alexnet',class_num_=5)
+cf = classifier(224,model_name='alexnet',class_num_=2)
 #lesion_category = 'Cotton_Wool_Spot'
 folder_label = 4
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
