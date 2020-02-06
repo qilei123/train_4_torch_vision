@@ -68,7 +68,7 @@ args = parser.parse_args()
 
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
-data_dir = "/data2/DB_GI/0"
+data_dir = "/data2/DB_GI/0/sample2"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "squeezenet"
