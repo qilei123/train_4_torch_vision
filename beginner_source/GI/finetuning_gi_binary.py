@@ -79,7 +79,7 @@ model_name = "densenet"
 model_name = "inception"
 model_name = args.model
 print(args.model)
-return
+exit(0)
 
 model_folder_dir = data_dir+'/finetune_binary_'+model_name
 
