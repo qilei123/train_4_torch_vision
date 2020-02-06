@@ -31,7 +31,7 @@ class classifier:
                 transforms.Resize(self.input_size),
                 transforms.CenterCrop(self.input_size),
                 transforms.ToTensor(),
-                #transforms.Normalize(self.mean, self.std)
+                transforms.Normalize(self.mean, self.std)
             ])
         self.class_num = class_num_
         if model_name == "alexnet":
