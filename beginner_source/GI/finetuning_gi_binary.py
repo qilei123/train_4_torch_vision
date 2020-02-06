@@ -78,6 +78,8 @@ model_name = "vgg"
 model_name = "densenet"
 model_name = "inception"
 model_name = args.model
+print(args.model)
+return
 
 model_folder_dir = data_dir+'/finetune_binary_'+model_name
 
