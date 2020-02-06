@@ -133,6 +133,7 @@ wrong_count=0
 count = [0,0,0,0,0]
 print('groundtruth:'+str(folder_label))
 for image_file_dir in image_file_dirs:
+    print(image_file_dir)
     label = cf.predict(image_file_dir)
     
     if label!=folder_label:
