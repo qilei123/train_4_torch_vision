@@ -29,6 +29,12 @@ import copy
 print("PyTorch Version: ",torch.__version__)
 #print("Torchvision Version: ",torchvision.__version__)
 
+import argparse
+
+parser = argparse.ArgumentParser(description='model name')
+parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
+args = parser.parse_args()
+
 
 ######################################################################
 # Inputs
@@ -71,6 +77,7 @@ model_name = "alexnet"
 model_name = "vgg"
 model_name = "densenet"
 model_name = "inception"
+model_name = args.model
 
 model_folder_dir = data_dir+'/finetune_binary_'+model_name
 
