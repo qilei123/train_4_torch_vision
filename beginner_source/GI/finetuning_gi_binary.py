@@ -33,6 +33,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='model name')
 parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
+parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/DB_GI/0/sample2")
 args = parser.parse_args()
 
 
@@ -69,7 +70,7 @@ args = parser.parse_args()
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
 data_dir = "/data2/DB_GI/0/sample2"
-
+data_dir = args.datadir
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "squeezenet"
 model_name = "resnet"
@@ -78,8 +79,7 @@ model_name = "vgg"
 model_name = "densenet"
 model_name = "inception"
 model_name = args.model
-print(args.model)
-exit(0)
+print("-------------------"+model_name+"-------------------")
 
 model_folder_dir = data_dir+'/finetune_binary_'+model_name
 
