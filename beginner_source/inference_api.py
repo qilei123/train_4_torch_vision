@@ -21,6 +21,11 @@ from torch.autograd import Variable
 from PIL import Image
 import glob
 import cv2
+import datetime
+import time
+def micros(t1, t2):
+    delta = (t2-t1).microseconds
+    return delta
 
 class classifier:
     def __init__(self,input_size_=1000,mean_=[0.485, 0.456, 0.406],std_=[0.229, 0.224, 0.225],class_num_=2,model_name = 'resnet101_wide'):
@@ -104,6 +109,7 @@ class classifier:
         self.model.eval()
     def predict(self,img_dir):
         image = Image.open(img_dir).convert('RGB')
+        t1 = datetime.datetime.now()
         image = self.test_transform(image)
         inputs = image
         inputs = Variable(inputs, volatile=True)
@@ -116,6 +122,8 @@ class classifier:
         probilities = []
         for probility in softmax_res:
             probilities.append(probility)
+        t2 = datetime.datetime.now()
+        print(micros(t1,t2))
         return probilities.index(max(probilities))
 
 cf = classifier(224,model_name='alexnet',class_num_=2)
