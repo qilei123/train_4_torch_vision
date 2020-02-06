@@ -126,11 +126,11 @@ class classifier:
         print(micros(t1,t2)/1000)
         return probilities.index(max(probilities))
 
-cf = classifier(224,model_name='squeezenet',class_num_=2)
+cf = classifier(224,model_name='vgg',class_num_=2)
 #lesion_category = 'Cotton_Wool_Spot'
 folder_label = 1
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
-model_dir = '/data2/DB_GI/0/finetune_binary_squeezenet/best.model'
+model_dir = '/data2/DB_GI/0/finetune_binary_vgg/best.model'
 cf.ini_model(model_dir)
 #for i in range(100):
 #image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
