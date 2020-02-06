@@ -120,7 +120,7 @@ class classifier:
 
 cf = classifier(224,model_name='alexnet',class_num_=2)
 #lesion_category = 'Cotton_Wool_Spot'
-folder_label = 0
+folder_label = 1
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 model_dir = '/data2/DB_GI/0/finetune_binary_alexnet/best.model'
 cf.ini_model(model_dir)
@@ -133,7 +133,7 @@ wrong_count=0
 count = [0,0,0,0,0]
 print('groundtruth:'+str(folder_label))
 for image_file_dir in image_file_dirs:
-    print(image_file_dir)
+    #print(image_file_dir)
     label = cf.predict(image_file_dir)
     
     if label!=folder_label:
