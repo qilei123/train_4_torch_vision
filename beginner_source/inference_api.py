@@ -120,13 +120,13 @@ class classifier:
 
 cf = classifier(224,model_name='alexnet',class_num_=2)
 #lesion_category = 'Cotton_Wool_Spot'
-folder_label = 4
+folder_label = 0
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 model_dir = '/data2/DB_GI/0/finetune_binary_alexnet/best.model'
 cf.ini_model(model_dir)
 #for i in range(100):
 #image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
-image_file_dirs = glob.glob('/data2/DB_GI/0/val/1/'+str(folder_label)+'/*.jpg')
+image_file_dirs = glob.glob('/data2/DB_GI/0/sample1/val/'+str(folder_label)+'/*.jpg')
 #print(image_file_dirs)
 #count = 0
 wrong_count=0
