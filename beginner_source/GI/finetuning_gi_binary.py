@@ -626,7 +626,7 @@ shist = []
 
 ohist = [h.cpu().numpy() for h in hist]
 #shist = [h.cpu().numpy() for h in scratch_hist]
-
+'''
 plt.title("Validation Accuracy vs. Number of Training Epochs")
 plt.xlabel("Training Epochs")
 plt.ylabel("Validation Accuracy")
@@ -636,7 +636,7 @@ plt.ylim((0,1.))
 plt.xticks(np.arange(1, num_epochs+1, 1.0))
 plt.legend()
 plt.show()
-
+'''
 
 ######################################################################
 # Final Thoughts and Where to Go Next
