@@ -90,10 +90,10 @@ if not os.path.exists(model_folder_dir):
 num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 128
+batch_size = 64
 
 # Number of epochs to train for 
-num_epochs = 15
+num_epochs = 12
 
 # Flag for feature extracting. When False, we finetune the whole model, 
 #   when True we only update the reshaped layer params
@@ -491,7 +491,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
 model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained=True)
 
 # Print the model we just instantiated
-print(model_ft) 
+#print(model_ft) 
 
 
 ######################################################################
@@ -563,17 +563,17 @@ model_ft = model_ft.to(device)
 #  that we have just initialized, i.e. the parameters with requires_grad
 #  is True.
 params_to_update = model_ft.parameters()
-print("Params to learn:")
+#print("Params to learn:")
 if feature_extract:
     params_to_update = []
     for name,param in model_ft.named_parameters():
         if param.requires_grad == True:
             params_to_update.append(param)
-            print("\t",name)
+            #print("\t",name)
 else:
     for name,param in model_ft.named_parameters():
         if param.requires_grad == True:
-            print("\t",name)
+            #print("\t",name)
 
 # Observe that all parameters are being optimized
 optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
