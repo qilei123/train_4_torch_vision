@@ -574,6 +574,7 @@ else:
     for name,param in model_ft.named_parameters():
         if param.requires_grad == True:
             #print("\t",name)
+            pass
 
 # Observe that all parameters are being optimized
 optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
