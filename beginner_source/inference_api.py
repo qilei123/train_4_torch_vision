@@ -134,7 +134,7 @@ model_dir = '/data2/DB_GI/0/sample3/finetune_binary_'+model_name+'/best.model'
 cf.ini_model(model_dir)
 #for i in range(100):
 #image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
-image_file_dirs = glob.glob('/data2/DB_GI/0/sample4/val/'+str(folder_label)+'/*.jpg')
+image_file_dirs = glob.glob('/data2/DB_GI/0/sample3/val/'+str(folder_label)+'/*.jpg')
 #print(image_file_dirs)
 #count = 0
 wrong_count=0
