@@ -125,7 +125,7 @@ class classifier:
         t2 = datetime.datetime.now()
         #print(micros(t1,t2)/1000)
         return probilities.index(max(probilities))
-model_name='densenet'
+model_name='resnet'
 cf = classifier(224,model_name=model_name,class_num_=2)
 #lesion_category = 'Cotton_Wool_Spot'
 folder_label = 1
