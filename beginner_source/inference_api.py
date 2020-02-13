@@ -123,7 +123,7 @@ class classifier:
         for probility in softmax_res:
             probilities.append(probility)
         t2 = datetime.datetime.now()
-        print(micros(t1,t2)/1000)
+        #print(micros(t1,t2)/1000)
         return probilities.index(max(probilities))
 model_name='alexnet'
 cf = classifier(224,model_name=model_name,class_num_=2)
