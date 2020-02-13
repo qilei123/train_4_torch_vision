@@ -125,16 +125,16 @@ class classifier:
         t2 = datetime.datetime.now()
         #print(micros(t1,t2)/1000)
         return probilities.index(max(probilities))
-model_name='alexnet'
+model_name='squeezenet'
 cf = classifier(224,model_name=model_name,class_num_=2)
 #lesion_category = 'Cotton_Wool_Spot'
-folder_label = 1
+folder_label = 0
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 model_dir = '/data2/DB_GI/0/sample3/finetune_binary_'+model_name+'/best.model'
 cf.ini_model(model_dir)
 #for i in range(100):
 #image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
-image_file_dirs = glob.glob('/data2/DB_GI/0/sample3/val/'+str(folder_label)+'/*.jpg')
+image_file_dirs = glob.glob('/data2/DB_GI/0/sample4/val/'+str(folder_label)+'/*.jpg')
 #print(image_file_dirs)
 #count = 0
 wrong_count=0
