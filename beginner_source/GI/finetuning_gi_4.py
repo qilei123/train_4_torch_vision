@@ -90,10 +90,10 @@ if not os.path.exists(model_folder_dir):
 num_classes = 4
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 32
+batch_size = 64
 
 # Number of epochs to train for 
-num_epochs = 12
+num_epochs = 16
 
 # Flag for feature extracting. When False, we finetune the whole model, 
 #   when True we only update the reshaped layer params
