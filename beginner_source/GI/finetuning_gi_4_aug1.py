@@ -210,7 +210,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             'optimizer_state_dict': optimizer.state_dict(),
             'loss': loss,
             }, model_save_path)  
-        print()
+        #print()
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
@@ -513,9 +513,9 @@ data_transforms = {
     'train': transforms.Compose([
         #transforms.RandomResizedCrop(input_size),
         transforms.Resize(input_size),
-        transforms.CenterCrop(input_size),
         transforms.RandomHorizontalFlip(),
         transforms.RandomVerticalFlip(),
+        transforms.CenterCrop(input_size),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),

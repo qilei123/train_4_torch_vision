@@ -210,7 +210,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             'optimizer_state_dict': optimizer.state_dict(),
             'loss': loss,
             }, model_save_path)  
-        print()
+        #print()
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
