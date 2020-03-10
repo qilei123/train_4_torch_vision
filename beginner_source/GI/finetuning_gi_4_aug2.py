@@ -528,7 +528,6 @@ data_transforms = {
     ]),
 }
 
-print(data_transforms)
 
 print("Initializing Datasets and Dataloaders...")
 
