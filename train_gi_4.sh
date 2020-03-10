@@ -1,5 +1,3 @@
-python beginner_source/GI/finetuning_gi_4_aug2.py -m "squeezenet"
-
 python beginner_source/GI/finetuning_gi_4.py -m "squeezenet"
 python beginner_source/GI/finetuning_gi_4.py -m "resnet"
 python beginner_source/GI/finetuning_gi_4.py -m "alexnet"
