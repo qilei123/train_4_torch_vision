@@ -19,6 +19,6 @@
 #python beginner_source/GI/finetuning_gi_4_aug2.py -m "densenet"
 #python beginner_source/GI/finetuning_gi_4_aug2.py -m "inception"
 
-python beginner_source/GI/finetuning_gi_4_aug2.py -m "vgg_13_bn"
-python beginner_source/GI/finetuning_gi_4_aug2.py -m "vgg_16_bn"
-python beginner_source/GI/finetuning_gi_4_aug2.py -m "vgg_19_bn"
+python beginner_source/GI/finetuning_gi_4_aug2.py -m "vgg13_bn"
+python beginner_source/GI/finetuning_gi_4_aug2.py -m "vgg16_bn"
+python beginner_source/GI/finetuning_gi_4_aug2.py -m "vgg19_bn"
