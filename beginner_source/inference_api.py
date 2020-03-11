@@ -126,7 +126,7 @@ class classifier:
         #print(micros(t1,t2)/1000)
         return probilities.index(max(probilities))
 model_name='vgg'
-cf = classifier(224,model_name=model_name,class_num_=2)
+cf = classifier(224,model_name=model_name,class_num_=4)
 #lesion_category = 'Cotton_Wool_Spot'
 folder_label = 0
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
