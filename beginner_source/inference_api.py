@@ -59,7 +59,7 @@ class classifier:
         elif model_name == "vgg11":
             """ VGG11_bn
             """
-            self.model = models.vgg11_bn()
+            self.model = models.vgg11()
             #set_parameter_requires_grad(model_ft, feature_extract)
             num_ftrs = self.model.classifier[6].in_features
             self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
