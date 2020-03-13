@@ -56,7 +56,14 @@ class classifier:
             num_ftrs = self.model.classifier[6].in_features
             self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
             input_size = 224
-
+        elif model_name == "vgg11":
+            """ VGG11_bn
+            """
+            self.model = models.vgg11_bn()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[6].in_features
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
+            input_size = 224
         elif model_name == "squeezenet":
             """ Squeezenet
             """
@@ -125,10 +132,10 @@ class classifier:
         t2 = datetime.datetime.now()
         #print(micros(t1,t2)/1000)
         return probilities.index(max(probilities))
-model_name='vgg'
+model_name='vgg11'
 cf = classifier(224,model_name=model_name,class_num_=4)
 #lesion_category = 'Cotton_Wool_Spot'
-folder_label = 3
+folder_label = 0
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 model_dir = '/data2/qilei_chen/DATA/GI_4/finetune_4_'+model_name+'/best.model'
 cf.ini_model(model_dir)
