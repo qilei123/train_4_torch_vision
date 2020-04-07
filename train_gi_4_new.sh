@@ -30,9 +30,9 @@
 
 #python beginner_source/GI/finetuning_gi_4_new_aug2.py -m "resnet101"
 
-python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "squeezenet"
-python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet"
-python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "alexnet"
-python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg"
-python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "densenet"
-python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "inception"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "shufflenetv2_x0_5"
+#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet"
+#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "alexnet"
+#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg"
+#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "densenet"
+#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "inception"
