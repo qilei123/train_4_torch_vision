@@ -63,4 +63,4 @@ python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "shufflenetv2_x1_5"
 python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "shufflenetv2_x2_0"
 
 python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "inception3"
-python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "inceptionv4"
+#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "inceptionv4"
