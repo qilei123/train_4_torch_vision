@@ -202,9 +202,9 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 best_model_wts = copy.deepcopy(model.state_dict())
             if phase == 'val':
                 val_acc_history.append(epoch_acc)
-        
-        model_save_path = model_folder_dir+'/'+model_name+'_epoch_'+str(epoch)+'.pth'
         '''
+        model_save_path = model_folder_dir+'/'+model_name+'_epoch_'+str(epoch)+'.pth'
+        
         torch.save({
             'epoch': epoch,
             'model_state_dict': model.state_dict(),
