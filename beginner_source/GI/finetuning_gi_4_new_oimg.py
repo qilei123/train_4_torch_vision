@@ -33,7 +33,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='model name')
 parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
-parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/4class_c")
+parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/GI_4_NEW")
 args = parser.parse_args()
 
 
@@ -81,7 +81,7 @@ model_name = "inception"
 model_name = args.model
 print("-------------------"+model_name+"-------------------")
 
-model_folder_dir = data_dir+'/finetune_4_end_'+model_name
+model_folder_dir = data_dir+'/finetune_4_new_oimg_'+model_name
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
