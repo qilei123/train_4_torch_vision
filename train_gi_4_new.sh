@@ -30,9 +30,37 @@
 
 #python beginner_source/GI/finetuning_gi_4_new_aug2.py -m "resnet101"
 
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "inceptionv4"
+
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet18"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet34"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet50"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet101"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet152"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnext50_32x4d"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnext101_32x8d"
+
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg11"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg13"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg16"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg19"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg11_bn"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg13_bn"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg16_bn"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg19_bn"
+
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "squeezenet1_0"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "squeezenet1_1"
+
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "densenet121"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "densenet161"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "densenet169"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "densenet201"
+
 python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "shufflenetv2_x0_5"
-#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet"
-#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "alexnet"
-#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "vgg"
-#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "densenet"
-#python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "inception"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "shufflenetv2_x1_0"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "shufflenetv2_x1_5"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "shufflenetv2_x2_0"
+
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "inception3"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "inceptionv4"
