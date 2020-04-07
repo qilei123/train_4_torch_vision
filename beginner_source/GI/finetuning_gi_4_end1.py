@@ -81,7 +81,7 @@ model_name = "inception"
 model_name = args.model
 print("-------------------"+model_name+"-------------------")
 
-model_folder_dir = data_dir+'/finetune_4_end_'+model_name
+model_folder_dir = data_dir+'/finetune_4_end1_'+model_name
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -196,7 +196,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             epoch_loss = running_loss / len(dataloaders[phase].dataset)
             epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
 
-            #print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+            print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
             if phase == 'val' and epoch_acc > best_acc:
