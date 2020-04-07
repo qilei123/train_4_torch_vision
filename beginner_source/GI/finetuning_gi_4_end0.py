@@ -34,7 +34,7 @@ import argparse
 parser = argparse.ArgumentParser(description='model name')
 parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
 parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/4class_c")
-parser.add_argument('--batch_size', '-b', help='set the batch_size', default=16)
+parser.add_argument('--batch_size', '-b', help='set the batch_size', default=8)
 args = parser.parse_args()
 
 
@@ -97,6 +97,7 @@ else:
     batch_size = 32
 
 batch_size=args.batch_size
+print(batch_size)
 
 # Number of epochs to train for 
 num_epochs = 100
