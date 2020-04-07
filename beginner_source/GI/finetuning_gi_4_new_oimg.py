@@ -204,12 +204,14 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 val_acc_history.append(epoch_acc)
         
         model_save_path = model_folder_dir+'/'+model_name+'_epoch_'+str(epoch)+'.pth'
+        '''
         torch.save({
             'epoch': epoch,
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
             'loss': loss,
             }, model_save_path)  
+        '''
         #print()
 
     time_elapsed = time.time() - since
@@ -513,13 +515,18 @@ data_transforms = {
     'train': transforms.Compose([
         #transforms.RandomResizedCrop(input_size),
         #'''
-        #transforms.Resize(input_size),
-        #transforms.CenterCrop(input_size),
+        transforms.Resize(input_size),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomVerticalFlip(),
+        transforms.CenterCrop(input_size),
         #'''
         #transforms.RandomHorizontalFlip(),
         #transforms.RandomVerticalFlip(),
-        transforms.RandomResizedCrop(input_size),
-        transforms.RandomHorizontalFlip(),
+
+
+        #transforms.RandomResizedCrop(input_size),
+        #transforms.RandomHorizontalFlip(),
+        
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
