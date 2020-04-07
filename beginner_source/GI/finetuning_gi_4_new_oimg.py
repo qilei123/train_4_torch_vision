@@ -93,7 +93,9 @@ num_classes = 4
 if model_name=="vgg":
     batch_size = 16
 else:
-    batch_size = 64
+    batch_size = 32
+
+batch_size=16
 
 # Number of epochs to train for 
 num_epochs = 25
