@@ -1,0 +1,5 @@
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet18"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet34"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet50"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet101"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet152"
