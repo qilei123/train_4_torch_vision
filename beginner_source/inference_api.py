@@ -227,8 +227,9 @@ for image_file_dir in image_file_dirs:
     label = cf.predict1(image_file_dir)
     
     if label!=folder_label:
-        print(label)
-        print(image_file_dir)
+        #print(label)
+        #print(image_file_dir)
+        pass
     #'
     #    wrong_count+=1
     #    #cv2.imshow('test',cv2.imread(image_file_dir))
