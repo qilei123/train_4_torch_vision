@@ -103,7 +103,12 @@ class classifier:
             self.model = models.densenet121()
             num_ftrs = self.model.classifier.in_features
             self.model.classifier = nn.Linear(num_ftrs, self.class_num) 
-            
+        elif model_name == "densenet161":
+            """ Densenet
+            """
+            self.model = models.densenet161()
+            num_ftrs = self.model.classifier.in_features
+            self.model.classifier = nn.Linear(num_ftrs, self.class_num)             
     def softmax(self,x):
         return np.exp(x) / np.sum(np.exp(x), axis=0)
     def ini_model(self,model_dir):
@@ -114,8 +119,10 @@ class classifier:
         print(self.model)
         cudnn.benchmark = True
         self.model.eval()
-    def predict(self,img_dir):
-        image = Image.open(img_dir).convert('RGB')
+    def predict(self,img):
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        #image = Image.open(img_dir).convert('RGB')
+        image = Image.fromarray(img)
         t1 = datetime.datetime.now()
         image = self.test_transform(image)
         inputs = image
@@ -132,21 +139,54 @@ class classifier:
         t2 = datetime.datetime.now()
         #print(micros(t1,t2)/1000)
         return probilities.index(max(probilities))
-
+    def predict1(self,img_dir):
+        img = cv2.imread(img_dir)
+        return self.predict(img)
 
 def process_4_situation_videos():
-    model_name = ""
+    model_name = "densenet161"
 
     model = classifier(224,model_name=model_name,class_num_=4)
     
-    model_dir = '/data2/qilei_chen/DATA/GI_4/finetune_4_'+model_name+'/best.model'
+    model_dir = '/data2/qilei_chen/DATA/GI_4_NEW/finetune_4_new_oimg_'+model_name+'/best.model'
 
     model.ini_model(model_dir)
 
-    videos_folder = ""
+    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/xiangyachangde/"
 
-    video_suffix = ""
+    videos_result_folder = os.path.join(videos_folder,"result_"+model_name)
 
+    video_suffix = ".avi"
+    
+    big_roi = [441, 1, 1278, 720]
+    small_roi = [156, 40, 698, 527]
+
+    roi = big_roi
+
+    video_file_dir_list = glob.glob(os.path.join(videos_folder,"*"+video_suffix))
+
+    if not os.path.exists(videos_result_folder):
+        os.makedirs(videos_result_folder)
+
+    for video_file_dir in video_file_dir_list:
+        count=0
+
+        video = cv2.VideoCapture(video_file_dir)
+
+        success,frame = video.read()
+
+        while success:
+
+            frame_roi = frame[roi[1]:roi[3],roi[0]:roi[2]]
+            print(model.predict(frame_roi))
+            cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
+            success,frame = video.read()
+
+            break
+
+        break
+process_4_situation_videos()
+'''
 model_name='vgg11'
 cf = classifier(224,model_name=model_name,class_num_=4)
 #lesion_category = 'Cotton_Wool_Spot'
@@ -164,19 +204,21 @@ count = [0,0,0,0,0]
 print('groundtruth:'+str(folder_label))
 for image_file_dir in image_file_dirs:
     #print(image_file_dir)
-    label = cf.predict(image_file_dir)
+    label = cf.predict1(image_file_dir)
     
     if label!=folder_label:
         print(label)
         print(image_file_dir)
-    '''
-        wrong_count+=1
-        #cv2.imshow('test',cv2.imread(image_file_dir))
-        #cv2.waitKey(0)
-    count += 1
-    '''
+    #'
+    #    wrong_count+=1
+    #    #cv2.imshow('test',cv2.imread(image_file_dir))
+    #    #cv2.waitKey(0)
+    #count += 1
+    #'
     count[int(label)]+=1
 print(count)
+'''
+
 '''
 print(cf.predict('/home/cql/Downloads/test5.7/test/16_left.jpeg'))
 print(cf.predict('/home/cql/Downloads/test5.7/test/172_right.jpeg'))
