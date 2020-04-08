@@ -117,7 +117,7 @@ class classifier:
         checkpoint = torch.load(model_dir,map_location='cuda:1')
         #self.model.load_state_dict(checkpoint['model_state_dict'])
         self.model.load_state_dict(checkpoint)
-        self.device = torch.device("cuda:0")
+        self.device = torch.device("cuda:1")
         #self.model.cuda()
         self.model.to(self.device)
         #print(self.model)
