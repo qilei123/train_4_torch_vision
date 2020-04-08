@@ -96,7 +96,7 @@ if model_name=="vgg":
 else:
     batch_size = 32
 
-batch_size=args.batch_size
+batch_size=int(args.batch_size)
 print(batch_size)
 
 # Number of epochs to train for 
