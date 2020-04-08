@@ -169,23 +169,39 @@ def process_4_situation_videos():
         os.makedirs(videos_result_folder)
 
     for video_file_dir in video_file_dir_list:
-        count=0
+        count=1
 
         video = cv2.VideoCapture(video_file_dir)
 
         success,frame = video.read()
+        
+        video_name = os.path.basename(video_file_dir)
+        
+        records_file_dir = os.path.join(videos_result_folder,video_name.replace(video_suffix,".txt"))
+        records_file_header = open(records_file_dir,"w")
+
+        fps = video.get(cv2.CAP_PROP_FPS)
+        frame_size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+        show_result_video_dir = os.path.join(videos_result_folder,video_name)
+        videoWriter = cv2.VideoWriter(show_result_video_dir,cv2.VideoWriter_fourcc("P", "I", "M", "1"),fps,frame_size)
 
         while success:
 
             frame_roi = frame[roi[1]:roi[3],roi[0]:roi[2]]
-            print(model.predict(frame_roi))
-            cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
+            predict_label = model.predict(frame_roi)
+            records_file_header.write(str(count)+" "+str(predict_label)+"\n")
+            #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
+            cv2.putText(frame,str(count)+":"+str(predict_label),(20,20),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
+            cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
             success,frame = video.read()
-
             break
-
         break
-    
+        
+
+            
+
+        
+
 process_4_situation_videos()
 '''
 model_name='vgg11'
