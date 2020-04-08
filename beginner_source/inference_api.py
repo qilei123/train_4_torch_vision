@@ -219,7 +219,7 @@ cf.ini_model(model_dir)
 image_file_dirs = glob.glob('/data2/qilei_chen/DATA/4class_c/val/'+str(folder_label)+'/*.jpg')
 #print(image_file_dirs)
 #count = 0
-wrong_count=0
+wrong_count=1
 count = [0,0,0,0,0]
 print('groundtruth:'+str(folder_label))
 for image_file_dir in image_file_dirs:
