@@ -116,7 +116,7 @@ class classifier:
         #self.model.load_state_dict(checkpoint['model_state_dict'])
         self.model.load_state_dict(checkpoint)
         self.model.cuda()
-        print(self.model)
+        #print(self.model)
         cudnn.benchmark = True
         self.model.eval()
     def predict(self,img):
