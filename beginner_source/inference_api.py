@@ -210,7 +210,7 @@ process_4_situation_videos()
 model_name='densenet121'
 cf = classifier(224,model_name=model_name,class_num_=4)
 #lesion_category = 'Cotton_Wool_Spot'
-folder_label = 0
+folder_label = 1
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 model_dir = '/data2/qilei_chen/DATA/4class_c/finetune_4_end0_'+model_name+'/best.model'
 cf.ini_model(model_dir)
@@ -219,7 +219,7 @@ cf.ini_model(model_dir)
 image_file_dirs = glob.glob('/data2/qilei_chen/DATA/4class_c/val/'+str(folder_label)+'/*.jpg')
 #print(image_file_dirs)
 #count = 0
-wrong_count=1
+wrong_count=0
 count = [0,0,0,0,0]
 print('groundtruth:'+str(folder_label))
 for image_file_dir in image_file_dirs:
