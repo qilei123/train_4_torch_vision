@@ -30,7 +30,7 @@ def micros(t1, t2):
 
 
 class classifier:
-    def __init__(self,input_size_=1000,mean_=[0.485, 0.456, 0.406],std_=[0.229, 0.224, 0.225],class_num_=2,model_name = 'resnet101_wide'):
+    def __init__(self,input_size_=1000,mean_=[0.485, 0.456, 0.406],std_=[0.229, 0.224, 0.225],class_num_=2,model_name = 'resnet101_wide',device_id=0):
         self.input_size = input_size_
         self.mean = mean_
         self.std = std_
@@ -41,6 +41,7 @@ class classifier:
                 transforms.Normalize(self.mean, self.std)
             ])
         self.class_num = class_num_
+        self.device = torch.device("cuda:"+str(device_id))
         if model_name == "alexnet":
             """ Alexnet
             """
@@ -114,10 +115,10 @@ class classifier:
     def softmax(self,x):
         return np.exp(x) / np.sum(np.exp(x), axis=0)
     def ini_model(self,model_dir):
-        checkpoint = torch.load(model_dir,map_location='cuda:1')
+        checkpoint = torch.load(model_dir)
         #self.model.load_state_dict(checkpoint['model_state_dict'])
         self.model.load_state_dict(checkpoint)
-        self.device = torch.device("cuda:1")
+        
         #self.model.cuda()
         self.model.to(self.device)
         #print(self.model)
@@ -132,7 +133,7 @@ class classifier:
         inputs = image
         inputs = Variable(inputs, volatile=True)
         
-        inputs = inputs.cuda()
+        inputs = inputs.to(self.device)
         inputs = inputs.view(1, inputs.size(0), inputs.size(1), inputs.size(2)) # add batch dim in the front
 
         outputs = self.model(inputs)
