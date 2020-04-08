@@ -192,8 +192,10 @@ def process_4_situation_videos():
             records_file_header.write(str(count)+" "+str(predict_label)+"\n")
             #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
             cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
-            cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
+            #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
+            videoWriter.write(frame)
             success,frame = video.read()
+            count+=1
             
         
         
