@@ -191,7 +191,7 @@ def process_4_situation_videos():
             predict_label = model.predict(frame_roi)
             records_file_header.write(str(count)+" "+str(predict_label)+"\n")
             #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
-            cv2.putText(frame,str(count)+":"+str(predict_label),(20,20),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
+            cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
             cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
             success,frame = video.read()
             break
