@@ -197,6 +197,7 @@ def process_4_situation_videos():
             cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
             #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
             #videoWriter.write(frame)
+            print(predict_label)
             success,frame = video.read()
             count+=1
             
