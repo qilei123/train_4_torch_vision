@@ -27,6 +27,8 @@ def micros(t1, t2):
     delta = (t2-t1).microseconds
     return delta
 
+
+
 class classifier:
     def __init__(self,input_size_=1000,mean_=[0.485, 0.456, 0.406],std_=[0.229, 0.224, 0.225],class_num_=2,model_name = 'resnet101_wide'):
         self.input_size = input_size_
@@ -97,7 +99,7 @@ class classifier:
             self.model = models.resnet101_wide()
             num_ftrs = self.model.fc.in_features
             self.model.fc = nn.Linear(num_ftrs,self.class_num)
-        elif model_name == "densenet":
+        elif model_name == "densenet121":
             """ Densenet
             """
             self.model = models.densenet121()
@@ -112,7 +114,7 @@ class classifier:
     def softmax(self,x):
         return np.exp(x) / np.sum(np.exp(x), axis=0)
     def ini_model(self,model_dir):
-        checkpoint = torch.load(model_dir,map_location='cuda:0')
+        checkpoint = torch.load(model_dir,map_location='cuda:1')
         #self.model.load_state_dict(checkpoint['model_state_dict'])
         self.model.load_state_dict(checkpoint)
         self.model.cuda()
@@ -179,32 +181,32 @@ def process_4_situation_videos():
         video_name = os.path.basename(video_file_dir)
         
         records_file_dir = os.path.join(videos_result_folder,video_name.replace(video_suffix,".txt"))
-        records_file_header = open(records_file_dir,"w")
+        #records_file_header = open(records_file_dir,"w")
 
         fps = video.get(cv2.CAP_PROP_FPS)
         frame_size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
         show_result_video_dir = os.path.join(videos_result_folder,video_name)
-        videoWriter = cv2.VideoWriter(show_result_video_dir,cv2.VideoWriter_fourcc("P", "I", "M", "1"),fps,frame_size)
+        #videoWriter = cv2.VideoWriter(show_result_video_dir,cv2.VideoWriter_fourcc("P", "I", "M", "1"),fps,frame_size)
 
         while success:
 
             frame_roi = frame[roi[1]:roi[3],roi[0]:roi[2]]
             predict_label = model.predict(frame_roi)
-            records_file_header.write(str(count)+" "+str(predict_label)+"\n")
+            #records_file_header.write(str(count)+" "+str(predict_label)+"\n")
             #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
             cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
             #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
-            videoWriter.write(frame)
+            #videoWriter.write(frame)
             success,frame = video.read()
             count+=1
             
 
 process_4_situation_videos()
 '''
-model_name='vgg11'
+model_name='densenet121'
 cf = classifier(224,model_name=model_name,class_num_=4)
 #lesion_category = 'Cotton_Wool_Spot'
-folder_label = 3
+folder_label = 0
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
 model_dir = '/data2/qilei_chen/DATA/GI_4/finetune_4_'+model_name+'/best.model'
 cf.ini_model(model_dir)
