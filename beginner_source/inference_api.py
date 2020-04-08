@@ -132,6 +132,21 @@ class classifier:
         t2 = datetime.datetime.now()
         #print(micros(t1,t2)/1000)
         return probilities.index(max(probilities))
+
+
+def process_4_situation_videos():
+    model_name = ""
+
+    model = classifier(224,model_name=model_name,class_num_=4)
+    
+    model_dir = '/data2/qilei_chen/DATA/GI_4/finetune_4_'+model_name+'/best.model'
+
+    model.ini_model(model_dir)
+
+    videos_folder = ""
+
+    video_suffix = ""
+
 model_name='vgg11'
 cf = classifier(224,model_name=model_name,class_num_=4)
 #lesion_category = 'Cotton_Wool_Spot'
@@ -174,3 +189,4 @@ print(cf.predict('/home/cql/Downloads/test5.7/test0/22_left.jpeg'))
 print(cf.predict('/home/cql/Downloads/test5.7/test0/31_right.jpeg'))
 print(cf.predict('/home/cql/Downloads/test5.7/test0/40_right.jpeg'))
 '''
+
