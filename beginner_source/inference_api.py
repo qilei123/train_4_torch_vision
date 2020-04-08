@@ -204,7 +204,7 @@ def process_4_situation_videos():
             success,frame = video.read()
             count+=1
             
-
+'''
 process_4_situation_videos()
 '''
 model_name='densenet121'
@@ -212,11 +212,11 @@ cf = classifier(224,model_name=model_name,class_num_=4)
 #lesion_category = 'Cotton_Wool_Spot'
 folder_label = 0
 #model_dir = '/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/models_4_'+lesion_category+'/densenet_epoch_16.pth'
-model_dir = '/data2/qilei_chen/DATA/GI_4/finetune_4_'+model_name+'/best.model'
+model_dir = '/data2/qilei_chen/DATA/4class_c/finetune_4_end0_'+model_name+'/best.model'
 cf.ini_model(model_dir)
 #for i in range(100):
 #image_file_dirs = glob.glob('/data0/qilei_chen/Development/Datasets/DR_LESION_PATCH/'+lesion_category+'/val/'+str(folder_label)+'/*.jpg')
-image_file_dirs = glob.glob('/data2/qilei_chen/DATA/GI_4/train/'+str(folder_label)+'/*.jpg')
+image_file_dirs = glob.glob('/data2/qilei_chen/DATA/4class_c/val/'+str(folder_label)+'/*.jpg')
 #print(image_file_dirs)
 #count = 0
 wrong_count=0
@@ -237,7 +237,7 @@ for image_file_dir in image_file_dirs:
     #'
     count[int(label)]+=1
 print(count)
-'''
+
 
 '''
 print(cf.predict('/home/cql/Downloads/test5.7/test/16_left.jpeg'))
