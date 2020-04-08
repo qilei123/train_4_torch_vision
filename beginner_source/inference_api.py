@@ -198,12 +198,6 @@ def process_4_situation_videos():
             success,frame = video.read()
             count+=1
             
-        
-        
-
-            
-
-        
 
 process_4_situation_videos()
 '''
