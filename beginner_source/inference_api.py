@@ -164,6 +164,7 @@ def process_4_situation_videos():
     small_roi = [156, 40, 698, 527]
 
     roi = small_roi
+    video_start = 15
 
     videos_result_folder = os.path.join(videos_folder,"result_"+model_name)
 
@@ -173,38 +174,40 @@ def process_4_situation_videos():
 
     if not os.path.exists(videos_result_folder):
         os.makedirs(videos_result_folder)
-
+    video_count=0
     for video_file_dir in video_file_dir_list:
-        count=1
 
-        video = cv2.VideoCapture(video_file_dir)
+        if video_count>video_start:
+            count=1
 
-        success,frame = video.read()
-        
-        video_name = os.path.basename(video_file_dir)
-        
-        records_file_dir = os.path.join(videos_result_folder,video_name.replace(video_suffix,".txt"))
-        #records_file_header = open(records_file_dir,"w")
+            video = cv2.VideoCapture(video_file_dir)
 
-        fps = video.get(cv2.CAP_PROP_FPS)
-        frame_size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-        show_result_video_dir = os.path.join(videos_result_folder,video_name)
-        #videoWriter = cv2.VideoWriter(show_result_video_dir,cv2.VideoWriter_fourcc("P", "I", "M", "1"),fps,frame_size)
-
-        while success:
-
-            frame_roi = frame[roi[1]:roi[3],roi[0]:roi[2]]
-            predict_label = model.predict(frame_roi)
-            #records_file_header.write(str(count)+" "+str(predict_label)+"\n")
-            #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
-            cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
-            #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
-            #videoWriter.write(frame)
-            print(predict_label)
             success,frame = video.read()
-            count+=1
+        
+            video_name = os.path.basename(video_file_dir)
+
+            records_file_dir = os.path.join(videos_result_folder,video_name.replace(video_suffix,".txt"))
+            records_file_header = open(records_file_dir,"w")
+
+            fps = video.get(cv2.CAP_PROP_FPS)
+            frame_size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+            show_result_video_dir = os.path.join(videos_result_folder,video_name)
+            videoWriter = cv2.VideoWriter(show_result_video_dir,cv2.VideoWriter_fourcc("P", "I", "M", "1"),fps,frame_size)
+
+            while success:
+
+                frame_roi = frame[roi[1]:roi[3],roi[0]:roi[2]]
+                predict_label = model.predict(frame_roi)
+                records_file_header.write(str(count)+" "+str(predict_label)+"\n")
+                #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
+                cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
+                #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
+                videoWriter.write(frame)
+                print(predict_label)
+                success,frame = video.read()
+                count+=1
             
-'''
+        video_count+=1
 process_4_situation_videos()
 '''
 model_name='densenet121'
@@ -238,7 +241,7 @@ for image_file_dir in image_file_dirs:
     #'
     count[int(label)]+=1
 print(count)
-
+'''
 
 '''
 print(cf.predict('/home/cql/Downloads/test5.7/test/16_left.jpeg'))
