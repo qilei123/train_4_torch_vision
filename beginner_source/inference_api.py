@@ -157,14 +157,14 @@ def process_4_situation_videos():
 
     model.ini_model(model_dir)
 
-    #videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/xiangyachangde/"
-    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/weijingshi4/"
+    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/xiangyachangde/"
+    #videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/weijingshi4/"
     
     big_roi = [441, 1, 1278, 720]
     small_roi = [156, 40, 698, 527]
 
-    roi = small_roi
-    video_start = 15
+    roi = big_roi
+    video_start = 9#15
 
     videos_result_folder = os.path.join(videos_folder,"result_"+model_name)
 
