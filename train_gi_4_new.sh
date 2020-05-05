@@ -32,6 +32,9 @@
 
 #python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "shufflenetv2_x0_5"
 
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnext50_32x4d"
+python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnext101_32x8d"
+
 python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet18"
 python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet34"
 python beginner_source/GI/finetuning_gi_4_new_oimg.py -m "resnet50"
