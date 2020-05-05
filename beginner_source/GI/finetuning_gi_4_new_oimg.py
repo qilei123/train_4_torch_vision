@@ -98,7 +98,7 @@ else:
 batch_size=16
 
 # Number of epochs to train for 
-num_epochs = 25
+num_epochs = 200
 
 # Flag for feature extracting. When False, we finetune the whole model, 
 #   when True we only update the reshaped layer params
@@ -296,7 +296,7 @@ def set_parameter_requires_grad(model, feature_extracting):
 # input features and 2 output features with:
 # 
 # ::
-# 
+# &
 #    model.fc = nn.Linear(512, num_classes)
 # 
 # Alexnet
