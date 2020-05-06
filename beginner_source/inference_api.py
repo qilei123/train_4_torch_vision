@@ -148,8 +148,8 @@ class classifier:
         img = cv2.imread(img_dir)
         return self.predict(img)
 
-def process_4_situation_videos():
-    model_name = "densenet161"
+def process_4_situation_videos(model_name = "densenet161"):
+    
 
     model = classifier(224,model_name=model_name,class_num_=4)
     
@@ -208,7 +208,8 @@ def process_4_situation_videos():
                 count+=1
             
         video_count+=1
-process_4_situation_videos()
+
+process_4_situation_videos(model_name='densenet121')
 '''
 model_name='densenet121'
 cf = classifier(224,model_name=model_name,class_num_=4)
