@@ -67,8 +67,8 @@ class classifier:
             num_ftrs = self.model.classifier[6].in_features
             self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
             input_size = 224
-        elif model_name == "squeezenet":
-            """ Squeezenet
+        elif model_name == "squeezenet1_0":
+            """ squeezenet1_0
             """
             self.model = models.squeezenet1_0()
             #set_parameter_requires_grad(model_ft, feature_extract)
@@ -211,12 +211,19 @@ def process_4_situation_videos(model_name = "densenet161"):
                 count+=1
             
         video_count+=1
-
+'''
 process_4_situation_videos(model_name='alexnet')
 process_4_situation_videos(model_name='vgg11')
 process_4_situation_videos(model_name='vgg13')
 process_4_situation_videos(model_name='vgg16')
 process_4_situation_videos(model_name='vgg19')
+'''
+
+process_4_situation_videos(model_name='squeezenet1_0')
+process_4_situation_videos(model_name='vgg11_bn')
+process_4_situation_videos(model_name='vgg13_bn')
+process_4_situation_videos(model_name='vgg16_bn')
+process_4_situation_videos(model_name='vgg19_bn')
 '''
 model_name='densenet121'
 cf = classifier(224,model_name=model_name,class_num_=4)
