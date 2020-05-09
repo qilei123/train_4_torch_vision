@@ -111,7 +111,19 @@ class classifier:
             """
             self.model = models.densenet161()
             num_ftrs = self.model.classifier.in_features
-            self.model.classifier = nn.Linear(num_ftrs, self.class_num)             
+            self.model.classifier = nn.Linear(num_ftrs, self.class_num)
+        elif model_name == "densenet169":
+            """ Densenet
+            """
+            self.model = models.densenet169()
+            num_ftrs = self.model.classifier.in_features
+            self.model.classifier = nn.Linear(num_ftrs, self.class_num) 
+        elif model_name == "densenet201":
+            """ Densenet
+            """
+            self.model = models.densenet201()
+            num_ftrs = self.model.classifier.in_features
+            self.model.classifier = nn.Linear(num_ftrs, self.class_num)              
     def softmax(self,x):
         return np.exp(x) / np.sum(np.exp(x), axis=0)
     def ini_model(self,model_dir):
@@ -218,12 +230,16 @@ process_4_situation_videos(model_name='vgg13')
 process_4_situation_videos(model_name='vgg16')
 process_4_situation_videos(model_name='vgg19')
 '''
-
+'''
 process_4_situation_videos(model_name='squeezenet1_0')
 process_4_situation_videos(model_name='vgg11_bn')
 process_4_situation_videos(model_name='vgg13_bn')
 process_4_situation_videos(model_name='vgg16_bn')
 process_4_situation_videos(model_name='vgg19_bn')
+'''
+process_4_situation_videos(model_name='densenet161')
+process_4_situation_videos(model_name='densenet169')
+process_4_situation_videos(model_name='densenet201')
 '''
 model_name='densenet121'
 cf = classifier(224,model_name=model_name,class_num_=4)
