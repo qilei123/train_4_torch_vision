@@ -95,7 +95,7 @@ if model_name=="vgg":
 else:
     batch_size = 32
 
-batch_size=64
+batch_size=128
 
 # Number of epochs to train for 
 num_epochs = 200
@@ -782,7 +782,7 @@ else:
             pass
 
 # Observe that all parameters are being optimized
-optimizer_ft = optim.SGD(params_to_update, lr=0.0005, momentum=0.9)
+optimizer_ft = optim.SGD(params_to_update, lr=0.0002, momentum=0.9)
 
 
 ######################################################################
