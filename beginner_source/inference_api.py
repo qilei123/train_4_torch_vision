@@ -157,14 +157,15 @@ def process_4_situation_videos(model_name = "densenet161"):
 
     model.ini_model(model_dir)
 
-    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/xiangyachangde/"
+    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/"
     #videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/weijingshi4/"
-    
+    '''
     big_roi = [441, 1, 1278, 720]
     small_roi = [156, 40, 698, 527]
 
     roi = big_roi
-    video_start = 9#15
+    '''
+    video_start = -1#15
 
     videos_result_folder = os.path.join(videos_folder,"result_"+model_name)
 
@@ -195,9 +196,11 @@ def process_4_situation_videos(model_name = "densenet161"):
             videoWriter = cv2.VideoWriter(show_result_video_dir,cv2.VideoWriter_fourcc("P", "I", "M", "1"),fps,frame_size)
             print(show_result_video_dir)
             while success:
-
+                '''
                 frame_roi = frame[roi[1]:roi[3],roi[0]:roi[2]]
                 predict_label = model.predict(frame_roi)
+                '''
+                predict_label = model.predict(frame)
                 records_file_header.write(str(count)+" "+str(predict_label)+"\n")
                 #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
                 cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
@@ -209,7 +212,7 @@ def process_4_situation_videos(model_name = "densenet161"):
             
         video_count+=1
 
-process_4_situation_videos(model_name='densenet121')
+process_4_situation_videos(model_name='alexnet')
 '''
 model_name='densenet121'
 cf = classifier(224,model_name=model_name,class_num_=4)
