@@ -33,7 +33,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='model name')
 parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
-parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/GI_4_NEW")
+parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/GI_4_NEW1")
 args = parser.parse_args()
 
 
