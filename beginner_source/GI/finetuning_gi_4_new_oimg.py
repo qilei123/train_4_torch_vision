@@ -707,7 +707,7 @@ data_transforms = {
         #'''
         transforms.Resize(input_size),
         transforms.RandomHorizontalFlip(),
-        transforms.RandomVerticalFlip(),
+        #transforms.RandomVerticalFlip(),
         transforms.CenterCrop(input_size),
         #'''
         #transforms.RandomHorizontalFlip(),
