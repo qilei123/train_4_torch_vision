@@ -213,6 +213,7 @@ def process_4_situation_videos(model_name = "densenet161"):
         video_count+=1
 
 process_4_situation_videos(model_name='alexnet')
+process_4_situation_videos(model_name='vgg11')
 '''
 model_name='densenet121'
 cf = classifier(224,model_name=model_name,class_num_=4)
