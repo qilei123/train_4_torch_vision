@@ -703,19 +703,19 @@ model_ft, input_size = initialize_model(model_name, num_classes, feature_extract
 # Just normalization for validation
 data_transforms = {
     'train': transforms.Compose([
-        transforms.RandomResizedCrop(input_size),
+        #transforms.RandomResizedCrop(input_size),
         #'''
-        #transforms.Resize(input_size),
-        #transforms.RandomHorizontalFlip(),
-        #transforms.RandomVerticalFlip(),
-        #transforms.CenterCrop(input_size),
+        transforms.Resize(input_size),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomVerticalFlip(),
+        transforms.CenterCrop(input_size),
         #'''
         #transforms.RandomHorizontalFlip(),
         #transforms.RandomVerticalFlip(),
 
 
         #transforms.RandomResizedCrop(input_size),
-        transforms.RandomHorizontalFlip(),
+        #transforms.RandomHorizontalFlip(),
         
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
