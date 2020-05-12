@@ -192,7 +192,7 @@ def process_4_situation_videos(model_name = "densenet161"):
     video_suffix = ".avi"
     
     video_file_dir_list = glob.glob(os.path.join(videos_folder,"2019*"))
-    print(video_file_dir_list)
+    #print(video_file_dir_list)
     return
     if not os.path.exists(videos_result_folder):
         os.makedirs(videos_result_folder)
