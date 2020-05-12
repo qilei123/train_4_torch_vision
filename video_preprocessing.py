@@ -23,12 +23,13 @@ def video_preprocessing_trim(src_folder_dir,dst_folder_dir,roi,video_suffix = "a
             dst_frame = src_frame[roi[1]:roi[3],roi[0]:roi[2]]
             dst_video.write(dst_frame)
             success,src_frame = src_video.read()
+'''
 src_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/xiangyachangde/"
 dst_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/"
 roi = [441, 1, 1278, 720]
 video_preprocessing_trim(src_folder_dir,dst_folder_dir,roi)
-
-src_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/weijingshi4/"
-dst_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/"
+'''
+src_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/xiangyachangde2/"
+dst_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed2/"
 roi = [156, 40, 698, 527]
 video_preprocessing_trim(src_folder_dir,dst_folder_dir,roi)
