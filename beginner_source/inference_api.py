@@ -183,8 +183,8 @@ def process_4_situation_videos(model_name = "densenet161"):
 
     video_suffix = ".avi"
     
-    video_file_dir_list = glob.glob(os.path.join(videos_folder,"*"+video_suffix))
-
+    video_file_dir_list = glob.glob(os.path.join(videos_folder,"2019*"))
+    print(video_file_dir_list)
     if not os.path.exists(videos_result_folder):
         os.makedirs(videos_result_folder)
     video_count=0
@@ -237,9 +237,11 @@ process_4_situation_videos(model_name='vgg13_bn')
 process_4_situation_videos(model_name='vgg16_bn')
 process_4_situation_videos(model_name='vgg19_bn')
 '''
+'''
 process_4_situation_videos(model_name='densenet161')
 process_4_situation_videos(model_name='densenet169')
 process_4_situation_videos(model_name='densenet201')
+'''
 '''
 model_name='densenet121'
 cf = classifier(224,model_name=model_name,class_num_=4)
