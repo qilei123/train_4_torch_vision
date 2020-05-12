@@ -75,6 +75,14 @@ class classifier:
             self.model.classifier[1] = nn.Conv2d(512, self.class_num, kernel_size=(1,1), stride=(1,1))
             self.model.num_classes = self.class_num
             input_size = 224
+        elif model_name == "squeezenet1_1":
+            """ squeezenet1_1
+            """
+            self.model = models.squeezenet1_1()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            self.model.classifier[1] = nn.Conv2d(512, self.class_num, kernel_size=(1,1), stride=(1,1))
+            self.model.num_classes = self.class_num
+            input_size = 224
         elif model_name == "resnet":
             """ Resnet18
             """
@@ -169,7 +177,7 @@ def process_4_situation_videos(model_name = "densenet161"):
 
     model.ini_model(model_dir)
 
-    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/"
+    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed2/"
     #videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/weijingshi4/"
     '''
     big_roi = [441, 1, 1278, 720]
@@ -185,6 +193,7 @@ def process_4_situation_videos(model_name = "densenet161"):
     
     video_file_dir_list = glob.glob(os.path.join(videos_folder,"2019*"))
     print(video_file_dir_list)
+    return
     if not os.path.exists(videos_result_folder):
         os.makedirs(videos_result_folder)
     video_count=0
@@ -223,6 +232,8 @@ def process_4_situation_videos(model_name = "densenet161"):
                 count+=1
             
         video_count+=1
+
+process_4_situation_videos(model_name='squeezenet1_0')
 '''
 process_4_situation_videos(model_name='alexnet')
 process_4_situation_videos(model_name='vgg11')
