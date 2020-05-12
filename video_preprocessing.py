@@ -5,7 +5,7 @@ def video_preprocessing_trim(src_folder_dir,dst_folder_dir,roi,video_suffix = "a
     if not os.path.exists(dst_folder_dir):
         os.makedirs(dst_folder_dir)
 
-    video_file_dirs = glob.glob(os.path.join(src_folder_dir,"*."+video_suffix))
+    video_file_dirs = glob.glob(os.path.join(src_folder_dir,"2019*"))
     
     for video_file_dir in video_file_dirs:
         video_file_name = os.path.basename(video_file_dir)
