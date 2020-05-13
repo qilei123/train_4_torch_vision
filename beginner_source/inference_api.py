@@ -177,7 +177,7 @@ def process_4_situation_videos(model_name = "densenet161"):
 
     model.ini_model(model_dir)
 
-    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed2/"
+    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/"
     #videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/weijingshi4/"
     '''
     big_roi = [441, 1, 1278, 720]
@@ -230,7 +230,7 @@ def process_4_situation_videos(model_name = "densenet161"):
                 #print(predict_label)
                 success,frame = video.read()
                 count+=1
-                if count%1000==0:
+                if count%10000==0:
                     print(count)
             
         video_count+=1
