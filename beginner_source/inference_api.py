@@ -28,7 +28,7 @@ def micros(t1, t2):
     return delta
 
 
-
+import threading
 class classifier:
     def __init__(self,input_size_=1000,mean_=[0.485, 0.456, 0.406],std_=[0.229, 0.224, 0.225],class_num_=2,model_name = 'resnet101_wide',device_id=0):
         self.input_size = input_size_
@@ -172,10 +172,14 @@ def process_4_situation_videos(model_name = "densenet161"):
     
 
     model = classifier(224,model_name=model_name,class_num_=4)
-    
+
+    model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
+
     model_dir = '/data2/qilei_chen/DATA/GI_4_NEW/finetune_4_new_oimg_'+model_name+'/best.model'
 
     model.ini_model(model_dir)
+
+    model1.ini_model(model_dir)
 
     videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/"
     #videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/weijingshi4/"
@@ -222,6 +226,7 @@ def process_4_situation_videos(model_name = "densenet161"):
                 predict_label = model.predict(frame_roi)
                 '''
                 predict_label = model.predict(frame)
+                predict_label1 = model1.predict(frame)
                 records_file_header.write(str(count)+" "+str(predict_label)+"\n")
                 #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
                 cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
