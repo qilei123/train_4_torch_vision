@@ -324,12 +324,12 @@ def process_4_situation_videos(model_name = "densenet161"):
 #process_4_situation_videos(model_name='squeezenet1_0')
 #process_4_situation_videos(model_name='squeezenet1_1')
 process_4_situation_videos(model_name='inception3')
-
+'''
 process_4_situation_videos(model_name='vgg11')
 process_4_situation_videos(model_name='vgg13')
 process_4_situation_videos(model_name='vgg16')
 process_4_situation_videos(model_name='vgg19')
-
+'''
 process_4_situation_videos(model_name='vgg11_bn')
 process_4_situation_videos(model_name='vgg13_bn')
 process_4_situation_videos(model_name='vgg16_bn')
@@ -339,19 +339,14 @@ process_4_situation_videos(model_name='densenet121')
 process_4_situation_videos(model_name='densenet161')
 process_4_situation_videos(model_name='densenet169')
 process_4_situation_videos(model_name='densenet201')
-'''
+
 process_4_situation_videos(model_name='resnet18')
 process_4_situation_videos(model_name='resnet34')
 process_4_situation_videos(model_name='resnet50')
 process_4_situation_videos(model_name='resnet101')
 process_4_situation_videos(model_name='resnet152')
 '''
-'''
-'''
-'''
-'''
 
-'''
 '''
 model_name='densenet121'
 cf = classifier(224,model_name=model_name,class_num_=4)
