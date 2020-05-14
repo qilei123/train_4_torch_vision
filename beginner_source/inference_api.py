@@ -51,7 +51,7 @@ class classifier:
             self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
             input_size = 224
 
-        elif model_name == "vgg":
+        elif model_name == "vgg11_bn":
             """ VGG11_bn
             """
             self.model = models.vgg11_bn()
@@ -60,9 +60,57 @@ class classifier:
             self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
             input_size = 224
         elif model_name == "vgg11":
-            """ VGG11_bn
+            """ VGG11
             """
             self.model = models.vgg11()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[6].in_features
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
+            input_size = 224
+        elif model_name == "vgg13_bn":
+            """ VGG13_bn
+            """
+            self.model = models.vgg13_bn()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[6].in_features
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
+            input_size = 224
+        elif model_name == "vgg13":
+            """ VGG13
+            """
+            self.model = models.vgg13()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[6].in_features
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
+            input_size = 224
+        elif model_name == "vgg16_bn":
+            """ VGG16_bn
+            """
+            self.model = models.vgg16_bn()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[6].in_features
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
+            input_size = 224
+        elif model_name == "vgg16":
+            """ VGG16
+            """
+            self.model = models.vgg16()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[6].in_features
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
+            input_size = 224
+        elif model_name == "vgg19_bn":
+            """ VGG19_bn
+            """
+            self.model = models.vgg19_bn()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[6].in_features
+            self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
+            input_size = 224
+        elif model_name == "vgg19":
+            """ VGG19
+            """
+            self.model = models.vgg19()
             #set_parameter_requires_grad(model_ft, feature_extract)
             num_ftrs = self.model.classifier[6].in_features
             self.model.classifier[6] = nn.Linear(num_ftrs,self.class_num)
@@ -83,7 +131,7 @@ class classifier:
             self.model.classifier[1] = nn.Conv2d(512, self.class_num, kernel_size=(1,1), stride=(1,1))
             self.model.num_classes = self.class_num
             input_size = 224
-        elif model_name == "resnet":
+        elif model_name == "resnet18":
             """ Resnet18
             """
             self.model = models.resnet18()
@@ -91,8 +139,39 @@ class classifier:
             num_ftrs = self.model.fc.in_features
             self.model.fc = nn.Linear(num_ftrs, self.class_num)
             input_size = 224
-
-        elif model_name=='inception_v3':
+        elif model_name == "resnet34":
+            """ Resnet34
+            """
+            self.model = models.resnet34()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.fc.in_features
+            self.model.fc = nn.Linear(num_ftrs, self.class_num)
+            input_size = 224
+        elif model_name == "resnet50":
+            """ Resnet50
+            """
+            self.model = models.resnet50()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.fc.in_features
+            self.model.fc = nn.Linear(num_ftrs, self.class_num)
+            input_size = 224
+        elif model_name == "resnet101":
+            """ Resnet101
+            """
+            self.model = models.resnet101()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.fc.in_features
+            self.model.fc = nn.Linear(num_ftrs, self.class_num)
+            input_size = 224
+        elif model_name == "resnet152":
+            """ Resnet152
+            """
+            self.model = models.resnet152()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.fc.in_features
+            self.model.fc = nn.Linear(num_ftrs, self.class_num)
+            input_size = 224
+        elif model_name=='inception3':
             self.model = models.inception_v3()
             num_ftrs = self.model.AuxLogits.fc.in_features
             self.model.AuxLogits.fc = nn.Linear(num_ftrs, self.class_num)
@@ -239,28 +318,29 @@ def process_4_situation_videos(model_name = "densenet161"):
                     print(count)
             
         video_count+=1
+process_4_situation_videos(model_name='alexnet')
 
 process_4_situation_videos(model_name='squeezenet1_0')
 process_4_situation_videos(model_name='squeezenet1_1')
-process_4_situation_videos(model_name='alexnet')
-'''
-process_4_situation_videos(model_name='alexnet')
+
 process_4_situation_videos(model_name='vgg11')
 process_4_situation_videos(model_name='vgg13')
 process_4_situation_videos(model_name='vgg16')
 process_4_situation_videos(model_name='vgg19')
-'''
-'''
-process_4_situation_videos(model_name='squeezenet1_0')
 process_4_situation_videos(model_name='vgg11_bn')
 process_4_situation_videos(model_name='vgg13_bn')
 process_4_situation_videos(model_name='vgg16_bn')
 process_4_situation_videos(model_name='vgg19_bn')
-'''
-'''
+process_4_situation_videos(model_name='densenet121')
 process_4_situation_videos(model_name='densenet161')
 process_4_situation_videos(model_name='densenet169')
 process_4_situation_videos(model_name='densenet201')
+'''
+
+
+'''
+'''
+
 '''
 '''
 model_name='densenet121'
