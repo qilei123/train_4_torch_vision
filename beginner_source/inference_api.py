@@ -334,7 +334,7 @@ process_4_situation_videos(model_name='vgg11_bn')
 process_4_situation_videos(model_name='vgg13_bn')
 process_4_situation_videos(model_name='vgg16_bn')
 process_4_situation_videos(model_name='vgg19_bn')
-'''
+
 process_4_situation_videos(model_name='densenet121')
 process_4_situation_videos(model_name='densenet161')
 process_4_situation_videos(model_name='densenet169')
@@ -345,6 +345,7 @@ process_4_situation_videos(model_name='resnet34')
 process_4_situation_videos(model_name='resnet50')
 process_4_situation_videos(model_name='resnet101')
 process_4_situation_videos(model_name='resnet152')
+'''
 '''
 '''
 '''
