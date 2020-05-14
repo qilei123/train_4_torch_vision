@@ -319,6 +319,7 @@ def process_4_situation_videos(model_name = "densenet161"):
                     print(count)
                 '''
         video_count+=1
+'''
 #process_4_situation_videos(model_name='alexnet')
 #process_4_situation_videos(model_name='squeezenet1_0')
 #process_4_situation_videos(model_name='squeezenet1_1')
@@ -333,7 +334,7 @@ process_4_situation_videos(model_name='vgg11_bn')
 process_4_situation_videos(model_name='vgg13_bn')
 process_4_situation_videos(model_name='vgg16_bn')
 process_4_situation_videos(model_name='vgg19_bn')
-
+'''
 process_4_situation_videos(model_name='densenet121')
 process_4_situation_videos(model_name='densenet161')
 process_4_situation_videos(model_name='densenet169')
