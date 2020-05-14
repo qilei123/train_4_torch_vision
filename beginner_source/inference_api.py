@@ -213,7 +213,7 @@ def process_4_situation_videos(model_name = "densenet161"):
             video_name = os.path.basename(video_file_dir)
 
             records_file_dir = os.path.join(videos_result_folder,video_name.replace(video_suffix,".txt"))
-            records_file_header = open(records_file_dir,"w")
+            #records_file_header = open(records_file_dir,"w")
 
             fps = video.get(cv2.CAP_PROP_FPS)
             frame_size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
@@ -227,7 +227,7 @@ def process_4_situation_videos(model_name = "densenet161"):
                 '''
                 predict_label = model.predict(frame)
                 predict_label1 = model1.predict(frame)
-                records_file_header.write(str(count)+" "+str(predict_label)+"\n")
+                #records_file_header.write(str(count)+" "+str(predict_label)+"\n")
                 #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
                 cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
                 #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
