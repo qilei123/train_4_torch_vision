@@ -314,9 +314,10 @@ def process_4_situation_videos(model_name = "densenet161"):
                 #print(predict_label)
                 success,frame = video.read()
                 count+=1
+                '''
                 if count%10000==0:
                     print(count)
-            
+                '''
         video_count+=1
 #process_4_situation_videos(model_name='alexnet')
 #process_4_situation_videos(model_name='squeezenet1_0')
