@@ -213,7 +213,7 @@ def process_4_situation_videos(model_name = "densenet161"):
             video_name = os.path.basename(video_file_dir)
 
             records_file_dir = os.path.join(videos_result_folder,video_name.replace(video_suffix,".txt"))
-            #records_file_header = open(records_file_dir,"w")
+            records_file_header = open(records_file_dir,"w")
 
             fps = video.get(cv2.CAP_PROP_FPS)
             frame_size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
@@ -225,17 +225,11 @@ def process_4_situation_videos(model_name = "densenet161"):
                 frame_roi = frame[roi[1]:roi[3],roi[0]:roi[2]]
                 predict_label = model.predict(frame_roi)
                 '''
-                t1 = threading.Thread(target=model.predict,args=(frame,))
-                t2 = threading.Thread(target=model1.predict,args=(frame,))
-                t1.start()
-                t2.start()
-                t1.join()
-                t2.join()
-                #predict_label = model.predict(frame)
-                #predict_label1 = model1.predict(frame)
-                #records_file_header.write(str(count)+" "+str(predict_label)+"\n")
+                predict_label = model.predict(frame)
+                predict_label1 = model1.predict(frame)
+                records_file_header.write(str(count)+" "+str(predict_label)+"\n")
                 #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
-                #cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
+                cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
                 #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
                 #videoWriter.write(frame)
                 #print(predict_label)
@@ -247,6 +241,8 @@ def process_4_situation_videos(model_name = "densenet161"):
         video_count+=1
 
 process_4_situation_videos(model_name='squeezenet1_0')
+process_4_situation_videos(model_name='squeezenet1_1')
+process_4_situation_videos(model_name='alexnet')
 '''
 process_4_situation_videos(model_name='alexnet')
 process_4_situation_videos(model_name='vgg11')
