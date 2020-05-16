@@ -323,7 +323,7 @@ def process_4_situation_videos(model_name = "densenet161"):
 #process_4_situation_videos(model_name='alexnet')
 #process_4_situation_videos(model_name='squeezenet1_0')
 #process_4_situation_videos(model_name='squeezenet1_1')
-process_4_situation_videos(model_name='inception3')
+#process_4_situation_videos(model_name='inception3')
 
 '''
 process_4_situation_videos(model_name='vgg11')
