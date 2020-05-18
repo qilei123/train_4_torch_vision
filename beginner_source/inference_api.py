@@ -340,13 +340,13 @@ process_4_situation_videos(model_name='densenet121')
 process_4_situation_videos(model_name='densenet161')
 process_4_situation_videos(model_name='densenet169')
 process_4_situation_videos(model_name='densenet201')
-'''
+
 process_4_situation_videos(model_name='resnet18')
 process_4_situation_videos(model_name='resnet34')
 process_4_situation_videos(model_name='resnet50')
 process_4_situation_videos(model_name='resnet101')
 process_4_situation_videos(model_name='resnet152')
-
+'''
 
 '''
 model_name='densenet121'
