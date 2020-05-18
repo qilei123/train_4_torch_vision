@@ -260,7 +260,7 @@ def process_4_situation_videos(model_name = "densenet161"):
 
     #model1.ini_model(model_dir)
 
-    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/"
+    videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed2/"
     #videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/weijingshi4/"
     '''
     big_roi = [441, 1, 1278, 720]
@@ -274,7 +274,7 @@ def process_4_situation_videos(model_name = "densenet161"):
 
     video_suffix = ".avi"
     
-    video_file_dir_list = glob.glob(os.path.join(videos_folder,"2020*"))
+    video_file_dir_list = glob.glob(os.path.join(videos_folder,"2019*"))
     #print(video_file_dir_list)
     #return
     if not os.path.exists(videos_result_folder):
@@ -367,17 +367,17 @@ print(cf.predict('/home/cql/Downloads/test5.7/test0/31_right.jpeg'))
 print(cf.predict('/home/cql/Downloads/test5.7/test0/40_right.jpeg'))
 '''
 
-#process_4_situation_videos(model_name='alexnet')
+process_4_situation_videos(model_name='alexnet')
 #process_4_situation_videos(model_name='squeezenet1_0')
 #process_4_situation_videos(model_name='squeezenet1_1')
 #process_4_situation_videos(model_name='inception3')
 
-#process_4_situation_videos(model_name='vgg11')
+process_4_situation_videos(model_name='vgg11')
 #process_4_situation_videos(model_name='vgg13')
 #process_4_situation_videos(model_name='vgg16')
 #process_4_situation_videos(model_name='vgg19')
 
-#process_4_situation_videos(model_name='vgg11_bn')
+process_4_situation_videos(model_name='vgg11_bn')
 #process_4_situation_videos(model_name='vgg13_bn')
 #process_4_situation_videos(model_name='vgg16_bn')
 #process_4_situation_videos(model_name='vgg19_bn')
@@ -387,7 +387,7 @@ print(cf.predict('/home/cql/Downloads/test5.7/test0/40_right.jpeg'))
 #process_4_situation_videos(model_name='densenet169')
 #process_4_situation_videos(model_name='densenet201')
 
-process_4_situation_videos(model_name='resnet18')
+#process_4_situation_videos(model_name='resnet18')
 #process_4_situation_videos(model_name='resnet34')
 #process_4_situation_videos(model_name='resnet50')
 #process_4_situation_videos(model_name='resnet101')
