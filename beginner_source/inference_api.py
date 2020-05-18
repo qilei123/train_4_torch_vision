@@ -325,12 +325,12 @@ process_4_situation_videos(model_name='squeezenet1_0')
 process_4_situation_videos(model_name='squeezenet1_1')
 #process_4_situation_videos(model_name='inception3')
 
-'''
+
 process_4_situation_videos(model_name='vgg11')
 process_4_situation_videos(model_name='vgg13')
 process_4_situation_videos(model_name='vgg16')
 process_4_situation_videos(model_name='vgg19')
-
+'''
 process_4_situation_videos(model_name='vgg11_bn')
 process_4_situation_videos(model_name='vgg13_bn')
 process_4_situation_videos(model_name='vgg16_bn')
