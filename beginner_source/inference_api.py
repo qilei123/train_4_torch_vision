@@ -367,9 +367,9 @@ print(cf.predict('/home/cql/Downloads/test5.7/test0/31_right.jpeg'))
 print(cf.predict('/home/cql/Downloads/test5.7/test0/40_right.jpeg'))
 '''
 
-process_4_situation_videos(model_name='alexnet')
+#process_4_situation_videos(model_name='alexnet')
 #process_4_situation_videos(model_name='squeezenet1_0')
-#process_4_situation_videos(model_name='squeezenet1_1')
+process_4_situation_videos(model_name='squeezenet1_1')
 #process_4_situation_videos(model_name='inception3')
 
 #process_4_situation_videos(model_name='vgg11')
