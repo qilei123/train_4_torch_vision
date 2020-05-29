@@ -29,7 +29,7 @@ dst_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed/"
 roi = [441, 1, 1278, 720]
 video_preprocessing_trim(src_folder_dir,dst_folder_dir,roi)
 '''
-src_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/xiangyachangde2/"
-dst_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed2/"
+src_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/changjing20/"
+dst_folder_dir="/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed_changjing20/"
 roi = [156, 40, 698, 527]
 video_preprocessing_trim(src_folder_dir,dst_folder_dir,roi)
