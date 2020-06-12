@@ -12,8 +12,9 @@ import os
 import sys
 import argparse
 import csv
-sys.path.insert(0,'/media/cql/DATA1/Development/vision2')
-sys.path.insert(0,'/data0/qilei_chen/Development/vision2')
+#sys.path.insert(0,'/media/cql/DATA1/Development/vision2')
+#sys.path.insert(0,'/data0/qilei_chen/Development/vision2')
+sys.path.insert(0,'/data1/qilei_chen/DEVELOPMENTS/vision2')
 import torchvision
 from torchvision import datasets, models, transforms
 #from networks import *
@@ -293,7 +294,7 @@ def process_4_situation_videos(model_name = "densenet161"):
             video_name = os.path.basename(video_file_dir)
 
             records_file_dir = os.path.join(videos_result_folder,video_name.replace(video_suffix,".txt"))
-            records_file_header = open(records_file_dir,"w")
+            #records_file_header = open(records_file_dir,"w")
 
             fps = video.get(cv2.CAP_PROP_FPS)
             frame_size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
@@ -307,9 +308,9 @@ def process_4_situation_videos(model_name = "densenet161"):
                 '''
                 predict_label = model.predict(frame)
                 #predict_label1 = model1.predict(frame)
-                records_file_header.write(str(count)+" "+str(predict_label)+"\n")
+                #records_file_header.write(str(count)+" "+str(predict_label)+"\n")
                 #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame_roi)
-                cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
+                #cv2.putText(frame,str(count)+":"+str(predict_label),(50,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),3,cv2.LINE_AA)
                 #cv2.imwrite("/data2/qilei_chen/DATA/test.jpg",frame)
                 #videoWriter.write(frame)
                 #print(predict_label)
@@ -368,8 +369,8 @@ print(cf.predict('/home/cql/Downloads/test5.7/test0/31_right.jpeg'))
 print(cf.predict('/home/cql/Downloads/test5.7/test0/40_right.jpeg'))
 '''
 
-process_4_situation_videos(model_name='alexnet')
-process_4_situation_videos(model_name='squeezenet1_0')
+#process_4_situation_videos(model_name='alexnet')
+#process_4_situation_videos(model_name='squeezenet1_0')
 #process_4_situation_videos(model_name='squeezenet1_1')
 process_4_situation_videos(model_name='inception3')
 
