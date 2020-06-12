@@ -250,7 +250,7 @@ class classifier:
 
 def process_4_situation_videos(model_name = "densenet161"):
     
-
+    print("start ini model")
     model = classifier(224,model_name=model_name,class_num_=4)
 
     #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
@@ -258,7 +258,7 @@ def process_4_situation_videos(model_name = "densenet161"):
     model_dir = '/data2/qilei_chen/DATA/GI_4_NEW/finetune_4_new_oimg_'+model_name+'/best.model'
 
     model.ini_model(model_dir)
-
+    print("finish ini model")
     #model1.ini_model(model_dir)
 
     #videos_folder = "/data2/qilei_chen/jianjiwanzhengshipin2/preprocessed2/"
