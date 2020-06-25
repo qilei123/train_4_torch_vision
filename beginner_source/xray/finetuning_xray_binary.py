@@ -49,7 +49,7 @@ class XrayDataset(VisionDataset):
     def __getitem__(self, index):
         image_dir = os.path.join(self.root,self.file_names[index])
         image = pil_loader(image_dir)
-        print(image_dir)
+
         if self.transform is not None:
             image = self.transform(image)
         if self.transforms is not None:
@@ -456,6 +456,8 @@ def cross_validation():
     precision_records = open(os.path.join(data_dir,"records.txt"),"w")
     for i,(train_file_names,train_labels,val_file_names,val_labels) in enumerate(split_set(
         os.path.join(args.datadir,args.annotation),nsplit=args.kcross)):
+        print("number of training images:"+str(len(train_labels)))
+        print("number of validation images:"+str(len(val_labels)))
         # Initialize the model for this run
         model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained=True)
 
