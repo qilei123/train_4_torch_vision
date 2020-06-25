@@ -449,13 +449,12 @@ def split_set(csv, nsplit = 4):
         yield file_name[train_index], label[train_index],file_name[test_index], label[test_index]
 
 
-
-
 def cross_validation():
     avg_precision = 0
     precision_records = open(os.path.join(data_dir,"records.txt"),"w")
     for i,(train_file_names,train_labels,val_file_names,val_labels) in enumerate(split_set(
         os.path.join(args.datadir,args.annotation),nsplit=args.kcross)):
+        print("-------Round "+str(i)+"-------")
         print("number of training images:"+str(len(train_labels)))
         print("number of validation images:"+str(len(val_labels)))
         # Initialize the model for this run
