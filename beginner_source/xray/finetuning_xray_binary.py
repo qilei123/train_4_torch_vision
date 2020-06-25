@@ -545,7 +545,7 @@ def cross_validation():
 
         ohist = [h.cpu().numpy() for h in hist]
         for precision in ohist:
-            precision_records.write(precision)
+            precision_records.write(str(precision))
             precision_records.write(" ")
         precision_records.write("\n")
             
