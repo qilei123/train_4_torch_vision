@@ -49,6 +49,7 @@ class XrayDataset(VisionDataset):
     def __getitem__(self, index):
         image_dir = os.path.join(self.root,self.file_names[index])
         image = pil_loader(image_dir)
+        print(image_dir)
         if self.transform is not None:
             image = self.transform(image)
         if self.transforms is not None:
