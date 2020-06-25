@@ -64,6 +64,7 @@ class XrayDataset(VisionDataset):
 parser = argparse.ArgumentParser(description='model name')
 parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
 parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/GI_4_NEW")
+parser.add_argument('--imagefolder', '-i', help='the folder for the images', default="/data2/qilei_chen/DATA/GI_4_NEW")
 parser.add_argument('--kcross', '-k', help='set the number of k cross folder', default=5)
 parser.add_argument('--class', '-c', help='set the classes of label', default=2)
 args = parser.parse_args()
@@ -102,7 +103,9 @@ args = parser.parse_args()
 # Top level data directory. Here we assume the format of the directory conforms 
 #   to the ImageFolder structure
 #data_dir = "/data2/DB_GI/0/sample2"
+
 data_dir = args.datadir
+image_folder = args.imagefolder
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "squeezenet"
 model_name = "resnet"
@@ -137,7 +140,7 @@ feature_extract = False
 input_size_ = 299
 
 gpu_index = '0'
-
+device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
 ######################################################################
 # Helper Functions
 # ----------------
@@ -620,90 +623,105 @@ def split_set(csv, nsplit = 4):
         yield file_name[train_index], label[train_index],file_name[test_index], label[test_index]
 
 
-######################################################################
-# Load Data
-# ---------
-# 
-# Now that we know what the input size must be, we can initialize the data
-# transforms, image datasets, and the dataloaders. Notice, the models were
-# pretrained with the hard-coded normalization values, as described
-# `here <https://pytorch.org/docs/master/torchvision/models.html>`__.
-# 
-
-# Data augmentation and normalization for training
-# Just normalization for validation
-data_transforms = {
-    'train': transforms.Compose([
-        #transforms.RandomResizedCrop(input_size),
-        transforms.Resize(input_size),
-        transforms.RandomHorizontalFlip(),
-        transforms.RandomVerticalFlip(),
-        #transforms.RandomRotation2(),
-        transforms.CenterCrop(input_size),
-        transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-    ]),
-    'val': transforms.Compose([
-        transforms.Resize(input_size),
-        transforms.CenterCrop(input_size),
-        transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-    ]),
-}
-
-# Initialize the model for this run
-model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained=True)
-
-# Print the model we just instantiated
-#print(model_ft) 
-
-print("Initializing Datasets and Dataloaders...")
-
-# Create training and validation datasets
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
-# Create training and validation dataloaders
-dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train', 'val']}
-
-# Detect if we have a GPU available
-device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
-#device = torch.device('cpu')
-
-# Send the model to GPU
-model_ft = model_ft.to(device)
-
-# Gather the parameters to be optimized/updated in this run. If we are
-#  finetuning we will be updating all parameters. However, if we are 
-#  doing feature extract method, we will only update the parameters
-#  that we have just initialized, i.e. the parameters with requires_grad
-#  is True.
-params_to_update = model_ft.parameters()
-#print("Params to learn:")
-if feature_extract:
-    params_to_update = []
-    for name,param in model_ft.named_parameters():
-        if param.requires_grad == True:
-            params_to_update.append(param)
-            #print("\t",name)
-else:
-    for name,param in model_ft.named_parameters():
-        if param.requires_grad == True:
-            #print("\t",name)
-            pass
-
-# Observe that all parameters are being optimized
-optimizer_ft = optim.SGD(params_to_update, lr=0.0001, momentum=0.9)
 
 
-# Setup the loss fxn
-criterion = nn.CrossEntropyLoss()
-#criterion = FocalLoss(class_num = num_classes,device_index=int(gpu_index))
+def cross_validation():
+    avg_precision = 0
+    precision_records = open(os.path.join(data_dir,"records.txt"),"w")
+    for i,(train_file_names,train_labels,val_file_names,val_labels) in enumerate(split_set(
+        "/data2/qilei_chen/DATA/xray/xray_dataset_annotations.csv",nsplit=args.kcross)):
+        # Initialize the model for this run
+        model_ft, input_size = initialize_model(model_name, num_classes, feature_extract, use_pretrained=True)
 
-# Train and evaluate
-model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
+        # Print the model we just instantiated
+        #print(model_ft) 
+
+        print("Initializing Datasets and Dataloaders...")
+        ######################################################################
+        # Load Data
+        # ---------
+        # 
+        # Now that we know what the input size must be, we can initialize the data
+        # transforms, image datasets, and the dataloaders. Notice, the models were
+        # pretrained with the hard-coded normalization values, as described
+        # `here <https://pytorch.org/docs/master/torchvision/models.html>`__.
+        # 
+
+        # Data augmentation and normalization for training
+        # Just normalization for validation
+        data_transforms = {
+            'train': transforms.Compose([
+                #transforms.RandomResizedCrop(input_size),
+                transforms.Resize(input_size),
+                transforms.RandomHorizontalFlip(),
+                transforms.RandomVerticalFlip(),
+                #transforms.RandomRotation2(),
+                transforms.CenterCrop(input_size),
+                transforms.ToTensor(),
+                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+            ]),
+            'val': transforms.Compose([
+                transforms.Resize(input_size),
+                transforms.CenterCrop(input_size),
+                transforms.ToTensor(),
+                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+            ]),
+        }
+        # Create training and validation datasets
+        #image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
+        image_root = os.path.join(data_dir,image_folder)
+        image_datasets = {'train':XrayDataset(image_root,train_file_names,train_labels,data_transforms["train"]),
+            'val':XrayDataset(image_root,val_file_names,val_labels,data_transforms["val"])}
+        # Create training and validation dataloaders
+        dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train', 'val']}
+
+        # Detect if we have a GPU available
+
+        #device = torch.device('cpu')
+
+        # Send the model to GPU
+        model_ft = model_ft.to(device)
+
+        # Gather the parameters to be optimized/updated in this run. If we are
+        #  finetuning we will be updating all parameters. However, if we are 
+        #  doing feature extract method, we will only update the parameters
+        #  that we have just initialized, i.e. the parameters with requires_grad
+        #  is True.
+        params_to_update = model_ft.parameters()
+        #print("Params to learn:")
+        if feature_extract:
+            params_to_update = []
+            for name,param in model_ft.named_parameters():
+                if param.requires_grad == True:
+                    params_to_update.append(param)
+                    #print("\t",name)
+        else:
+            for name,param in model_ft.named_parameters():
+                if param.requires_grad == True:
+                    #print("\t",name)
+                    pass
+
+        # Observe that all parameters are being optimized
+        optimizer_ft = optim.SGD(params_to_update, lr=0.0001, momentum=0.9)
 
 
-ohist = []
-shist = []
+        # Setup the loss fxn
+        criterion = nn.CrossEntropyLoss()
+        #criterion = FocalLoss(class_num = num_classes,device_index=int(gpu_index))
 
-ohist = [h.cpu().numpy() for h in hist]
+        # Train and evaluate
+        model_ft, hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
 
+
+        ohist = []
+
+        ohist = [h.cpu().numpy() for h in hist]
+        for precision in ohist:
+            precision_records.write(precision)
+            precision_records.write(" ")
+        precision_records.write("\n")
+            
+        avg_precision += max(ohist) 
+    print(str(args.kcross)+"-crocss folder average precision:"+str(avg_precision/args.kcross))
+if __name__ == "__main__":
+    cross_validation()    
