@@ -66,8 +66,8 @@ parser.add_argument('--model', '-m', help='set the training model', default="ale
 parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/xray")
 parser.add_argument('--imagefolder', '-i', help='the folder for the images', default="xray_images")
 parser.add_argument('--annotation', '-a', help='the annotations for the images', default="xray_dataset_annotations.csv")
-parser.add_argument('--kcross', '-k', help='set the number of k cross folder', default=5)
-parser.add_argument('--class', '-c', help='set the classes of label', default=2)
+parser.add_argument('--kcross', '-k', help='set the number of k cross folder', default=4)
+parser.add_argument('--classnumber', '-c', help='set the classes of label', default=2)
 args = parser.parse_args()
 
 
@@ -123,13 +123,13 @@ if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
 
 # Number of classes in the dataset
-num_classes = 4
+num_classes = args.classnumber
 
 # Batch size for training (change depending on how much memory you have)
 if model_name=="vgg" or model_name=="resnet101":
-    batch_size = 16
+    batch_size = 4
 else:
-    batch_size = 32
+    batch_size = 8
 
 # Number of epochs to train for 
 num_epochs = 40
