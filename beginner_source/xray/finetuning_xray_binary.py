@@ -47,8 +47,7 @@ class XrayDataset(VisionDataset):
         self.transforms = transforms
         self.target_transform = target_transform
         self.is_shuffle_sample = is_shuffle_sample
-        print("before balance")
-        print(len(self.labels))
+
         if self.is_shuffle_sample:
             max_count_category = 0
             max_count = 0
@@ -85,8 +84,7 @@ class XrayDataset(VisionDataset):
             
             self.labels = balanced_labels
             self.file_names = balanced_file_names
-            print("after balance")
-            print(len(self.labels))
+            
 
     def __getitem__(self, index):
         image_dir = os.path.join(self.root,self.file_names[index])
