@@ -158,7 +158,7 @@ model_name = "inception"
 model_name = args.model
 print("-------------------"+model_name+"-------------------")
 
-model_folder_dir = data_dir+'/finetune_4_'+model_name
+model_folder_dir = data_dir+'/balanced_finetune_4_'+model_name
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
