@@ -170,7 +170,7 @@ num_classes = args.classnumber
 if model_name=="vgg" or model_name=="resnet101":
     batch_size = 4
 else:
-    batch_size = 8
+    batch_size = 128
 
 # Number of epochs to train for 
 num_epochs = 100
