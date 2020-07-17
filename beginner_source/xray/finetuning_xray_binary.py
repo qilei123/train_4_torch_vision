@@ -28,6 +28,7 @@ import time
 import os
 import copy
 from PIL import Image
+import random
 print("PyTorch Version: ",torch.__version__)
 #print("Torchvision Version: ",torchvision.__version__)
 
@@ -38,13 +39,52 @@ def pil_loader(path):
         img = Image.open(f)
         return img.convert('RGB')
 class XrayDataset(VisionDataset):
-    def __init__(self, root, file_names,labels,transforms=None, transform=None, target_transform=None):
+    def __init__(self, root, file_names,labels,transforms=None, transform=None, target_transform=None,is_shuffle_sample=False):
         super().__init__(root, transforms=transforms, transform=transform, target_transform=target_transform)
         self.root = root
         self.file_names = file_names
         self.labels = labels
         self.transforms = transforms
         self.target_transform = target_transform
+        self.is_shuffle_sample = is_shuffle_sample
+        print(len(self.labels))
+        if self.is_shuffle_sample:
+            max_count_category = 0
+            max_count = 0
+            labels_instances = dict()
+
+            for label,index in zip(self.labels,range(len(self.labels))):
+                if label in labels_instances:
+                    pass
+                else:
+                    labels_instances[label] = []
+                labels_instances[label].append(index)
+                if len(labels_instances[label])>max_count:
+                    max_count_category=label
+                    max_count = len(labels_instances[label])
+            labels_instances_add = dict()
+            for label in labels_instances:
+                more_count = max_count-len(labels_instances[label])
+                labels_instances_add[label]=[]
+                for i in range(more_count):
+                    randint = random.randint(0,len(labels_instances[label])-1)
+                    labels_instances_add[label].append(labels_instances[label][randint])
+            balanced_indexes = []
+
+            for label in labels_instances:
+                balanced_indexes+=labels_instances[label]
+                balanced_indexes+=labels_instances_add[label]
+
+            random.shuffle(balanced_indexes)
+            balanced_labels = []
+            balanced_file_names = []
+            for i in range(len(balanced_indexes)):
+                balanced_labels.append(labels[balanced_indexes[i]])
+                balanced_file_names.append(file_names[balanced_indexes[i]])
+            
+            self.labels = balanced_labels
+            self.file_names = balanced_file_names
+            print(len(self.labels))
 
     def __getitem__(self, index):
         image_dir = os.path.join(self.root,self.file_names[index])
@@ -624,7 +664,7 @@ def cross_validation():
         # Create training and validation datasets
         #image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
         image_root = os.path.join(data_dir,image_folder)
-        image_datasets = {'train':XrayDataset(image_root,train_file_names,train_labels,data_transforms["train"]),
+        image_datasets = {'train':XrayDataset(image_root,train_file_names,train_labels,data_transforms["train"],is_shuffle_sample=True),
             'val':XrayDataset(image_root,val_file_names,val_labels,data_transforms["val"])}
         # Create training and validation dataloaders
         dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train', 'val']}
