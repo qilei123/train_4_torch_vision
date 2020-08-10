@@ -108,7 +108,7 @@ parser.add_argument('--datadir', '-d', help='set the training dataset', default=
 parser.add_argument('--imagefolder', '-i', help='the folder for the images', default="xray_images")
 parser.add_argument('--annotation', '-a', help='the annotations for the images', default="xray_dataset_annotations.csv")
 parser.add_argument('--kcross', '-k', help='set the number of k cross folder', default=4)
-parser.add_argument('--classnumber', '-c', help='set the classes of label', default=2)
+parser.add_argument('--classnumber', '-c', help='set the classes of label', default=4)
 args = parser.parse_args()
 
 
@@ -158,7 +158,7 @@ model_name = "inception"
 model_name = args.model
 print("-------------------"+model_name+"-------------------")
 
-model_folder_dir = data_dir+'/balanced_finetune_4_'+model_name
+model_folder_dir = data_dir+'/4categories_finetune_4_'+model_name
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
@@ -181,7 +181,7 @@ feature_extract = False
 
 input_size_ = 299
 
-gpu_index = '0'
+gpu_index = '1'
 device = torch.device("cuda:"+gpu_index)# if torch.cuda.is_available() else "cpu")
 ######################################################################
 # Helper Functions
@@ -591,7 +591,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
 import pandas as pd
 import numpy as np
 from  sklearn.model_selection import KFold
-LABEL_MAP = ['N','A']
+LABEL_MAP = ['CA','LI','AI','OT']
 
 def split_set(csv, nsplit = 4):
     pd_frame = pd.read_csv(csv, sep=';')
@@ -618,7 +618,7 @@ def split_set(csv, nsplit = 4):
 def cross_validation():
     avg_precision = 0
     print(model_name)
-    precision_records = open(os.path.join(data_dir,"records.txt"),"w")
+    precision_records = open(os.path.join(data_dir,"records_4categories.txt"),"w")
     for i,(train_file_names,train_labels,val_file_names,val_labels) in enumerate(split_set(
         os.path.join(args.datadir,args.annotation),nsplit=args.kcross)):
         print("-------Round "+str(i)+"-------")
