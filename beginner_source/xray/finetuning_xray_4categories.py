@@ -598,7 +598,7 @@ def split_set(csv, nsplit = 4):
     file_name = pd_frame.filename.to_numpy()
     label = pd_frame.presencia_hallazgos_tb.to_numpy()
     # remove NaN rows
-    keep = label != 'nan'
+    keep = label != 'NaN'
     file_name = file_name[keep]
     label = label[keep]
     # convert string label to numeric label
