@@ -664,7 +664,7 @@ def cross_validation():
         # Create training and validation datasets
         #image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
         image_root = os.path.join(data_dir,image_folder)
-        image_datasets = {'train':XrayDataset(image_root,train_file_names,train_labels,data_transforms["train"],is_shuffle_sample=False),
+        image_datasets = {'train':XrayDataset(image_root,train_file_names,train_labels,data_transforms["train"],is_shuffle_sample=True),
             'val':XrayDataset(image_root,val_file_names,val_labels,data_transforms["val"])}
         # Create training and validation dataloaders
         dataloaders_dict = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4) for x in ['train', 'val']}
