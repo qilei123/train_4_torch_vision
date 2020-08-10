@@ -609,8 +609,8 @@ def split_set(csv, nsplit = 4):
             temp_file_name.append(fn)
             temp_label.append(lb)
 
-    file_name = temp_file_name
-    label = temp_label
+    file_name = np.array(temp_file_name)
+    label = np.array(temp_label)
     # convert string label to numeric label
     assert len(np.unique(label)) == len(LABEL_MAP)
     for i, l in enumerate(LABEL_MAP):
