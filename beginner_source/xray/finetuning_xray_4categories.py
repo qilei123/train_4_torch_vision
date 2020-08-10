@@ -602,7 +602,7 @@ def split_set(csv, nsplit = 4):
     file_name = file_name[keep]
     label = label[keep]
     # convert string label to numeric label
-    assert len(np.unique(label)) == len(LABEL_MAP)
+    #assert len(np.unique(label)) == len(LABEL_MAP)
     for i, l in enumerate(LABEL_MAP):
         label[label == l] = i
     label = label.astype(np.int)
