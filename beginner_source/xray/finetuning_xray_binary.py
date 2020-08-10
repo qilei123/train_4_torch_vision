@@ -594,9 +594,9 @@ from  sklearn.model_selection import KFold
 LABEL_MAP = ['N','A']
 
 def split_set(csv, nsplit = 4):
-    print(csv)
-    pd_frame = pd.read_csv(csv, sep=';')
-    
+
+    pd_frame = pd.read_csv(csv, sep=',')
+
     file_name = pd_frame.filename.to_numpy()
     label = pd_frame.normal_o_anormal.to_numpy()
     # remove NaN rows
