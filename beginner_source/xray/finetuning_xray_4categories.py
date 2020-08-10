@@ -601,8 +601,18 @@ def split_set(csv, nsplit = 4):
     keep = label == label
     file_name = file_name[keep]
     label = label[keep]
+    temp_file_name = []
+    temp_label = []
+
+    for lb,fn in zip(label,file_name):
+        if lb in LABEL_MAP:
+            temp_file_name.append(fn)
+            temp_label.append(lb)
+
+    file_name = temp_file_name
+    label = temp_label
     # convert string label to numeric label
-    #assert len(np.unique(label)) == len(LABEL_MAP)
+    assert len(np.unique(label)) == len(LABEL_MAP)
     for i, l in enumerate(LABEL_MAP):
         label[label == l] = i
     label = label.astype(np.int)
