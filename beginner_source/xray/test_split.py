@@ -42,6 +42,7 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
             temp_file_name.append(fn)
             temp_label.append(lb)
             command = "cp /data2/qilei_chen/DATA/xray/xray_images/"+fn+" /data2/qilei_chen/DATA/xray/labeled_4categories_images/"+lb
+            print(command)
             os.system(command)
     file_name = np.array(temp_file_name)
     label = np.array(temp_label)
