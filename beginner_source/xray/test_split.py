@@ -44,7 +44,7 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
             command = "cp /data2/qilei_chen/DATA/xray/xray_images/"+fn+" /data2/qilei_chen/DATA/xray/labeled_4categories_images/"+lb
             #print(command)
             #os.system(command)
-            if lb=="CA":
+            if lb=="CA" and os.path.exists("/data2/qilei_chen/DATA/xray/xray_images/"+fn):
                 os.system(command)
                 count+=1
 
