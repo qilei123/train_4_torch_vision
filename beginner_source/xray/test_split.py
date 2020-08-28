@@ -57,8 +57,8 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
     # build 4 fold
     # random seed for reproducibility
     kf = KFold(n_splits=nsplit, shuffle=True, random_state=20)
-    for train_index, test_index in kf.split(file_name):
-        yield file_name[train_index], label[train_index],file_name[test_index], label[test_index]
+    #for train_index, test_index in kf.split(file_name):
+    #    yield file_name[train_index], label[train_index],file_name[test_index], label[test_index]
 
 
 if __name__ == "__main__":
