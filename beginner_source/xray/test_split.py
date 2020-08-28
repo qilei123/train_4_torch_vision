@@ -45,6 +45,7 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
             #print(command)
             #os.system(command)
             if lb=="CA":
+                os.system(command)
                 count+=1
 
     print(count)
