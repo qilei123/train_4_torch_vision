@@ -38,6 +38,7 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
     temp_label = []
 
     for lb,fn in zip(label,file_name):
+        print(lb)
         if lb in LABEL_MAP:
             temp_file_name.append(fn)
             temp_label.append(lb)
