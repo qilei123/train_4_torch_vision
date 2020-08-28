@@ -40,8 +40,7 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
     count2 = 0
     for lb,fn in zip(label,file_name):
         if lb in LABEL_MAP:
-            temp_file_name.append(fn)
-            temp_label.append(lb)
+
             command = "cp /data2/qilei_chen/DATA/xray/xray_images/"+fn+" /data2/qilei_chen/DATA/xray/labeled_4categories_images/"+lb
             #print(command)
             #os.system(command)
@@ -50,6 +49,8 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
                     count2+=1
                 #os.system(command)
                 count+=1
+            temp_file_name.append(fn)
+            temp_label.append(lb)
 
     print(count)
     print(count2)
