@@ -36,15 +36,18 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
     label = label[keep]
     temp_file_name = []
     temp_label = []
-
+    count=0
     for lb,fn in zip(label,file_name):
-        print(lb)
         if lb in LABEL_MAP:
             temp_file_name.append(fn)
             temp_label.append(lb)
             command = "cp /data2/qilei_chen/DATA/xray/xray_images/"+fn+" /data2/qilei_chen/DATA/xray/labeled_4categories_images/"+lb
-            print(command)
-            os.system(command)
+            #print(command)
+            #os.system(command)
+            if lb=="CA":
+                count+=1
+
+    print(count)
     file_name = np.array(temp_file_name)
     label = np.array(temp_label)
     # convert string label to numeric label
