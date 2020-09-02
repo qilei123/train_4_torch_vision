@@ -600,9 +600,9 @@ def split_set(csv, nsplit = 4):
     file_name = pd_frame.filename.to_numpy()
     label = pd_frame.abnormal.to_numpy()
     # remove NaN rows
-    keep = label != 'nan'
-    file_name = file_name[keep]
-    label = label[keep]
+    #keep = label != 'nan'
+    #file_name = file_name[keep]
+    #label = label[keep]
     # convert string label to numeric label
     assert len(np.unique(label)) == len(LABEL_MAP)
     for i, l in enumerate(LABEL_MAP):
