@@ -70,7 +70,7 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
     #for train_index, test_index in kf.split(file_name):
     #    yield file_name[train_index], label[train_index],file_name[test_index], label[test_index]
 
-LABEL_MAP = ['0','1']
+LABEL_MAP = [0,1]
 
 def split_set_copy(csv):
     pd_frame = pd.read_csv(csv, sep=',')
