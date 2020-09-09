@@ -70,15 +70,15 @@ def split_set_presencia_hallazgos_tb(csv, nsplit = 4):
     #for train_index, test_index in kf.split(file_name):
     #    yield file_name[train_index], label[train_index],file_name[test_index], label[test_index]
 
-LABEL_MAP = ['N','A']
+LABEL_MAP = ['0','1']
 
 def split_set_copy(csv):
     pd_frame = pd.read_csv(csv, sep=',')
     file_name = pd_frame.filename.to_numpy()
-    label = pd_frame.normal_o_anormal.to_numpy()    
-    keep = label == label
-    file_name = file_name[keep]
-    label = label[keep]
+    label = pd_frame.abnormal.to_numpy()    
+    #keep = label == label
+    #file_name = file_name[keep]
+    #label = label[keep]
     temp_file_name = []
     temp_label = []
     count=0
@@ -89,6 +89,6 @@ def split_set_copy(csv):
             os.system(command)
 if __name__ == "__main__":
     #split_set_presencia_hallazgos_tb("/data2/qilei_chen/DATA/xray/xray_dataset_annotations.csv")
-    split_set_copy("/data2/qilei_chen/DATA/xray/xray_dataset_annotations.csv")
+    split_set_copy("/data2/qilei_chen/DATA/xray/xray_dataset_simple_annotations.csv")
     #for i,(train_file_names,train_labels,test_file_names,test_labels) in enumerate(split_set("/data2/qilei_chen/DATA/xray/xray_dataset_annotations.csv")):
     #    print(train_labels)    
