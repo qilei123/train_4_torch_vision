@@ -86,7 +86,7 @@ def split_set_copy(csv):
     print(label)
     for lb,fn in zip(label,file_name):
         if lb in LABEL_MAP:
-            command = "cp /data2/qilei_chen/DATA/xray/xray_images/"+fn+" /data2/qilei_chen/DATA/xray/labeled_2categories_images/"+lb
+            command = "cp /data2/qilei_chen/DATA/xray/xray_images/"+fn+" /data2/qilei_chen/DATA/xray/labeled_2categories_images/"+str(lb)
             os.system(command)
 if __name__ == "__main__":
     #split_set_presencia_hallazgos_tb("/data2/qilei_chen/DATA/xray/xray_dataset_annotations.csv")
