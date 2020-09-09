@@ -83,6 +83,7 @@ def split_set_copy(csv):
     temp_label = []
     count=0
     count2 = 0
+    print(label)
     for lb,fn in zip(label,file_name):
         if lb in LABEL_MAP:
             command = "cp /data2/qilei_chen/DATA/xray/xray_images/"+fn+" /data2/qilei_chen/DATA/xray/labeled_2categories_images/"+lb
