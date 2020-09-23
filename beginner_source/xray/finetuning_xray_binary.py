@@ -43,7 +43,7 @@ def pil_loader(path):
     
     img = cv2.imread(path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    return Image.fromarray(img)
+    return Image.fromarray(img).convert('RGB')
 
 class XrayDataset(VisionDataset):
     def __init__(self, root, file_names,labels,transforms=None, transform=None, target_transform=None,is_shuffle_sample=False):
