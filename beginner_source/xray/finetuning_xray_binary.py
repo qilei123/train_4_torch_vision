@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 import time
 import os
 import copy
-from PIL import Image
+from PIL import Image,ImageOps
 import random
 print("PyTorch Version: ",torch.__version__)
 #print("Torchvision Version: ",torchvision.__version__)
@@ -37,7 +37,9 @@ import argparse
 def pil_loader(path):
     with open(path, 'rb') as f:
         img = Image.open(f)
-        return img.convert('RGB')
+        #return img.convert('RGB')
+        return mageOps.grayscale(img.convert('RGB'))
+
 class XrayDataset(VisionDataset):
     def __init__(self, root, file_names,labels,transforms=None, transform=None, target_transform=None,is_shuffle_sample=False):
         super().__init__(root, transforms=transforms, transform=transform, target_transform=target_transform)
@@ -105,7 +107,7 @@ class XrayDataset(VisionDataset):
 parser = argparse.ArgumentParser(description='model name')
 parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
 parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/xray")
-parser.add_argument('--imagefolder', '-i', help='the folder for the images', default="xray_images")
+parser.add_argument('--imagefolder', '-i', help='the folder for the images', default="xray_images1")
 parser.add_argument('--annotation', '-a', help='the annotations for the images', default="xray_dataset_simple_annotations.csv")
 parser.add_argument('--kcross', '-k', help='set the number of k cross folder', default=4)
 parser.add_argument('--classnumber', '-c', help='set the classes of label', default=2)
@@ -158,8 +160,8 @@ model_name = "inception"
 model_name = args.model
 print("-------------------"+model_name+"-------------------")
 
-model_folder_dir = data_dir+'/balanced_finetune_4_'+model_name
-
+#model_folder_dir = data_dir+'/balanced_finetune_4_'+model_name
+model_folder_dir = data_dir+'/balanced_finetune_2_'+model_name
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
 
