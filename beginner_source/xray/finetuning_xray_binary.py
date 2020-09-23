@@ -38,7 +38,7 @@ def pil_loader(path):
     with open(path, 'rb') as f:
         img = Image.open(f)
         #return img.convert('RGB')
-        return mageOps.grayscale(img.convert('RGB'))
+        return ImageOps.grayscale(img.convert('RGB'))
 
 class XrayDataset(VisionDataset):
     def __init__(self, root, file_names,labels,transforms=None, transform=None, target_transform=None,is_shuffle_sample=False):
