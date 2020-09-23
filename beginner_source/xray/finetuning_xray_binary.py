@@ -33,12 +33,17 @@ print("PyTorch Version: ",torch.__version__)
 #print("Torchvision Version: ",torchvision.__version__)
 
 import argparse
-
+import cv2
 def pil_loader(path):
+    '''
     with open(path, 'rb') as f:
         img = Image.open(f)
-        #return img.convert('RGB')
-        return ImageOps.grayscale(img.convert('RGB'))
+        return img.convert('RGB')
+    '''
+    
+    img = cv2.imread(path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    return Image.fromarray(img)
 
 class XrayDataset(VisionDataset):
     def __init__(self, root, file_names,labels,transforms=None, transform=None, target_transform=None,is_shuffle_sample=False):
