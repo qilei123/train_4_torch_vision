@@ -195,23 +195,29 @@ class classifier:
             num_ftrs = self.model.classifier.in_features
             self.model.classifier = nn.Linear(num_ftrs, self.class_num) 
         elif model_name == "densenet161":
-            """ Densenet
-            """
             self.model = models.densenet161()
             num_ftrs = self.model.classifier.in_features
             self.model.classifier = nn.Linear(num_ftrs, self.class_num)
         elif model_name == "densenet169":
-            """ Densenet
-            """
             self.model = models.densenet169()
             num_ftrs = self.model.classifier.in_features
             self.model.classifier = nn.Linear(num_ftrs, self.class_num) 
         elif model_name == "densenet201":
-            """ Densenet
-            """
             self.model = models.densenet201()
             num_ftrs = self.model.classifier.in_features
-            self.model.classifier = nn.Linear(num_ftrs, self.class_num)              
+            self.model.classifier = nn.Linear(num_ftrs, self.class_num)
+        elif model_name == "mobilenet_v2":
+            self.model = models.mobilenet_v2()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.classifier[1].in_features
+            self.model.classifier[1] = nn.Linear(num_ftrs,self.class_num)
+            #input_size = 224  
+        elif model_name == "shufflenetv2_x0_5":
+            self.model = models.shufflenetv2_x0_5()
+            #set_parameter_requires_grad(model_ft, feature_extract)
+            num_ftrs = self.model.fc.in_features
+            self.model.fc = nn.Linear(num_ftrs, self.class_num)
+            #input_size = 224            
     def softmax(self,x):
         return np.exp(x) / np.sum(np.exp(x), axis=0)
     def ini_model(self,model_dir):
@@ -372,7 +378,7 @@ print(cf.predict('/home/cql/Downloads/test5.7/test0/40_right.jpeg'))
 #process_4_situation_videos(model_name='alexnet')
 #process_4_situation_videos(model_name='squeezenet1_0')
 #process_4_situation_videos(model_name='squeezenet1_1')
-process_4_situation_videos(model_name='inception3')
+#process_4_situation_videos(model_name='inception3')
 
 #process_4_situation_videos(model_name='vgg11')
 #process_4_situation_videos(model_name='vgg13')
@@ -394,3 +400,29 @@ process_4_situation_videos(model_name='inception3')
 #process_4_situation_videos(model_name='resnet50')
 #process_4_situation_videos(model_name='resnet101')
 #process_4_situation_videos(model_name='resnet152')
+
+import pandas as pd
+import numpy as np
+
+xray_model_names = ["squeezenet1_0","shufflenetv2_x0_5","mobilenet_v2"]
+def test_4_xray(model_name=xray_model_names[0],folder_id=0):
+    
+    print("start ini model")
+    model = classifier(224,model_name=model_name,class_num_=2)
+    #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
+
+    model_dir = '/data2/qilei_chen/DATA/xray/balanced_finetune_2_'+model_name+'/0_best.model'
+
+    model.ini_model(model_dir)
+    print("finish ini model")
+
+    test_dataset_anno = "/data1/qilei_chen/DATA/CheXpert/SUBSETS-small/combined.csv"
+
+    pd_frame = pd.read_csv(test_dataset_anno,sep=',')
+
+    file_dirs = pd_frame.filename.to_numpy()
+    labels = pd_frame.Abnormal
+
+    while file_dir,label in zip(file_dirs,labels):
+        print(file_dir)
+
