@@ -435,7 +435,7 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
 
         result_records.append(model.predict1(img_dir))
 
-        result_records_file.write(result_records[-1]+"\n")
+        result_records_file.write(str(result_records[-1])+"\n")
 
         counts[int(label)]+=1
 
