@@ -426,3 +426,4 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
     for file_dir,label in zip(file_dirs,labels):
         print(file_dir)
 
+test_4_xray()
