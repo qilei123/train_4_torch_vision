@@ -423,6 +423,6 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
     file_dirs = pd_frame.filename.to_numpy()
     labels = pd_frame.Abnormal
 
-    while file_dir,label in zip(file_dirs,labels):
+    for file_dir,label in zip(file_dirs,labels):
         print(file_dir)
 
