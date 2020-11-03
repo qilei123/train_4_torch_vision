@@ -447,5 +447,6 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
 
     print(counts)
     print(error_counts)
-
-test_4_xray()
+#test_4_xray(model_name=xray_model_names[0])
+test_4_xray(model_name=xray_model_names[1])
+test_4_xray(model_name=xray_model_names[2])
