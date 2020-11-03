@@ -407,26 +407,46 @@ import numpy as np
 xray_model_names = ["squeezenet1_0","shufflenetv2_x0_5","mobilenet_v2"]
 with_model = False
 def test_4_xray(model_name=xray_model_names[0],folder_id=0):
-    if with_model:
-        print("start ini model")
-        model = classifier(224,model_name=model_name,class_num_=2)
-        #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
+    
+    print("start ini model")
+    model = classifier(224,model_name=model_name,class_num_=2)
+    #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
 
-        model_dir = '/data2/qilei_chen/DATA/xray/balanced_finetune_2_'+model_name+'/0_best.model'
+    model_dir = '/data2/qilei_chen/DATA/xray/balanced_finetune_2_'+model_name+'/0_best.model'
 
-        model.ini_model(model_dir)
-        print("finish ini model")
-
-    test_dataset_anno = "/data1/qilei_chen/DATA/CheXpert/SUBSETS-small/combined.csv"
+    model.ini_model(model_dir)
+    print("finish ini model")
+    test_dataset_folder_dir = "/data1/qilei_chen/DATA/CheXpert/SUBSETS-small/"
+    test_dataset_anno = os.path.join(test_dataset_folder_dir,"combined.csv")
 
     pd_frame = pd.read_csv(test_dataset_anno,sep=',')
 
     file_dirs = pd_frame.filename.to_numpy()
     labels = pd_frame.Abnormal
-    records=[]
+
+    result_records=[]
     counts = [0,0]
+    error_counts = [0,0]
+
+    result_records_file = open(os.path.join(test_dataset_folder_dir,model_name+"_records.txt"),'w')
+
     for file_dir,label in zip(file_dirs,labels):
+
+        img_dir = os.path.join(test_dataset_folder_dir,file_dir)
+
+        result_records.append(model.predict1(img_dir))
+
+        result_records_file.write(result_records[-1]+"\n")
+
         counts[int(label)]+=1
+
+        if label==result_records[-1]:
+            error_counts[int(label)]+=1
+
+        if sum(counts)%1000==0:
+            print(str(sum(counts))+"...")
+
     print(counts)
+    print(error_counts)
 
 test_4_xray()
