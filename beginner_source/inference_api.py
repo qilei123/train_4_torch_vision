@@ -411,11 +411,10 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
     print("start ini model")
     model = classifier(224,model_name=model_name,class_num_=2)
     #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
-
-    model_dir = '/data2/qilei_chen/DATA/xray/balanced_finetune_2_'+model_name+'/0_best.model'
-
+    model_dir = '/data2/qilei_chen/DATA/xray/balanced_finetune_2_'+model_name+'/'+str(folder_id)+'_best.model'
     model.ini_model(model_dir)
     print("finish ini model")
+
     test_dataset_folder_dir = "/data1/qilei_chen/DATA/CheXpert/SUBSETS-small/"
     test_dataset_anno = os.path.join(test_dataset_folder_dir,"combined.csv")
 
