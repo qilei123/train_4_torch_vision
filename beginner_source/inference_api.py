@@ -405,16 +405,17 @@ import pandas as pd
 import numpy as np
 
 xray_model_names = ["squeezenet1_0","shufflenetv2_x0_5","mobilenet_v2"]
+with_model = False
 def test_4_xray(model_name=xray_model_names[0],folder_id=0):
-    
-    print("start ini model")
-    model = classifier(224,model_name=model_name,class_num_=2)
-    #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
+    if with_model:
+        print("start ini model")
+        model = classifier(224,model_name=model_name,class_num_=2)
+        #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
 
-    model_dir = '/data2/qilei_chen/DATA/xray/balanced_finetune_2_'+model_name+'/0_best.model'
+        model_dir = '/data2/qilei_chen/DATA/xray/balanced_finetune_2_'+model_name+'/0_best.model'
 
-    model.ini_model(model_dir)
-    print("finish ini model")
+        model.ini_model(model_dir)
+        print("finish ini model")
 
     test_dataset_anno = "/data1/qilei_chen/DATA/CheXpert/SUBSETS-small/combined.csv"
 
@@ -422,8 +423,10 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
 
     file_dirs = pd_frame.filename.to_numpy()
     labels = pd_frame.Abnormal
-
+    records=[]
+    counts = [0,0]
     for file_dir,label in zip(file_dirs,labels):
-        print(file_dir)
+        counts[int(label)]+=1
+    print(counts)
 
 test_4_xray()
