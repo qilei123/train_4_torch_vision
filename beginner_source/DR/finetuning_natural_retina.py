@@ -33,7 +33,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='model name')
 parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
-parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data0/qilei_chen/AI_EYE/binary_0")
+parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data1/qilei_chen/DATA/DB_NATURAL")
 args = parser.parse_args()
 
 
@@ -470,11 +470,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         model_ft = models.resnext50_32x4d(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.fc.in_features
-        model_ft.fc = nn.Linear(num_ftrs, num_classes)
-        input_size = 224   
-
-    elif model_name == "resnext101_32x8d":
-        model_ft = models.resnext50_32x4d(pretrained=use_pretrained)
+        model_ft.fc = nn.Linear(num_ftrs, num_classes)/data1/qilei_chen/DATA/DB_NATURAL/
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs, num_classes)
