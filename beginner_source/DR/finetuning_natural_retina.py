@@ -87,7 +87,7 @@ if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
 
 # Number of classes in the dataset
-num_classes = 4
+num_classes = 2
 
 # Batch size for training (change depending on how much memory you have)
 if model_name=="vgg":
@@ -98,7 +98,7 @@ else:
 batch_size=32
 
 # Number of epochs to train for 
-num_epochs = 400
+num_epochs = 100
 
 # Flag for feature extracting. When False, we finetune the whole model, 
 #   when True we only update the reshaped layer params

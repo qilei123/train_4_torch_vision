@@ -417,7 +417,7 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
 
     test_dataset_folder_dir = "/data1/qilei_chen/DATA/CheXpert/SUBSETS-small/"
     test_dataset_anno = os.path.join(test_dataset_folder_dir,"combined.csv")
-
+    
     pd_frame = pd.read_csv(test_dataset_anno,sep=',')
 
     file_dirs = pd_frame.filename.to_numpy()
