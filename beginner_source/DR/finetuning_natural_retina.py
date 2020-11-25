@@ -470,7 +470,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         model_ft = models.resnext50_32x4d(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.fc.in_features
-        model_ft.fc = nn.Linear(num_ftrs, num_classes)/data1/qilei_chen/DATA/DB_NATURAL/
+        model_ft.fc = nn.Linear(num_ftrs, num_classes)
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.fc.in_features
         model_ft.fc = nn.Linear(num_ftrs, num_classes)
