@@ -293,7 +293,7 @@ def set_parameter_requires_grad(model, feature_extracting):
 #    (fc): Linear(in_features=512, out_features=1000, bias=True) 
 # 
 # Thus, we must reinitialize ``model.fc`` to be a Linear layer with 512
-# input features and 2 output features with:
+# input features and 2 output features with:/data1/qilei_chen/DATA/DB_NATURAL/
 # 
 # ::
 # &
