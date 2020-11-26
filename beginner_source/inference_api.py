@@ -456,4 +456,6 @@ model = classifier(224,model_name="shufflenetv2_x0_5",class_num_=2)
 #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
 model_dir = "/data1/qilei_chen/DATA/DB_NATURAL/finetune_natural_retina_shufflenetv2_x0_5/best.model"
 model.ini_model(model_dir)
-print(model.predict1("/data1/qilei_chen/DEVELOPMENTS/train_4_torch_vision/1057440537.jpg"))
+print(model.predict1("/data1/qilei_chen/DATA/DB_NATURAL/val/0/2007_000033.jpg"))
+
+#print(model.predict1("/data1/qilei_chen/DATA/DB_NATURAL/train/0/1057440537.jpg"))
