@@ -1,6 +1,7 @@
 
 import os
 from PIL import Image
+
 #圆形头像
 def circle(img_path):
     path_name = os.path.dirname(img_path)
