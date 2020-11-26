@@ -452,7 +452,8 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
 #test_4_xray(model_name=xray_model_names[2])
 
 
-model = classifier(299,model_name="inception3",class_num_=2)
+model = classifier(224,model_name="shufflenetv2_x0_5",class_num_=2)
 #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
-model_dir = '/data2/qilei_chen/DATA/xray/balanced_finetune_2_'+model_name+'/'+str(folder_id)+'_best.model'
+model_dir = "/data1/qilei_chen/DATA/DB_NATURAL/finetune_natural_retina_shufflenetv2_x0_5/best.model"
 model.ini_model(model_dir)
+print(model.predict1(""))
