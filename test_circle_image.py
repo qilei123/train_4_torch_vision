@@ -1,45 +1,33 @@
-import cv2
-import numpy as np
 
-#加载图片
-img = cv2.imread('/media/cql/DATA0/DOWNLOAD/1163156166.jpg', cv2.IMREAD_UNCHANGED)
+import os
+from PIL import Image
+#圆形头像
+def circle(img_path):
+    path_name = os.path.dirname(img_path)
+    cir_file_name = 'cir_img.png'
+    cir_path = path_name + '/' + cir_file_name
+    ima = Image.open(img_path).convert("RGBA")
+    size = ima.size
+    print(size)
+    # 因为是要圆形，所以需要正方形的图片
+    r2 = min(size[0], size[1])
+    if size[0] != size[1]:
+        ima = ima.resize((r2, r2), Image.ANTIALIAS)
+    # 最后生成圆的半径
+    r3 = int(r2/2)
+    imb = Image.new('RGBA', (r3*2, r3*2),(255,255,255,0))
+    pima = ima.load() # 像素的访问对象
+    pimb = imb.load()
+    r = float(r2/2) #圆心横坐标
+ 
+    for i in range(r2):
+        for j in range(r2):
+            lx = abs(i-r) #到圆心距离的横坐标
+            ly = abs(j-r)#到圆心距离的纵坐标
+            l = (pow(lx,2) + pow(ly,2))** 0.5 # 三角函数 半径
+            if l < r3:
+                pimb[i-(r-r3),j-(r-r3)] = pima[i,j]
+ 
+    imb.save(cir_path)
 
-#获取图片尺寸
-height, width = img.shape[:2]
-height = int(height)
-width = int(width)
-
-#生成内显示模板
-circleIn = np.zeros((height, width, 1), np.uint8)
-circleIn = cv2.circle(circleIn, (width // 2, height // 2), min(height, width) // 2, (1), -1)
-#实际使用中不需要写入文件
-#np.savetxt('./out/circle.txt', circleIn[:, :, 0], fmt="%d", delimiter="")
-
-#生成外显示模板
-circleOut = circleIn.copy()
-circleOut[circleOut == 0] = 2
-circleOut[circleOut == 1] = 0
-circleOut[circleOut == 2] = 1
-#实际使用中不需要写入文件
-#np.savetxt('./out/circle1.txt', circleOut[:, :, 0], fmt="%d", delimiter="")
-
-#原图与内显示模板融合
-#生成空白图片
-imgIn = np.zeros((height, width, 4), np.uint8)
-#复制前3个通道
-imgIn[:, :, 0] = np.multiply(img[:, :, 0], circleIn[:, :, 0])
-imgIn[:, :, 1] = np.multiply(img[:, :, 1], circleIn[:, :, 0])
-imgIn[:, :, 2] = np.multiply(img[:, :, 2], circleIn[:, :, 0])
-#设置α通道的不透明部分
-circleIn[circleIn == 1] = 255
-imgIn[:, :, 3] = circleIn[:, :, 0]
-cv2.imwrite('/media/cql/DATA0/DOWNLOAD/imgIn.jpg', imgIn)
-
-#外显示与内显示同理
-imgOut = np.zeros((height, width, 4), np.uint8)
-imgOut[:, :, 0] = np.multiply(img[:, :, 0], circleOut[:, :, 0])
-imgOut[:, :, 1] = np.multiply(img[:, :, 1], circleOut[:, :, 0])
-imgOut[:, :, 2] = np.multiply(img[:, :, 2], circleOut[:, :, 0])
-circleOut[circleOut == 1] = 255
-imgOut[:, :, 3] = circleOut[:, :, 0]
-cv2.imwrite('/media/cql/DATA0/DOWNLOAD/imgOut.jpg', imgOut)
+circle("/media/cql/DATA0/DOWNLOAD/1163156166.jpg")
