@@ -90,7 +90,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 6
 
 # Batch size for training (change depending on how much memory you have)
-if model_name=="vgg":
+if "vgg" in model_name:
     batch_size = 16
 else:
     batch_size = 32
