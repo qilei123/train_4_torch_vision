@@ -90,7 +90,7 @@ if not os.path.exists(model_folder_dir):
 num_classes = 4
 
 # Batch size for training (change depending on how much memory you have)
-if model_name=="vgg":
+if "vgg" in model_name:
     batch_size = 16
 else:
     batch_size = 32
@@ -196,7 +196,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             epoch_loss = running_loss / len(dataloaders[phase].dataset)
             epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
 
-            #print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+            print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
             if phase == 'val' and epoch_acc > best_acc:
