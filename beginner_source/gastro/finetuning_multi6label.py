@@ -33,7 +33,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='model name')
 parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
-parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/4class_c")
+parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data1/qilei_chen/DATA/gastro/binary")
 args = parser.parse_args()
 
 
@@ -81,13 +81,13 @@ model_name = "inception"
 model_name = args.model
 print("-------------------"+model_name+"-------------------")
 
-model_folder_dir = data_dir+'/finetune_4_end_'+model_name
+model_folder_dir = data_dir+'/'+model_name
 
 if not os.path.exists(model_folder_dir):
     os.makedirs(model_folder_dir)
 
 # Number of classes in the dataset
-num_classes = 4
+num_classes = 6
 
 # Batch size for training (change depending on how much memory you have)
 if model_name=="vgg":
@@ -106,7 +106,7 @@ feature_extract = False
 
 input_size_ = 299
 
-gpu_index = '0'
+gpu_index = '1'
 
 ######################################################################
 # Helper Functions
@@ -196,7 +196,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             epoch_loss = running_loss / len(dataloaders[phase].dataset)
             epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
 
-            #print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+            print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
             if phase == 'val' and epoch_acc > best_acc:
