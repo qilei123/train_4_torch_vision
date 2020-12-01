@@ -451,9 +451,69 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
 #test_4_xray(model_name=xray_model_names[1])
 #test_4_xray(model_name=xray_model_names[2])
 
-
+''' this part for DB
 model = classifier(224,model_name="shufflenetv2_x0_5",class_num_=2)
 #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
 model_dir = "/data1/qilei_chen/DATA/DB_NATURAL/data1/finetune_natural_retina_shufflenetv2_x0_5/best.model"
 model.ini_model(model_dir)
 print(model.predict1("/data1/qilei_chen/DEVELOPMENTS/train_4_torch_vision/1057440537.jpg"))
+'''
+
+def test_4_gastro(img_dir,model_name,model_dir,label,class_num):
+    if "inception" in model_name:
+        model = classifier(299,model_name=model_name,class_num_=class_num)
+    else:
+        model = classifier(224,model_name=model_name,class_num_=class_num)
+    
+    model.ini_model(model_dir)
+
+    records = open(model_dir+"_"+str(label)+".txt",'w')
+
+    img_files = glob.glob(os.path.join(img_dir,str(label),"*.jpg"))
+    
+    for img_file in img_files:
+        prelabel = model.predict1(img_file)
+        img_name = os.path.basename(img_file)
+        records.write(img_name+" "+str(prelabel)+"\n")
+        
+img_dir = "/data1/qilei_chen/DATA/gastro/binary/val/"
+model_name = "vgg11"
+model_dir = "/data1/qilei_chen/DATA/gastro/binary/vgg11/best.model"
+label = 0
+class_num = 2
+test_4_gastro(img_dir,model_name,model_dir,label,class_num)
+
+img_dir = "/data1/qilei_chen/DATA/gastro/binary/val/"
+model_name = "vgg11"
+model_dir = "/data1/qilei_chen/DATA/gastro/binary/vgg11/best.model"
+label = 1
+class_num = 2
+test_4_gastro(img_dir,model_name,model_dir,label,class_num)
+
+img_dir = "/data1/qilei_chen/DATA/gastro/binary/val/"
+model_name = "densenet121"
+model_dir = "/data1/qilei_chen/DATA/gastro/binary/densenet121/best.model"
+label = 0
+class_num = 2
+test_4_gastro(img_dir,model_name,model_dir,label,class_num)
+
+img_dir = "/data1/qilei_chen/DATA/gastro/binary/val/"
+model_name = "densenet121"
+model_dir = "/data1/qilei_chen/DATA/gastro/binary/densenet121/best.model"
+label = 1
+class_num = 2
+test_4_gastro(img_dir,model_name,model_dir,label,class_num)
+
+img_dir = "/data1/qilei_chen/DATA/gastro/binary/val/"
+model_name = "inception3"
+model_dir = "/data1/qilei_chen/DATA/gastro/binary/inception3/best.model"
+label = 0
+class_num = 2
+test_4_gastro(img_dir,model_name,model_dir,label,class_num)
+
+img_dir = "/data1/qilei_chen/DATA/gastro/binary/val/"
+model_name = "inception3"
+model_dir = "/data1/qilei_chen/DATA/gastro/binary/inception3/best.model"
+label = 1
+class_num = 2
+test_4_gastro(img_dir,model_name,model_dir,label,class_num)
