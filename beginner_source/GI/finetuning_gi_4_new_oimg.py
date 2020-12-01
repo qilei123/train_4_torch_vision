@@ -18,8 +18,8 @@ import sys
 #sys.path.insert(0,"../")
 from FocalLoss import FocalLoss
 #sys.path.insert(0,'/data0/qilei_chen/pytorch_vision_4_DR')
-sys.path.insert(0,'/data0/qilei_chen/Development/vision2')
-#sys.path.insert(0,"/data1/qilei_chen/DEVELOPMENTS/vision")
+#sys.path.insert(0,'/data0/qilei_chen/Development/vision2')
+sys.path.insert(0,"/data1/qilei_chen/DEVELOPMENTS/vision")
 import torchvision
 from torchvision import datasets, models, transforms
 import matplotlib.pyplot as plt
@@ -33,7 +33,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='model name')
 parser.add_argument('--model', '-m', help='set the training model', default="alexnet")
-parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/GI_4_NEW")
+parser.add_argument('--datadir', '-d', help='set the training dataset', default="/data2/qilei_chen/DATA/GI_4_NEW_GRAY")
 args = parser.parse_args()
 
 
@@ -202,6 +202,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
+                torch.save(best_model_wts, model_folder_dir+'/best.model')
             if phase == 'val':
                 val_acc_history.append(epoch_acc)
         '''
