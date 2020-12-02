@@ -173,7 +173,7 @@ class classifier:
             self.model.fc = nn.Linear(num_ftrs, self.class_num)
             input_size = 224
         elif model_name=='inception3':
-            self.model = models.inception_v3(init_weights=False)
+            self.model = models.inception_v3()
             num_ftrs = self.model.AuxLogits.fc.in_features
             self.model.AuxLogits.fc = nn.Linear(num_ftrs, self.class_num)
             num_ftrs = self.model.fc.in_features
