@@ -503,7 +503,7 @@ model_dir = "/data1/qilei_chen/DATA/gastro/binary/densenet121/best.model"
 label = 1
 class_num = 2
 test_4_gastro(img_dir,model_name,model_dir,label,class_num)
-'''
+
 img_dir = "/data1/qilei_chen/DATA/gastro/binary/val/"
 model_name = "inception3"
 model_dir = "/data1/qilei_chen/DATA/gastro/binary/inception3/best.model"
@@ -517,3 +517,13 @@ model_dir = "/data1/qilei_chen/DATA/gastro/binary/inception3/best.model"
 label = 1
 class_num = 2
 test_4_gastro(img_dir,model_name,model_dir,label,class_num)
+'''
+
+model_names = ['vgg11','densenet121','inception3']
+labels = [0,1,2,3,4,5]
+img_dir = "/data1/qilei_chen/DATA/gastro/multilabel/val/"
+class_num = 6
+for model_name in model_names:
+    model_dir = "/data1/qilei_chen/DATA/gastro/multilabel/"+model_name+"/best.model"
+    for label in labels:
+        test_4_gastro(img_dir,model_name,model_dir,label,class_num)
