@@ -452,9 +452,9 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
 #test_4_xray(model_name=xray_model_names[2])
 
 # this part for DB
-model = classifier(224,model_name="shufflenetv2_x0_5",class_num_=2)
+model = classifier(224,model_name="squeezenet1_0",class_num_=3)
 #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
-model_dir = "/data1/qilei_chen/DATA/DB_NATURAL/data2/shufflenetv2_x0_5/best.model"
+model_dir = "/data1/qilei_chen/DATA/DB_NATURAL/data2/squeezenet1_0/best.model"
 model.ini_model(model_dir)
 print(model.predict1("/data1/qilei_chen/DEVELOPMENTS/train_4_torch_vision/1057440537.jpg"))
 
