@@ -475,7 +475,7 @@ def test_4_gastro(img_dir,model_name,model_dir,label,class_num):
         prelabel = model.predict1(img_file)
         img_name = os.path.basename(img_file)
         records.write(img_name+" "+str(prelabel)+"\n")
-        
+'''        
 img_dir = "/data1/qilei_chen/DATA/gastro/binary/val/"
 model_name = "vgg11"
 model_dir = "/data1/qilei_chen/DATA/gastro/binary/vgg11/best.model"
@@ -503,7 +503,7 @@ model_dir = "/data1/qilei_chen/DATA/gastro/binary/densenet121/best.model"
 label = 1
 class_num = 2
 test_4_gastro(img_dir,model_name,model_dir,label,class_num)
-
+'''
 img_dir = "/data1/qilei_chen/DATA/gastro/binary/val/"
 model_name = "inception3"
 model_dir = "/data1/qilei_chen/DATA/gastro/binary/inception3/best.model"
