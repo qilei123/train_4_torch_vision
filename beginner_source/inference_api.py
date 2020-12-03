@@ -456,7 +456,7 @@ model = classifier(224,model_name="squeezenet1_0",class_num_=3)
 #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
 model_dir = "/data1/qilei_chen/DATA/DB_NATURAL/data2/squeezenet1_0/best.model"
 model.ini_model(model_dir)
-print(model.predict1("/data1/qilei_chen/DEVELOPMENTS/train_4_torch_vision/XYNFMK202007230003_L_ORG.jpg"))
+print(model.predict1("/data1/qilei_chen/DEVELOPMENTS/train_4_torch_vision/ER1687235648.jpg"))
 
 
 def test_4_gastro(img_dir,model_name,model_dir,label,class_num):
