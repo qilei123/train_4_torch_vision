@@ -6,7 +6,7 @@
 #python beginner_source/gastro/finetuning_binarylabel.py -m "resnext50_32x4d"
 #python beginner_source/gastro/finetuning_binarylabel.py -m "resnext101_32x8d"
 
-#python beginner_source/gastro/finetuning_binarylabel.py -m "vgg11"
+python beginner_source/gastro/finetuning_binarylabel.py -m "vgg11"
 #python beginner_source/gastro/finetuning_binarylabel.py -m "vgg13"
 #python beginner_source/gastro/finetuning_binarylabel.py -m "vgg16"
 #python beginner_source/gastro/finetuning_binarylabel.py -m "vgg19"
@@ -18,7 +18,7 @@
 #python beginner_source/gastro/finetuning_binarylabel.py -m "squeezenet1_0"
 #python beginner_source/gastro/finetuning_binarylabel.py -m "squeezenet1_1"
 
-#python beginner_source/gastro/finetuning_binarylabel.py -m "densenet121"
+python beginner_source/gastro/finetuning_binarylabel.py -m "densenet121"
 #python beginner_source/gastro/finetuning_binarylabel.py -m "densenet161"
 #python beginner_source/gastro/finetuning_binarylabel.py -m "densenet169"
 #python beginner_source/gastro/finetuning_binarylabel.py -m "densenet201"

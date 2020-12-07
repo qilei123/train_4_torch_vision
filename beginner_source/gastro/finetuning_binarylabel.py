@@ -223,7 +223,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    torch.save(model.state_dict(), model_folder_dir+'/best.model')
+    torch.save(model.state_dict(), model_folder_dir+'_adam/best.model')
     return model, val_acc_history
 
 
@@ -783,7 +783,9 @@ else:
             pass
 
 # Observe that all parameters are being optimized
-optimizer_ft = optim.SGD(params_to_update, lr=0.0001, momentum=0.9)
+#optimizer_ft = optim.SGD(params_to_update, lr=0.0001, momentum=0.9)
+
+optimizer_ft = optim.Adam(params_to_update, lr=0.0005, momentum=0.9)
 
 
 ######################################################################
