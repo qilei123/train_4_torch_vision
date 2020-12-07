@@ -679,7 +679,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
     elif model_name == "mobilenetv2":
         """ Densenet
         """
-        model_ft = models.MobileNetV2(pretrained=use_pretrained)
+        model_ft = models.mobilenet_v2(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.classifier[1].in_features
         model_ft.classifier[1] = nn.Linear(num_ftrs,num_classes)
