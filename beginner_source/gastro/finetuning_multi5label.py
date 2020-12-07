@@ -106,7 +106,7 @@ feature_extract = False
 
 input_size_ = 299
 
-gpu_index = '1'
+gpu_index = '0'
 
 ######################################################################
 # Helper Functions
