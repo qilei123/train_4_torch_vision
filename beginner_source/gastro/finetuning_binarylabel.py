@@ -785,7 +785,7 @@ else:
 # Observe that all parameters are being optimized
 #optimizer_ft = optim.SGD(params_to_update, lr=0.0001, momentum=0.9)
 
-optimizer_ft = optim.Adam(params_to_update, lr=0.0005, momentum=0.9)
+optimizer_ft = optim.Adam(params_to_update, lr=0.0005)
 
 
 ######################################################################
@@ -847,9 +847,7 @@ plt.legend()
 plt.show()
 '''
 
-######################################################################
-# Final Thoughts and Where to Go Next
-# -----------------------------------
+####################################python beginner_source/gastro/finetuning_binarylabel.py -m "densenet121"-
 # 
 # Try running some of the other models and see how good the accuracy gets.
 # Also, notice that feature extracting takes less time because in the
