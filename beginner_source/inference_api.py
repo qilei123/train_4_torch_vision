@@ -221,7 +221,7 @@ class classifier:
     def softmax(self,x):
         return np.exp(x) / np.sum(np.exp(x), axis=0)
     def ini_model(self,model_dir):
-        checkpoint = torch.load(model_dir)
+        checkpoint = torch.load(model_dir,map_location={'cuda:0': 'cpu'})
         #self.model.load_state_dict(checkpoint['model_state_dict'])
         self.model.load_state_dict(checkpoint)
         
@@ -454,10 +454,16 @@ def test_4_xray(model_name=xray_model_names[0],folder_id=0):
 # this part for DB
 model = classifier(224,model_name="squeezenet1_0",class_num_=3)
 #model1 = classifier(224,model_name=model_name,class_num_=4,device_id=1)
-model_dir = "/data1/qilei_chen/DATA/DB_NATURAL/data3/squeezenet1_0/best.model"
+#model_dir = "/data1/qilei_chen/DATA/DB_NATURAL/data3/squeezenet1_0/best.model"
+model_dir = "/home/cql/Downloads/best.model"
 model.ini_model(model_dir)
-print(model.predict1("/data1/qilei_chen/DEVELOPMENTS/train_4_torch_vision/XYNFMK202007230003_L_ORG.jpg"))
-
+#print(model.predict1("/data1/qilei_chen/DEVELOPMENTS/train_4_torch_vision/XYNFMK202007230003_L_ORG.jpg"))
+import glob
+test_files = glob.glob("/media/cql/DATA0/baidupan/2020_xiangyaneifenmike/xiangyaneifenmiyanke_20020804result/*.jpg")
+for test_file in test_files:
+    if "ORG" in test_file:
+        print(os.path.basename(test_file))
+        print(model.predict1(test_file))
 
 def test_4_gastro(img_dir,model_name,model_dir,label,class_num):
     if "inception" in model_name:

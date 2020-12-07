@@ -15,7 +15,7 @@ python beginner_source/gastro/finetuning_multi6label.py -m "vgg11"
 #python beginner_source/gastro/finetuning_multi6label.py -m "vgg16_bn"
 #python beginner_source/gastro/finetuning_multi6label.py -m "vgg19_bn"
 
-python beginner_source/gastro/finetuning_multi6label.py -m "squeezenet1_0"
+#python beginner_source/gastro/finetuning_multi6label.py -m "squeezenet1_0"
 #python beginner_source/gastro/finetuning_multi6label.py -m "squeezenet1_1"
 
 python beginner_source/gastro/finetuning_multi6label.py -m "densenet121"
@@ -23,7 +23,7 @@ python beginner_source/gastro/finetuning_multi6label.py -m "densenet121"
 #python beginner_source/gastro/finetuning_multi6label.py -m "densenet169"
 #python beginner_source/gastro/finetuning_multi6label.py -m "densenet201"
 
-python beginner_source/gastro/finetuning_multi6label.py -m "shufflenetv2_x0_5"
+#python beginner_source/gastro/finetuning_multi6label.py -m "shufflenetv2_x0_5"
 #python beginner_source/gastro/finetuning_multi6label.py -m "shufflenetv2_x1_0"
 #python beginner_source/gastro/finetuning_multi6label.py -m "shufflenetv2_x1_5"
 #python beginner_source/gastro/finetuning_multi6label.py -m "shufflenetv2_x2_0"
